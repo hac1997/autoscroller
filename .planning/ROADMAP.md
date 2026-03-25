@@ -29,12 +29,12 @@ Decimal phases appear between their surrounding integers in numeric order.
   3. Cross-system communication uses a typed EventBus with no direct scene-to-scene coupling
   4. A run in progress survives a browser refresh (IndexedDB persistence of RunState)
   5. After 20+ combat cycles in a test run, no orphaned event listeners or objects accumulate (memory stable)
-**Plans**: TBD
+**Plans**: 3 plans
 
 Plans:
-- [ ] 01-01: EventBus + RunState + memory conventions
-- [ ] 01-02: Scene refactor (thin scenes) + IndexedDB persistence
-- [ ] 01-03: Verification and memory profiling
+- [ ] 01-01-PLAN.md — EventBus + RunState + data types + JSON migration + test infrastructure (Wave 0)
+- [ ] 01-02-PLAN.md — SaveManager with idb-keyval + all scenes rewritten as thin wrappers + boot flow
+- [ ] 01-03-PLAN.md — Integration tests + memory leak verification + manual browser refresh checkpoint
 
 ### Phase 2: Combat + Deck Engine
 **Goal**: Players experience the core differentiator -- fully automatic combat with per-card cooldowns, visible card queues, sequential synergies, and complete deck management
