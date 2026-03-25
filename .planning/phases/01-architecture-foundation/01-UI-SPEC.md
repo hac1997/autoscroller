@@ -103,7 +103,7 @@ Phase 1 is an architecture rewrite. The only user-facing UI changes are scene tr
 | Error state | "Something went wrong. Returning to main menu." |
 | Destructive confirmation | Delete Save: "This will permanently erase your current run. Continue?" |
 | Confirm button | "Yes, Delete" |
-| Cancel button | "Cancel" |
+| Cancel button | "Keep My Run" |
 
 **Language:** English. The GDD is in pt-br but no localization system exists yet. All in-game copy is English for v1.
 
@@ -166,6 +166,8 @@ Phase 1 reuses and standardizes existing Phaser UI patterns. No new visual compo
 3. If saved run exists: Main Menu shows "Continue Run" (primary) + "New Run" (secondary)
 4. If no saved run: Main Menu shows "New Run" only
 5. "New Run" when save exists: shows destructive confirmation dialog
+
+**Primary focal point on Main Menu:** "Continue Run" CTA button -- largest interactive element on screen, rendered at Heading size (24px bold) in accent color (`#ffd700`), vertically centered at canvas midpoint (400, 300). When no save exists, "New Run" takes its position and serves as the sole focal point. The CTA is the first element the player's eye reaches after the dark navy background loads.
 
 ---
 
