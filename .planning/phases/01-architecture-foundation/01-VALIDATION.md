@@ -38,25 +38,29 @@ created: 2026-03-25
 
 | Task ID | Plan | Wave | Requirement | Test Type | Automated Command | File Exists | Status |
 |---------|------|------|-------------|-----------|-------------------|-------------|--------|
-| 01-01-01 | 01 | 1 | ARCH-03 | unit | `npx vitest run tests/core/eventbus.test.ts` | ❌ W0 | ⬜ pending |
-| 01-01-02 | 01 | 1 | ARCH-02 | unit | `npx vitest run tests/state/runstate.test.ts` | ❌ W0 | ⬜ pending |
-| 01-01-03 | 01 | 1 | ARCH-04 | unit | `npx vitest run tests/memory/listener-leak.test.ts` | ❌ W0 | ⬜ pending |
-| 01-02-01 | 02 | 2 | ARCH-01 | unit | `npx vitest run tests/core/eventbus.test.ts -t "no phaser"` | ❌ W0 | ⬜ pending |
-| 01-02-02 | 02 | 2 | PERS-01 | integration | `npx vitest run tests/core/savemanager.test.ts` | ❌ W0 | ⬜ pending |
+| 01-01-00 | 01 | 1 | ARCH-03 | unit | `npx vitest run tests/core/eventbus.test.ts` | W0 | pending |
+| 01-01-00 | 01 | 1 | ARCH-02 | unit | `npx vitest run tests/state/runstate.test.ts` | W0 | pending |
+| 01-01-00 | 01 | 1 | ARCH-04 | unit | `npx vitest run tests/memory/listener-leak.test.ts` | W0 | pending |
+| 01-01-01 | 01 | 1 | ARCH-04 | unit | `npx vitest run tests/data/dataloader.test.ts` | W0 | pending |
+| 01-02-00 | 02 | 2 | ARCH-01 | unit | `npx vitest run tests/core/eventbus.test.ts -t "no phaser"` | W0 | pending |
+| 01-02-00 | 02 | 2 | PERS-01 | integration | `npx vitest run tests/core/savemanager.test.ts` | W0 | pending |
+| 01-02-01 | 02 | 2 | ARCH-01 | compile | `npx tsc --noEmit` | n/a | pending |
+| 01-02-02 | 02 | 2 | ARCH-01 | compile | `npx tsc --noEmit` | n/a | pending |
 
-*Status: ⬜ pending · ✅ green · ❌ red · ⚠️ flaky*
+*Status: pending / green / red / flaky*
 
 ---
 
 ## Wave 0 Requirements
 
-- [ ] `npm install -D vitest` — test framework
-- [ ] `npm install -D fake-indexeddb` — IndexedDB mock for Node
-- [ ] `vitest.config.ts` — configure with jsdom environment
-- [ ] `tests/core/eventbus.test.ts` — EventBus unit tests (typed emit/on/off, cleanup, listener count)
-- [ ] `tests/state/runstate.test.ts` — RunState creation, JSON serialization round-trip
-- [ ] `tests/core/savemanager.test.ts` — SaveManager save/load/clear with fake-indexeddb
-- [ ] `tests/memory/listener-leak.test.ts` — 20+ subscribe/unsubscribe cycles, assert 0 leaks
+- [ ] `npm install -D vitest` -- test framework
+- [ ] `npm install -D fake-indexeddb` -- IndexedDB mock for Node
+- [ ] `vitest.config.ts` -- configure with node environment
+- [ ] `tests/core/eventbus.test.ts` -- EventBus unit tests (typed emit/on/off, cleanup, listener count)
+- [ ] `tests/state/runstate.test.ts` -- RunState creation, JSON serialization round-trip
+- [ ] `tests/data/dataloader.test.ts` -- DataLoader smoke test (loadAllData, getAllCards, getCardById)
+- [ ] `tests/core/savemanager.test.ts` -- SaveManager save/load/clear with fake-indexeddb
+- [ ] `tests/memory/listener-leak.test.ts` -- 20+ subscribe/unsubscribe cycles, assert 0 leaks
 
 ---
 
