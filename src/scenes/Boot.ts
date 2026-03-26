@@ -1,15 +1,13 @@
 import { Scene } from 'phaser';
+import { loadAllData } from '../data/DataLoader';
 
 export class Boot extends Scene {
-    constructor() {
-        super('Boot');
-    }
+  constructor() {
+    super('Boot');
+  }
 
-    preload() {
-        // Load assets needed for the preloader
-    }
-
-    create() {
-        this.scene.start('Preloader');
-    }
+  create(): void {
+    loadAllData();
+    this.scene.start('Preloader');
+  }
 }

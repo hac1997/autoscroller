@@ -3,9 +3,20 @@ import Phaser from 'phaser'
 import { Boot } from './scenes/Boot'
 import { Preloader } from './scenes/Preloader'
 import { MainMenu } from './scenes/MainMenu'
+import { TutorialScene } from './scenes/TutorialScene'
 import { Game } from './scenes/Game'
 import { CombatScene } from './scenes/CombatScene'
+import { RewardScene } from './scenes/RewardScene'
+import { ShopScene } from './scenes/ShopScene'
+import { RestScene } from './scenes/RestScene'
+import { EventScene } from './scenes/EventScene'
+import { PauseScene } from './scenes/PauseScene'
+import { SettingsScene } from './scenes/SettingsScene'
+import { GameOverScene } from './scenes/GameOverScene'
+import { DeckCustomizationScene } from './scenes/DeckCustomizationScene'
+import { RelicViewerScene } from './scenes/RelicViewerScene'
 import { SelectionScene } from './scenes/SelectionScene'
+import { DeathScene } from './scenes/DeathScene'
 
 const config: Phaser.Types.Core.GameConfig = {
     type: Phaser.AUTO,
@@ -16,16 +27,27 @@ const config: Phaser.Types.Core.GameConfig = {
         default: 'arcade',
         arcade: {
             gravity: { x: 0, y: 0 },
-            debug: true
+            debug: false
         }
     },
     scene: [
         Boot,
         Preloader,
         MainMenu,
+        TutorialScene,
         Game,
         CombatScene,
-        SelectionScene
+        RewardScene,
+        ShopScene,
+        RestScene,
+        EventScene,
+        PauseScene,
+        SettingsScene,
+        GameOverScene,
+        DeckCustomizationScene,
+        RelicViewerScene,
+        SelectionScene,
+        DeathScene
     ]
 }
 

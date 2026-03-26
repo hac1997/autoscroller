@@ -2,7 +2,7 @@ import 'fake-indexeddb/auto';
 import { describe, it, expect, beforeEach, vi } from 'vitest';
 import { SaveManager } from '../../src/core/SaveManager';
 import { eventBus } from '../../src/core/EventBus';
-import { createNewRun, type RunState } from '../../src/state/RunState';
+import { createNewRun } from '../../src/state/RunState';
 
 describe('SaveManager', () => {
   let manager: SaveManager;

@@ -1,30 +1,25 @@
 import { Scene } from 'phaser';
+import { saveManager } from '../core/SaveManager';
 
 export class Preloader extends Scene {
-    constructor() {
-        super('Preloader');
-    }
+  constructor() {
+    super('Preloader');
+  }
 
-    init() {
-        //  A simple progress bar. This is the outline of the bar.
-        this.add.rectangle(512, 384, 468, 32).setStrokeStyle(1, 0xffffff);
+  async create(): Promise<void> {
+    // Show a simple loading indicator
+    this.add.rectangle(400, 300, 468, 32).setStrokeStyle(1, 0xffffff);
+    const bar = this.add.rectangle(400 - 230, 300, 4, 28, 0xffffff);
 
-        //  This is the progress bar itself. It will increase in size from the left based on the % of progress.
-        const bar = this.add.rectangle(512 - 230, 384, 4, 28, 0xffffff);
+    // Simulate brief load
+    bar.width = 464;
 
-        //  Use the 'progress' event emitted by the LoaderPlugin to update the loading bar
-        this.load.on('progress', (progress: number) => {
-            //  Update the progress bar (our bar is 464px wide, so 100% = 464px)
-            bar.width = 4 + (460 * progress);
-        });
-    }
+    // Check for existing saved run
+    const savedRun = await saveManager.load();
 
-    preload() {
-        // Load game assets here
-        this.load.setPath('assets');
-    }
+    // Pass saved run info to MainMenu via registry
+    this.registry.set('savedRun', savedRun);
 
-    create() {
-        this.scene.start('MainMenu');
-    }
+    this.scene.start('MainMenu');
+  }
 }
