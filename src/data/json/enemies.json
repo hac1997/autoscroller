@@ -11,6 +11,7 @@
     },
     "attackCooldown": 2500,
     "goldReward": { "min": 10, "max": 20 },
+    "metaLootReward": { "min": 1, "max": 3 },
     "color": 65280
   },
   {
@@ -26,6 +27,7 @@
     },
     "attackCooldown": 1500,
     "goldReward": { "min": 15, "max": 25 },
+    "metaLootReward": { "min": 1, "max": 3 },
     "color": 9127187
   },
   {
@@ -41,6 +43,7 @@
     },
     "attackCooldown": 3000,
     "goldReward": { "min": 20, "max": 30 },
+    "metaLootReward": { "min": 1, "max": 3 },
     "color": 5597999
   },
   {
@@ -56,6 +59,7 @@
     },
     "attackCooldown": 2000,
     "goldReward": { "min": 25, "max": 35 },
+    "metaLootReward": { "min": 1, "max": 3 },
     "color": 9662683
   },
   {
@@ -71,6 +75,7 @@
     },
     "attackCooldown": 2000,
     "goldReward": { "min": 50, "max": 80 },
+    "metaLootReward": { "min": 5, "max": 10 },
     "color": 12632256
   },
   {
@@ -87,6 +92,58 @@
     },
     "attackCooldown": 2500,
     "goldReward": { "min": 100, "max": 150 },
+    "metaLootReward": { "min": 10, "max": 18 },
     "color": 9109504
+  },
+  {
+    "id": "boss_tank",
+    "name": "Iron Golem",
+    "type": "boss",
+    "bossType": "tank",
+    "baseHP": 1200,
+    "baseDefense": 30,
+    "attack": {
+      "damage": 16,
+      "defense": 15,
+      "pattern": "scaling"
+    },
+    "attackCooldown": 3000,
+    "goldReward": { "min": 120, "max": 180 },
+    "metaLootReward": { "min": 15, "max": 25 },
+    "color": 8421504
+  },
+  {
+    "id": "boss_berserker",
+    "name": "Blood Reaver",
+    "type": "boss",
+    "bossType": "berserker",
+    "baseHP": 600,
+    "baseDefense": 10,
+    "attack": {
+      "damage": 40,
+      "pattern": "random",
+      "specialEffect": "double"
+    },
+    "attackCooldown": 1800,
+    "goldReward": { "min": 100, "max": 160 },
+    "metaLootReward": { "min": 12, "max": 20 },
+    "color": 11141120
+  },
+  {
+    "id": "boss_mage",
+    "name": "Lich King",
+    "type": "boss",
+    "bossType": "mage",
+    "baseHP": 800,
+    "baseDefense": 15,
+    "attack": {
+      "damage": 24,
+      "pattern": "conditional",
+      "specialEffect": "debuff"
+    },
+    "attackCooldown": 2200,
+    "goldReward": { "min": 110, "max": 170 },
+    "metaLootReward": { "min": 14, "max": 22 },
+    "color": 6684927
   }
 ]
