@@ -75,6 +75,34 @@ export class GameScene extends Scene {
     // HUD
     this.hud = new LoopHUD(this);
 
+    // Controls hint
+    this.add.text(10, 550, '[D] Deck | [R] Relics | [ESC] Pause', {
+      fontSize: '12px',
+      color: '#aaccff',
+    }).setScrollFactor(0).setDepth(100);
+
+    // Keyboard shortcuts
+    this.input.keyboard?.on('keydown-D', () => {
+      if (!this.scene.isPaused()) {
+        this.scene.pause();
+        this.scene.launch('DeckCustomizationScene');
+      }
+    });
+
+    this.input.keyboard?.on('keydown-R', () => {
+      if (!this.scene.isPaused()) {
+        this.scene.pause();
+        this.scene.launch('RelicViewerScene');
+      }
+    });
+
+    this.input.keyboard?.on('keydown-ESC', () => {
+      if (!this.scene.isPaused()) {
+        this.scene.pause();
+        this.scene.launch('PauseScene');
+      }
+    });
+
     // Resume handler (return from combat/shop/etc overlay)
     this.events.on('resume', () => {
       // Sync economy back from global RunState
@@ -88,9 +116,15 @@ export class GameScene extends Scene {
       }
       this.tilePool.clear();
 
-      // If LoopRunner is in tile-interaction state, resume traversal
+      // If LoopRunner is in tile-interaction state, check if boss was defeated
       if (this.loopRunner.getState() === 'tile-interaction') {
-        this.loopRunner.resumeTraversal();
+        if ((run as any)._lastBossDefeated) {
+          (run as any)._lastBossDefeated = false;
+          this.loopRunner.onBossDefeated();
+          // boss-defeated event handler will launch BossExitScene
+        } else {
+          this.loopRunner.resumeTraversal();
+        }
       }
       // If planning state, launch PlanningOverlay
       if (this.loopRunner.getState() === 'planning') {

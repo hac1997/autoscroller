@@ -168,6 +168,10 @@ export class CombatScene extends Scene {
           // Write HP back to RunState
           const finalState = this.engine.getState();
           currentRun.hero.currentHP = finalState.heroHP;
+          // Flag boss defeat for GameScene to trigger BossExitScene
+          if (enemyDef.type === 'boss') {
+            (currentRun as any)._lastBossDefeated = true;
+          }
 
           // Transition to PostCombatScene
           const stats = this.engine.getStats();
