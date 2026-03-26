@@ -32,6 +32,8 @@
     "rarity": "rare",
     "icon": "\u2694",
     "color": 16737095,
+    "unlockSource": "shrine",
+    "unlockTier": 1,
     "effects": [{
       "trigger": "card_played",
       "description": "Reduce stamina cost by 1",
@@ -45,6 +47,8 @@
     "rarity": "rare",
     "icon": "\ud83d\udee1",
     "color": 12632256,
+    "unlockSource": "shrine",
+    "unlockTier": 1,
     "effects": [{
       "trigger": "damage_taken",
       "description": "Gain 2 Defense",
@@ -55,7 +59,7 @@
     "id": "arcane_crystal",
     "name": "Arcane Crystal",
     "description": "+15 Max Mana",
-    "rarity": "rare",
+    "rarity": "common",
     "icon": "\u2666",
     "color": 9662683,
     "effects": [{
@@ -71,6 +75,8 @@
     "rarity": "epic",
     "icon": "\ud83d\udc8d",
     "color": 14423100,
+    "unlockSource": "shrine",
+    "unlockTier": 2,
     "effects": [{
       "trigger": "passive",
       "description": "+50% Strength, -20% Max HP",
@@ -84,6 +90,8 @@
     "rarity": "legendary",
     "icon": "\u2665",
     "color": 9109504,
+    "unlockSource": "shrine",
+    "unlockTier": 3,
     "effects": [{
       "trigger": "turn_start",
       "description": "First turn double damage",
@@ -97,6 +105,8 @@
     "rarity": "legendary",
     "icon": "\ud83e\udeb6",
     "color": 16728320,
+    "unlockSource": "shrine",
+    "unlockTier": 3,
     "effects": [{
       "trigger": "damage_taken",
       "description": "Revive at 50% HP",

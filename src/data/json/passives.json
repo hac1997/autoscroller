@@ -1,0 +1,22 @@
+{
+  "warrior": [
+    {
+      "id": "passive_attack_up",
+      "name": "Battle Hardened",
+      "xpCost": 100,
+      "effect": { "type": "stat_bonus", "stat": "attack", "value": 5 }
+    },
+    {
+      "id": "passive_defense_up",
+      "name": "Iron Constitution",
+      "xpCost": 250,
+      "effect": { "type": "stat_bonus", "stat": "defense", "value": 5 }
+    },
+    {
+      "id": "passive_hp_up",
+      "name": "Vitality",
+      "xpCost": 500,
+      "effect": { "type": "stat_bonus", "stat": "maxHP", "value": 25 }
+    }
+  ]
+}

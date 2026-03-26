@@ -1,0 +1,48 @@
+{
+  "forge": {
+    "name": "Forge",
+    "maxLevel": 4,
+    "tiers": [
+      { "level": 1, "cost": 50, "unlocks": { "cards": ["counter-strike", "shield-wall"] } },
+      { "level": 2, "cost": 100, "unlocks": { "cards": ["fury", "iron-skin"] } },
+      { "level": 3, "cost": 200, "unlocks": { "cards": ["berserker", "fortify"] } },
+      { "level": 4, "cost": 400, "unlocks": { "cards": ["weaken"] } }
+    ]
+  },
+  "library": {
+    "name": "Library",
+    "maxLevel": 3,
+    "tiers": [
+      { "level": 1, "cost": 50, "unlocks": { "cards": ["arcane-shield", "fireball"] } },
+      { "level": 2, "cost": 100, "unlocks": { "cards": ["heal", "mana-drain"] } },
+      { "level": 3, "cost": 200, "unlocks": { "cards": ["rejuvenate"] } }
+    ]
+  },
+  "tavern": {
+    "name": "Tavern",
+    "maxLevel": 3,
+    "tiers": [
+      { "level": 1, "cost": 40, "unlocks": {} },
+      { "level": 2, "cost": 80, "unlocks": {} },
+      { "level": 3, "cost": 160, "unlocks": {} }
+    ]
+  },
+  "workshop": {
+    "name": "Workshop",
+    "maxLevel": 3,
+    "tiers": [
+      { "level": 1, "cost": 60, "unlocks": { "tiles": ["graveyard"] } },
+      { "level": 2, "cost": 120, "unlocks": { "tiles": ["swamp"] } },
+      { "level": 3, "cost": 240, "unlocks": { "tiles": ["volcano"] } }
+    ]
+  },
+  "shrine": {
+    "name": "Shrine",
+    "maxLevel": 3,
+    "tiers": [
+      { "level": 1, "cost": 75, "unlocks": { "relics": ["warrior_spirit", "iron_will"] } },
+      { "level": 2, "cost": 150, "unlocks": { "relics": ["berserker_ring"] } },
+      { "level": 3, "cost": 300, "unlocks": { "relics": ["demon_heart", "phoenix_feather"] } }
+    ]
+  }
+}

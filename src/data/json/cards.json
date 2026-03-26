@@ -30,7 +30,9 @@
       "cost": { "defense": 10 },
       "cooldown": 2.2,
       "targeting": "single",
-      "rarity": "uncommon"
+      "rarity": "uncommon",
+      "unlockSource": "forge",
+      "unlockTier": 2
     },
     {
       "id": "berserker",
@@ -41,7 +43,9 @@
       "cost": { "stamina": 15, "defense": 5 },
       "cooldown": 3.0,
       "targeting": "single",
-      "rarity": "rare"
+      "rarity": "rare",
+      "unlockSource": "forge",
+      "unlockTier": 3
     },
     {
       "id": "defend",
@@ -62,7 +66,9 @@
       "cost": { "stamina": 5 },
       "cooldown": 1.5,
       "targeting": "self",
-      "rarity": "common"
+      "rarity": "common",
+      "unlockSource": "forge",
+      "unlockTier": 1
     },
     {
       "id": "fortify",
@@ -73,7 +79,9 @@
       "cost": { "stamina": 10 },
       "cooldown": 2.0,
       "targeting": "self",
-      "rarity": "rare"
+      "rarity": "rare",
+      "unlockSource": "forge",
+      "unlockTier": 3
     },
     {
       "id": "iron-skin",
@@ -84,7 +92,9 @@
       "cost": { "mana": 5 },
       "cooldown": 1.8,
       "targeting": "self",
-      "rarity": "uncommon"
+      "rarity": "uncommon",
+      "unlockSource": "forge",
+      "unlockTier": 2
     },
     {
       "id": "fireball",
@@ -106,7 +116,9 @@
       "cost": { "mana": 8 },
       "cooldown": 2.0,
       "targeting": "self",
-      "rarity": "uncommon"
+      "rarity": "uncommon",
+      "unlockSource": "library",
+      "unlockTier": 2
     },
     {
       "id": "arcane-shield",
@@ -117,7 +129,9 @@
       "cost": { "mana": 6 },
       "cooldown": 1.5,
       "targeting": "self",
-      "rarity": "uncommon"
+      "rarity": "uncommon",
+      "unlockSource": "library",
+      "unlockTier": 1
     },
     {
       "id": "rejuvenate",
@@ -128,7 +142,9 @@
       "cost": { "mana": 5 },
       "cooldown": 1.2,
       "targeting": "self",
-      "rarity": "uncommon"
+      "rarity": "uncommon",
+      "unlockSource": "library",
+      "unlockTier": 3
     },
     {
       "id": "mana-drain",
@@ -141,7 +157,9 @@
       ],
       "cooldown": 1.0,
       "targeting": "single",
-      "rarity": "uncommon"
+      "rarity": "uncommon",
+      "unlockSource": "library",
+      "unlockTier": 2
     },
     {
       "id": "weaken",
@@ -155,7 +173,24 @@
       "cost": { "mana": 7 },
       "cooldown": 1.8,
       "targeting": "single",
-      "rarity": "rare"
+      "rarity": "rare",
+      "unlockSource": "forge",
+      "unlockTier": 4
+    },
+    {
+      "id": "counter-strike",
+      "name": "Counter Strike",
+      "description": "Deal 12 damage. Gain 3 Armor.",
+      "category": "attack",
+      "effects": [
+        { "type": "damage", "value": 12, "target": "enemy" },
+        { "type": "armor", "value": 3, "target": "self" }
+      ],
+      "cooldown": 1.5,
+      "targeting": "single",
+      "rarity": "common",
+      "unlockSource": "forge",
+      "unlockTier": 1
     }
   ],
   "starterDeckIds": [
