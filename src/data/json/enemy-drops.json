@@ -1,0 +1,83 @@
+{
+  "Slime": {
+    "cardDrops": {
+      "enemyType": "Slime",
+      "cardPool": ["strike", "defend", "heavy-hit", "shield-wall", "fireball", "heal"],
+      "minDrops": 1,
+      "maxDrops": 1,
+      "choicesShown": 3
+    },
+    "tileDrops": [
+      { "tileType": "combat", "dropChance": 0.3, "minQuantity": 1, "maxQuantity": 1 }
+    ]
+  },
+  "Goblin": {
+    "cardDrops": {
+      "enemyType": "Goblin",
+      "cardPool": ["strike", "defend", "heavy-hit", "berserk", "quick-strike"],
+      "minDrops": 1,
+      "maxDrops": 1,
+      "choicesShown": 3
+    },
+    "tileDrops": [
+      { "tileType": "combat", "dropChance": 0.4, "minQuantity": 1, "maxQuantity": 2 },
+      { "tileType": "event", "dropChance": 0.2, "minQuantity": 1, "maxQuantity": 1 }
+    ]
+  },
+  "Orc": {
+    "cardDrops": {
+      "enemyType": "Orc",
+      "cardPool": ["heavy-hit", "shield-wall", "defend", "fortress"],
+      "minDrops": 1,
+      "maxDrops": 1,
+      "choicesShown": 3
+    },
+    "tileDrops": [
+      { "tileType": "combat", "dropChance": 0.5, "minQuantity": 1, "maxQuantity": 2 },
+      { "tileType": "rest", "dropChance": 0.3, "minQuantity": 1, "maxQuantity": 1 }
+    ]
+  },
+  "Dark Mage": {
+    "cardDrops": {
+      "enemyType": "Dark Mage",
+      "cardPool": ["fireball", "heal", "frost", "arcane-blast"],
+      "minDrops": 1,
+      "maxDrops": 1,
+      "choicesShown": 3
+    },
+    "tileDrops": [
+      { "tileType": "event", "dropChance": 0.5, "minQuantity": 1, "maxQuantity": 2 },
+      { "tileType": "shop", "dropChance": 0.3, "minQuantity": 1, "maxQuantity": 1 }
+    ]
+  },
+  "Elite Knight": {
+    "cardDrops": {
+      "enemyType": "Elite Knight",
+      "cardPool": ["heavy-hit", "shield-wall", "fortress", "berserk"],
+      "minDrops": 2,
+      "maxDrops": 2,
+      "choicesShown": 4
+    },
+    "tileDrops": [
+      { "tileType": "combat", "dropChance": 0.7, "minQuantity": 2, "maxQuantity": 3 },
+      { "tileType": "elite", "dropChance": 0.4, "minQuantity": 1, "maxQuantity": 1 },
+      { "tileType": "shop", "dropChance": 0.5, "minQuantity": 1, "maxQuantity": 1 }
+    ]
+  },
+  "Demon Lord": {
+    "cardDrops": {
+      "enemyType": "Demon Lord",
+      "cardPool": ["berserk", "fury", "fireball", "arcane-blast", "fortress"],
+      "minDrops": 2,
+      "maxDrops": 3,
+      "choicesShown": 5
+    },
+    "tileDrops": [
+      { "tileType": "combat", "dropChance": 1.0, "minQuantity": 3, "maxQuantity": 5 },
+      { "tileType": "elite", "dropChance": 0.8, "minQuantity": 1, "maxQuantity": 2 },
+      { "tileType": "treasure", "dropChance": 0.6, "minQuantity": 1, "maxQuantity": 2 },
+      { "tileType": "shop", "dropChance": 0.7, "minQuantity": 1, "maxQuantity": 2 },
+      { "tileType": "rest", "dropChance": 0.8, "minQuantity": 1, "maxQuantity": 2 }
+    ]
+  }
+}

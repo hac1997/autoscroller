@@ -1,0 +1,86 @@
+[
+  {
+    "id": "slime",
+    "name": "Slime",
+    "type": "normal",
+    "baseHP": 100,
+    "baseDefense": 0,
+    "attack": {
+      "damage": 8,
+      "pattern": "fixed"
+    },
+    "goldReward": { "min": 10, "max": 20 },
+    "color": 65280
+  },
+  {
+    "id": "goblin",
+    "name": "Goblin",
+    "type": "normal",
+    "baseHP": 75,
+    "baseDefense": 0,
+    "attack": {
+      "damage": 6,
+      "pattern": "random",
+      "specialEffect": "double"
+    },
+    "goldReward": { "min": 15, "max": 25 },
+    "color": 9127187
+  },
+  {
+    "id": "orc",
+    "name": "Orc",
+    "type": "normal",
+    "baseHP": 175,
+    "baseDefense": 10,
+    "attack": {
+      "damage": 12,
+      "defense": 5,
+      "pattern": "fixed"
+    },
+    "goldReward": { "min": 20, "max": 30 },
+    "color": 5597999
+  },
+  {
+    "id": "mage",
+    "name": "Dark Mage",
+    "type": "normal",
+    "baseHP": 85,
+    "baseDefense": 0,
+    "attack": {
+      "damage": 7,
+      "pattern": "conditional",
+      "specialEffect": "debuff"
+    },
+    "goldReward": { "min": 25, "max": 35 },
+    "color": 9662683
+  },
+  {
+    "id": "elite_knight",
+    "name": "Elite Knight",
+    "type": "elite",
+    "baseHP": 200,
+    "baseDefense": 15,
+    "attack": {
+      "damage": 15,
+      "defense": 8,
+      "pattern": "scaling"
+    },
+    "goldReward": { "min": 50, "max": 80 },
+    "color": 12632256
+  },
+  {
+    "id": "boss_demon",
+    "name": "Demon Lord",
+    "type": "boss",
+    "baseHP": 400,
+    "baseDefense": 20,
+    "attack": {
+      "damage": 20,
+      "defense": 10,
+      "pattern": "scaling",
+      "specialEffect": "lifesteal"
+    },
+    "goldReward": { "min": 100, "max": 150 },
+    "color": 9109504
+  }
+]

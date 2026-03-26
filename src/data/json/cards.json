@@ -1,0 +1,152 @@
+{
+  "cards": [
+    {
+      "id": "strike",
+      "name": "Strike",
+      "description": "Deal 10 damage.",
+      "category": "attack",
+      "effects": [{ "type": "damage", "value": 10, "target": "enemy" }],
+      "cooldown": 1.0,
+      "targeting": "single"
+    },
+    {
+      "id": "heavy-hit",
+      "name": "Heavy Hit",
+      "description": "Deal 20 damage. Lose 5 Stamina.",
+      "category": "attack",
+      "effects": [{ "type": "damage", "value": 20, "target": "enemy" }],
+      "cost": { "stamina": 5 },
+      "cooldown": 1.0,
+      "targeting": "single"
+    },
+    {
+      "id": "fury",
+      "name": "Fury",
+      "description": "Deal 30 damage. Lose 10 Defense.",
+      "category": "attack",
+      "effects": [{ "type": "damage", "value": 30, "target": "enemy" }],
+      "cost": { "defense": 10 },
+      "cooldown": 1.0,
+      "targeting": "single"
+    },
+    {
+      "id": "berserker",
+      "name": "Berserker",
+      "description": "Deal 40 damage. Lose 15 Stamina and 5 Defense.",
+      "category": "attack",
+      "effects": [{ "type": "damage", "value": 40, "target": "enemy" }],
+      "cost": { "stamina": 15, "defense": 5 },
+      "cooldown": 1.0,
+      "targeting": "single"
+    },
+    {
+      "id": "defend",
+      "name": "Defend",
+      "description": "Gain 5 Armor.",
+      "category": "defense",
+      "effects": [{ "type": "armor", "value": 5, "target": "self" }],
+      "cooldown": 1.0,
+      "targeting": "self"
+    },
+    {
+      "id": "shield-wall",
+      "name": "Shield Wall",
+      "description": "Gain 15 Armor. Lose 5 Stamina.",
+      "category": "defense",
+      "effects": [{ "type": "armor", "value": 15, "target": "self" }],
+      "cost": { "stamina": 5 },
+      "cooldown": 1.0,
+      "targeting": "self"
+    },
+    {
+      "id": "fortify",
+      "name": "Fortify",
+      "description": "Gain 25 Armor. Lose 10 Stamina.",
+      "category": "defense",
+      "effects": [{ "type": "armor", "value": 25, "target": "self" }],
+      "cost": { "stamina": 10 },
+      "cooldown": 1.0,
+      "targeting": "self"
+    },
+    {
+      "id": "iron-skin",
+      "name": "Iron Skin",
+      "description": "Gain 20 Armor. Lose 5 Mana.",
+      "category": "defense",
+      "effects": [{ "type": "armor", "value": 20, "target": "self" }],
+      "cost": { "mana": 5 },
+      "cooldown": 1.0,
+      "targeting": "self"
+    },
+    {
+      "id": "fireball",
+      "name": "Fireball",
+      "description": "Deal 15 damage. Costs 5 Mana.",
+      "category": "magic",
+      "effects": [{ "type": "damage", "value": 15, "target": "enemy" }],
+      "cost": { "mana": 5 },
+      "cooldown": 1.0,
+      "targeting": "single"
+    },
+    {
+      "id": "heal",
+      "name": "Heal",
+      "description": "Restore 15 HP. Costs 8 Mana.",
+      "category": "magic",
+      "effects": [{ "type": "heal", "value": 15, "target": "self" }],
+      "cost": { "mana": 8 },
+      "cooldown": 1.0,
+      "targeting": "self"
+    },
+    {
+      "id": "arcane-shield",
+      "name": "Arcane Shield",
+      "description": "Gain 10 Armor. Costs 6 Mana.",
+      "category": "magic",
+      "effects": [{ "type": "armor", "value": 10, "target": "self" }],
+      "cost": { "mana": 6 },
+      "cooldown": 1.0,
+      "targeting": "self"
+    },
+    {
+      "id": "rejuvenate",
+      "name": "Rejuvenate",
+      "description": "Restore 10 Stamina. Costs 5 Mana.",
+      "category": "magic",
+      "effects": [{ "type": "stamina", "value": 10, "target": "self" }],
+      "cost": { "mana": 5 },
+      "cooldown": 1.0,
+      "targeting": "self"
+    },
+    {
+      "id": "mana-drain",
+      "name": "Mana Drain",
+      "description": "Deal 8 damage. Restore 5 Mana.",
+      "category": "magic",
+      "effects": [
+        { "type": "damage", "value": 8, "target": "enemy" },
+        { "type": "mana", "value": 5, "target": "self" }
+      ],
+      "cooldown": 1.0,
+      "targeting": "single"
+    },
+    {
+      "id": "weaken",
+      "name": "Weaken",
+      "description": "Deal 5 damage. Enemy loses 5 Defense next turn. Costs 7 Mana.",
+      "category": "magic",
+      "effects": [
+        { "type": "damage", "value": 5, "target": "enemy" },
+        { "type": "debuff", "value": 5, "target": "enemy" }
+      ],
+      "cost": { "mana": 7 },
+      "cooldown": 1.0,
+      "targeting": "single"
+    }
+  ],
+  "starterDeckIds": [
+    "strike", "strike", "strike", "strike",
+    "defend", "defend", "defend", "defend",
+    "heavy-hit", "fireball"
+  ]
+}
