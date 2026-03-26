@@ -35,6 +35,8 @@ export interface CardDefinition {
   cooldown: number;
   /** Targeting mode for this card */
   targeting: 'single' | 'aoe' | 'lowest-hp' | 'random' | 'self';
+  /** Card rarity tier */
+  rarity: 'common' | 'uncommon' | 'rare';
 }
 
 // ── Enemy Types ─────────────────────────────────────────────
@@ -55,8 +57,24 @@ export interface EnemyDefinition {
   baseHP: number;
   baseDefense: number;
   attack: EnemyAttack;
+  /** Independent attack cooldown in milliseconds */
+  attackCooldown: number;
   goldReward: { min: number; max: number };
   color: number;
+}
+
+// ── Synergy Types ──────────────────────────────────────────
+
+export interface SynergyDefinition {
+  cardA: string;
+  cardB: string;
+  bonus: {
+    type: 'damage' | 'armor' | 'heal' | 'stamina' | 'mana' | 'cost_waive';
+    value: number;
+    target: 'enemy' | 'self';
+  };
+  classRestriction?: string;
+  displayName: string;
 }
 
 // ── Tile Types ──────────────────────────────────────────────

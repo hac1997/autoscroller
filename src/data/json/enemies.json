@@ -9,6 +9,7 @@
       "damage": 8,
       "pattern": "fixed"
     },
+    "attackCooldown": 2500,
     "goldReward": { "min": 10, "max": 20 },
     "color": 65280
   },
@@ -23,6 +24,7 @@
       "pattern": "random",
       "specialEffect": "double"
     },
+    "attackCooldown": 1500,
     "goldReward": { "min": 15, "max": 25 },
     "color": 9127187
   },
@@ -37,6 +39,7 @@
       "defense": 5,
       "pattern": "fixed"
     },
+    "attackCooldown": 3000,
     "goldReward": { "min": 20, "max": 30 },
     "color": 5597999
   },
@@ -51,6 +54,7 @@
       "pattern": "conditional",
       "specialEffect": "debuff"
     },
+    "attackCooldown": 2000,
     "goldReward": { "min": 25, "max": 35 },
     "color": 9662683
   },
@@ -65,6 +69,7 @@
       "defense": 8,
       "pattern": "scaling"
     },
+    "attackCooldown": 2000,
     "goldReward": { "min": 50, "max": 80 },
     "color": 12632256
   },
@@ -80,6 +85,7 @@
       "pattern": "scaling",
       "specialEffect": "lifesteal"
     },
+    "attackCooldown": 2500,
     "goldReward": { "min": 100, "max": 150 },
     "color": 9109504
   }

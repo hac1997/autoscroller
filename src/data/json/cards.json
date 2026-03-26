@@ -6,8 +6,9 @@
       "description": "Deal 10 damage.",
       "category": "attack",
       "effects": [{ "type": "damage", "value": 10, "target": "enemy" }],
-      "cooldown": 1.0,
-      "targeting": "single"
+      "cooldown": 1.2,
+      "targeting": "single",
+      "rarity": "common"
     },
     {
       "id": "heavy-hit",
@@ -16,8 +17,9 @@
       "category": "attack",
       "effects": [{ "type": "damage", "value": 20, "target": "enemy" }],
       "cost": { "stamina": 5 },
-      "cooldown": 1.0,
-      "targeting": "single"
+      "cooldown": 1.8,
+      "targeting": "single",
+      "rarity": "common"
     },
     {
       "id": "fury",
@@ -26,8 +28,9 @@
       "category": "attack",
       "effects": [{ "type": "damage", "value": 30, "target": "enemy" }],
       "cost": { "defense": 10 },
-      "cooldown": 1.0,
-      "targeting": "single"
+      "cooldown": 2.2,
+      "targeting": "single",
+      "rarity": "uncommon"
     },
     {
       "id": "berserker",
@@ -36,8 +39,9 @@
       "category": "attack",
       "effects": [{ "type": "damage", "value": 40, "target": "enemy" }],
       "cost": { "stamina": 15, "defense": 5 },
-      "cooldown": 1.0,
-      "targeting": "single"
+      "cooldown": 3.0,
+      "targeting": "single",
+      "rarity": "rare"
     },
     {
       "id": "defend",
@@ -46,7 +50,8 @@
       "category": "defense",
       "effects": [{ "type": "armor", "value": 5, "target": "self" }],
       "cooldown": 1.0,
-      "targeting": "self"
+      "targeting": "self",
+      "rarity": "common"
     },
     {
       "id": "shield-wall",
@@ -55,8 +60,9 @@
       "category": "defense",
       "effects": [{ "type": "armor", "value": 15, "target": "self" }],
       "cost": { "stamina": 5 },
-      "cooldown": 1.0,
-      "targeting": "self"
+      "cooldown": 1.5,
+      "targeting": "self",
+      "rarity": "common"
     },
     {
       "id": "fortify",
@@ -65,8 +71,9 @@
       "category": "defense",
       "effects": [{ "type": "armor", "value": 25, "target": "self" }],
       "cost": { "stamina": 10 },
-      "cooldown": 1.0,
-      "targeting": "self"
+      "cooldown": 2.0,
+      "targeting": "self",
+      "rarity": "rare"
     },
     {
       "id": "iron-skin",
@@ -75,8 +82,9 @@
       "category": "defense",
       "effects": [{ "type": "armor", "value": 20, "target": "self" }],
       "cost": { "mana": 5 },
-      "cooldown": 1.0,
-      "targeting": "self"
+      "cooldown": 1.8,
+      "targeting": "self",
+      "rarity": "uncommon"
     },
     {
       "id": "fireball",
@@ -85,8 +93,9 @@
       "category": "magic",
       "effects": [{ "type": "damage", "value": 15, "target": "enemy" }],
       "cost": { "mana": 5 },
-      "cooldown": 1.0,
-      "targeting": "single"
+      "cooldown": 1.5,
+      "targeting": "single",
+      "rarity": "common"
     },
     {
       "id": "heal",
@@ -95,8 +104,9 @@
       "category": "magic",
       "effects": [{ "type": "heal", "value": 15, "target": "self" }],
       "cost": { "mana": 8 },
-      "cooldown": 1.0,
-      "targeting": "self"
+      "cooldown": 2.0,
+      "targeting": "self",
+      "rarity": "uncommon"
     },
     {
       "id": "arcane-shield",
@@ -105,8 +115,9 @@
       "category": "magic",
       "effects": [{ "type": "armor", "value": 10, "target": "self" }],
       "cost": { "mana": 6 },
-      "cooldown": 1.0,
-      "targeting": "self"
+      "cooldown": 1.5,
+      "targeting": "self",
+      "rarity": "uncommon"
     },
     {
       "id": "rejuvenate",
@@ -115,8 +126,9 @@
       "category": "magic",
       "effects": [{ "type": "stamina", "value": 10, "target": "self" }],
       "cost": { "mana": 5 },
-      "cooldown": 1.0,
-      "targeting": "self"
+      "cooldown": 1.2,
+      "targeting": "self",
+      "rarity": "uncommon"
     },
     {
       "id": "mana-drain",
@@ -128,7 +140,8 @@
         { "type": "mana", "value": 5, "target": "self" }
       ],
       "cooldown": 1.0,
-      "targeting": "single"
+      "targeting": "single",
+      "rarity": "uncommon"
     },
     {
       "id": "weaken",
@@ -140,8 +153,9 @@
         { "type": "debuff", "value": 5, "target": "enemy" }
       ],
       "cost": { "mana": 7 },
-      "cooldown": 1.0,
-      "targeting": "single"
+      "cooldown": 1.8,
+      "targeting": "single",
+      "rarity": "rare"
     }
   ],
   "starterDeckIds": [
