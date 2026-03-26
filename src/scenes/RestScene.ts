@@ -53,7 +53,7 @@ export class RestScene extends Scene {
 
   private close(): void {
     this.scene.stop();
-    this.scene.resume('Game');
+    this.scene.resume('GameScene');
   }
 
   private cleanup(): void {

@@ -63,7 +63,7 @@ export class TutorialScene extends Scene {
   private nextStep(): void {
     this.step++;
     if (this.step >= this.tutorialTexts.length) {
-      this.scene.start('Game');
+      this.scene.start('GameScene');
     } else {
       this.scene.restart();
     }

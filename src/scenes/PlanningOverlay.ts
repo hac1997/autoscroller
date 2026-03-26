@@ -127,8 +127,7 @@ export class PlanningOverlay extends Scene {
       // Make basic slots clickable for placement
       if (tiles[i].type === 'basic') {
         tv.setAlpha(0.6);
-        tv.setInteractive(new Phaser.Geom.Rectangle(-tileSize / 2, -tileSize / 2, tileSize, tileSize), Phaser.Geom.Rectangle.Contains);
-        tv.on('pointerdown', () => this.onSlotClicked(i));
+        tv.onClick(() => this.onSlotClicked(i));
       }
     }
   }
@@ -218,7 +217,7 @@ export class PlanningOverlay extends Scene {
       container.add(costText);
 
       // Check inventory for free copies
-      const tileKey = tileConfig.terrain ?? tileConfig.name.toLowerCase();
+      const tileKey = (tileConfig as any).key ?? tileConfig.terrain ?? tileConfig.name.toLowerCase();
       const invEntry = this.loopRunState.tileInventory.find(t => t.tileType === tileKey);
       const freeCount = invEntry?.count ?? 0;
       if (freeCount > 0) {
@@ -236,7 +235,7 @@ export class PlanningOverlay extends Scene {
       } else {
         // Make interactive
         bg.setInteractive({ useHandCursor: true });
-        bg.on('pointerdown', () => this.selectInventoryTile(idx, tileConfig.terrain ?? tileConfig.name.toLowerCase()));
+        bg.on('pointerdown', () => this.selectInventoryTile(idx, (tileConfig as any).key ?? tileConfig.terrain ?? tileConfig.name.toLowerCase()));
       }
 
       this.inventoryCards.push(container);

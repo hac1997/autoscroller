@@ -76,8 +76,8 @@ describe('LoopRunner', () => {
     runner.startRun(runState);
     // Mark tile 0 as defeated
     runState.loop.tiles[0].defeatedThisLoop = true;
-    // Tick to tile 0 - should be skipped
-    runner.tick(500); // 30px, still on tile 0
+    // Tick to tile 0 - should be skipped (speed=240px/s, 100ms=24px, still on tile 0)
+    runner.tick(100);
     // State should still be traversing since tile 0 is already defeated
     expect(runner.getState()).toBe('traversing');
   });

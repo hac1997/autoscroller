@@ -20,6 +20,12 @@ export class CombatScene extends Scene {
   private cardQueue!: CardQueueDisplay;
   private combatEffects!: CombatEffects;
 
+  // Visual representations
+  private heroSprite!: Phaser.GameObjects.Rectangle;
+  private enemySprite!: Phaser.GameObjects.Rectangle;
+  private heroLabel!: Phaser.GameObjects.Text;
+  private enemyLabel!: Phaser.GameObjects.Text;
+
   // Event handler references for cleanup
   private onCardPlayed!: (data: GameEvents['combat:card-played']) => void;
   private onSynergyTriggered!: (data: GameEvents['combat:synergy-triggered']) => void;
@@ -44,7 +50,7 @@ export class CombatScene extends Scene {
     if (!enemyDef) {
       // Fallback: return to game if enemy not found
       run.isInCombat = false;
-      this.scene.start('Game');
+      this.scene.start('GameScene');
       return;
     }
 
@@ -61,6 +67,25 @@ export class CombatScene extends Scene {
     const combatState = createCombatState(run, scaledEnemy);
     this.engine = new CombatEngine(combatState);
 
+    // ── Hero & Enemy visual representations ──────────────
+    // Hero (left side) - blue square with label
+    this.heroSprite = this.add.rectangle(200, 350, 64, 64, 0x4488ff).setDepth(10);
+    this.heroLabel = this.add.text(200, 300, 'Hero', {
+      fontSize: '16px', fontStyle: 'bold', color: '#ffffff',
+    }).setOrigin(0.5).setDepth(10);
+
+    // Enemy (right side) - colored square with name
+    const enemyColor = enemyDef.color ?? 0xff0000;
+    this.enemySprite = this.add.rectangle(550, 350, 64, 64, enemyColor).setDepth(10);
+    this.enemyLabel = this.add.text(550, 300, enemyDef.name, {
+      fontSize: '16px', fontStyle: 'bold', color: '#ffffff',
+    }).setOrigin(0.5).setDepth(10);
+
+    // "VS" divider
+    this.add.text(375, 350, 'VS', {
+      fontSize: '24px', fontStyle: 'bold', color: '#ffd700',
+    }).setOrigin(0.5).setDepth(10).setAlpha(0.6);
+
     // Create UI components
     this.hud = new CombatHUD(this);
     this.cardQueue = new CardQueueDisplay(this);
@@ -70,8 +95,16 @@ export class CombatScene extends Scene {
     this.cardQueue.update(combatState, 0);
 
     // Subscribe to EventBus events
-    this.onCardPlayed = (_eventData) => {
+    this.onCardPlayed = (eventData) => {
       this.cardQueue.onCardPlayed(0);
+      // Flash enemy white on hit
+      if (eventData.damage > 0) {
+        this.combatEffects.floatingNumber(550, 320, eventData.damage, '#ffffff', '-');
+        this.enemySprite.setFillStyle(0xffffff);
+        this.time.delayedCall(200, () => {
+          if (this.enemySprite) this.enemySprite.setFillStyle(enemyColor);
+        });
+      }
       // Update HUD and queue after a short delay for animation
       this.time.delayedCall(350, () => {
         if (this.engine && !this.engine.isComplete()) {
@@ -103,8 +136,13 @@ export class CombatScene extends Scene {
 
     this.onEnemyAttack = (eventData) => {
       // Floating damage number on hero side
-      this.combatEffects.floatingNumber(200, 200, eventData.damage, '#ff0000', '-');
+      this.combatEffects.floatingNumber(200, 320, eventData.damage, '#ff0000', '-');
       this.combatEffects.screenShake(3, 150);
+      // Flash hero red briefly
+      this.heroSprite.setFillStyle(0xff0000);
+      this.time.delayedCall(200, () => {
+        if (this.heroSprite) this.heroSprite.setFillStyle(0x4488ff);
+      });
     };
     eventBus.on('combat:enemy-attack', this.onEnemyAttack);
 

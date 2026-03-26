@@ -82,6 +82,7 @@ export class DeathScene extends Scene {
     menuBtn.on('pointerdown', () => {
       loseAllRunXP(run);
       clearRun();
+      this.scene.stop('GameScene');
       this.scene.start('MainMenu');
     });
 

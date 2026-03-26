@@ -1,13 +1,15 @@
 import Phaser, { Scene } from 'phaser';
+import { createHeroStats, type HeroStats } from '../data/HeroStats';
 
 export class Player extends Phaser.GameObjects.Container {
     private sprite: Phaser.GameObjects.Rectangle;
-    private moveSpeed: number = 2; // Pixels per frame
+    public stats: HeroStats;
 
-
-    constructor(scene: Scene, x: number, y: number) {
+    constructor(scene: Scene, x: number, y: number, stats?: HeroStats) {
         super(scene, x, y);
         scene.add.existing(this);
+
+        this.stats = stats ?? createHeroStats();
 
         // Player visual representation (red square)
         this.sprite = scene.add.rectangle(0, 0, 40, 40, 0xff0000);
@@ -20,8 +22,7 @@ export class Player extends Phaser.GameObjects.Container {
     }
 
     update(_time: number, _delta: number) {
-        // Move to the right
-        this.x += this.moveSpeed;
+        this.x += this.stats.moveSpeed;
 
         // Simple loop reset logic (for testing)
         if (this.x > 1600) { // Extended range

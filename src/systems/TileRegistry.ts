@@ -35,8 +35,14 @@ export function getTileConfig(key: string): TileConfig {
   return config;
 }
 
-export function getAllPlaceableTiles(): TileConfig[] {
-  return Object.values(tileMap).filter(t => t.canPlaceManually);
+export interface TileConfigWithKey extends TileConfig {
+  key: string;
+}
+
+export function getAllPlaceableTiles(): TileConfigWithKey[] {
+  return Object.entries(tileMap)
+    .filter(([, t]) => t.canPlaceManually)
+    .map(([key, t]) => ({ ...t, key }));
 }
 
 export function createTileSlot(key: string): TileSlot {

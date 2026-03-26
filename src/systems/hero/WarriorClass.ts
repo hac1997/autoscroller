@@ -15,9 +15,9 @@ export const WARRIOR_BASE_STATS = {
 // ── Starter Deck ────────────────────────────────────────────
 
 export const WARRIOR_STARTER_DECK: string[] = [
-  'strike', 'strike', 'strike', 'strike',
-  'defend', 'defend', 'defend', 'defend',
-  'heavy-hit', 'fireball',
+  'defend', 'strike', 'defend', 'strike',
+  'heavy-hit', 'defend', 'strike', 'defend',
+  'strike', 'fireball',
 ];
 
 // ── Class Definition ────────────────────────────────────────

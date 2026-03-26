@@ -65,7 +65,7 @@ export class MainMenu extends Scene {
   private continueRun(): void {
     if (this.savedRun) {
       setRun(this.savedRun);
-      this.scene.start('Game');
+      this.scene.start('GameScene');
     }
   }
 
@@ -124,7 +124,7 @@ export class MainMenu extends Scene {
     await saveManager.clear();
     setRun(createNewRun());
     await saveManager.save(getRun());
-    this.scene.start('Game');
+    this.scene.start('GameScene');
   }
 
   private cleanup(): void {

@@ -136,7 +136,8 @@ export class RewardScene extends Scene {
   }
 
   private close(): void {
-    this.scene.start('Game');
+    this.scene.stop();
+    this.scene.resume('GameScene');
   }
 
   private cleanup(): void {

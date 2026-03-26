@@ -82,6 +82,12 @@ export class GameScene extends Scene {
       this.loopRunState.economy.gold = run.economy.gold;
       this.loopRunState.economy.tilePoints = run.economy.tilePoints;
 
+      // Flush tile pool so world tiles re-render with updated data
+      for (const [, tv] of this.tilePool) {
+        tv.destroy();
+      }
+      this.tilePool.clear();
+
       // If LoopRunner is in tile-interaction state, resume traversal
       if (this.loopRunner.getState() === 'tile-interaction') {
         this.loopRunner.resumeTraversal();

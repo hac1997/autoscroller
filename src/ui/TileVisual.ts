@@ -62,6 +62,11 @@ export class TileVisual extends Phaser.GameObjects.Container {
     scene.add.existing(this);
   }
 
+  /** Register a click handler on this tile's background */
+  onClick(callback: () => void): void {
+    this.bg.on('pointerdown', callback);
+  }
+
   /** Highlight with accent color (selected state) */
   setSelected(selected: boolean): void {
     if (selected) {

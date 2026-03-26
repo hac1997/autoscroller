@@ -45,7 +45,7 @@ export class SelectionScene extends Scene {
     continueBtn.on('pointerover', () => continueBtn.setColor('#ffffff'));
     continueBtn.on('pointerout', () => continueBtn.setColor('#ffd700'));
     continueBtn.on('pointerdown', () => {
-      this.scene.start('Game');
+      this.scene.start('GameScene');
     });
 
     this.events.on('shutdown', this.cleanup, this);

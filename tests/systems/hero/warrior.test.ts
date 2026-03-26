@@ -35,9 +35,9 @@ describe('WarriorClass', () => {
 
     it('matches existing starter deck composition', () => {
       expect(WARRIOR_STARTER_DECK).toEqual([
-        'strike', 'strike', 'strike', 'strike',
-        'defend', 'defend', 'defend', 'defend',
-        'heavy-hit', 'fireball',
+        'defend', 'strike', 'defend', 'strike',
+        'heavy-hit', 'defend', 'strike', 'defend',
+        'strike', 'fireball',
       ]);
     });
   });

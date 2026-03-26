@@ -70,7 +70,7 @@ export class PauseScene extends Scene {
     abandonBtn.on('pointerover', () => abandonBtn.setColor('#ffffff'));
     abandonBtn.on('pointerout', () => abandonBtn.setColor('#ff0000'));
     abandonBtn.on('pointerdown', () => {
-      this.scene.stop('Game');
+      this.scene.stop('GameScene');
       this.scene.stop();
       this.scene.start('MainMenu');
     });
@@ -83,7 +83,7 @@ export class PauseScene extends Scene {
 
   private resume(): void {
     this.scene.stop();
-    this.scene.resume('Game');
+    this.scene.resume('GameScene');
   }
 
   private cleanup(): void {

@@ -2,8 +2,17 @@ import { Scene } from 'phaser';
 import { eventBus, type GameEvents } from '../core/EventBus';
 import { getRun } from '../state/RunState';
 import { saveManager } from '../core/SaveManager';
+import { MapManager } from '../objects/MapManager';
+import { Player } from '../objects/Player';
+import { getRandomEnemy } from '../data/EnemyDefinitions';
 
 export class Game extends Scene {
+  // Gameplay objects
+  private mapManager!: MapManager;
+  private player!: Player;
+  private lastLoop: number = 0;
+  private inEncounter: boolean = false;
+
   // Named event handler references for cleanup
   private onGoldChanged!: (data: GameEvents['gold:changed']) => void;
   private onHeroDamaged!: (data: GameEvents['hero:damaged']) => void;
@@ -14,7 +23,6 @@ export class Game extends Scene {
   // HUD elements
   private goldText!: Phaser.GameObjects.Text;
   private hpBar!: Phaser.GameObjects.Rectangle;
-
   private hpText!: Phaser.GameObjects.Text;
   private loopText!: Phaser.GameObjects.Text;
   private saveIndicator!: Phaser.GameObjects.Text;
@@ -25,9 +33,22 @@ export class Game extends Scene {
 
   create(): void {
     const run = getRun();
+    this.inEncounter = false;
 
     // Background
     this.cameras.main.setBackgroundColor(0x1a1a2e);
+
+    // ── Gameplay objects ──────────────────────────────────
+    this.mapManager = new MapManager(this);
+    this.player = new Player(this, 100, 410);
+
+    // Camera follows player
+    this.cameras.main.startFollow(this.player, true, 0.1, 0.1);
+    this.cameras.main.setDeadzone(100, 100);
+
+    // Track current loop
+    this.lastLoop = this.mapManager.getCurrentLoop(this.player.x);
+    this.mapManager.updateLoopEndTile(this.lastLoop);
 
     // ── HUD Panel ──────────────────────────────────────────
     this.add.rectangle(8, 8, 200, 80, 0x222222, 0.85)
@@ -130,8 +151,63 @@ export class Game extends Scene {
       }
     });
 
+    // ── Resume handler (return from combat/shop/etc) ──────
+    this.events.on('resume', () => {
+      this.inEncounter = false;
+    });
+
     // Register cleanup
     this.events.on('shutdown', this.cleanup, this);
+  }
+
+  update(time: number, delta: number): void {
+    if (this.scene.isPaused() || this.inEncounter) return;
+
+    this.player.update(time, delta);
+    this.mapManager.update(this.player.x);
+
+    // Check loop progression
+    const currentLoop = this.mapManager.getCurrentLoop(this.player.x);
+    if (currentLoop > this.lastLoop) {
+      this.lastLoop = currentLoop;
+      this.mapManager.updateLoopEndTile(currentLoop);
+
+      // Update RunState loop count
+      const run = getRun();
+      run.loop.count = currentLoop;
+      eventBus.emit('loop:completed', { loopNumber: currentLoop, difficulty: run.loop.difficulty });
+    }
+
+    // Check tile encounters
+    const tileData = this.mapManager.getTileDataAt(this.player.x);
+    if (tileData && !tileData.isDefeated) {
+      if (tileData.type === 'combat' || tileData.type === 'elite' || tileData.type === 'boss') {
+        this.inEncounter = true;
+        tileData.isDefeated = true;
+
+        // Pick enemy based on tile type
+        const enemyType = tileData.type === 'boss' ? 'boss' : tileData.type === 'elite' ? 'elite' : 'normal';
+        const enemy = getRandomEnemy(enemyType);
+
+        this.scene.pause();
+        this.scene.launch('CombatScene', { enemyId: enemy.id });
+      } else if (tileData.type === 'shop') {
+        this.inEncounter = true;
+        tileData.isDefeated = true;
+        this.scene.pause();
+        this.scene.launch('ShopScene');
+      } else if (tileData.type === 'rest') {
+        this.inEncounter = true;
+        tileData.isDefeated = true;
+        this.scene.pause();
+        this.scene.launch('RestScene');
+      } else if (tileData.type === 'event') {
+        this.inEncounter = true;
+        tileData.isDefeated = true;
+        this.scene.pause();
+        this.scene.launch('EventScene');
+      }
+    }
   }
 
   private updateHpBar(currentHP: number, maxHP: number): void {
@@ -148,24 +224,8 @@ export class Game extends Scene {
   }
 
   private showSaveIndicator(): void {
-    // Fade in 200ms, hold 1.5s, fade out 500ms
     this.tweens.killTweensOf(this.saveIndicator);
     this.saveIndicator.setAlpha(0);
-    this.tweens.add({
-      targets: this.saveIndicator,
-      alpha: 1,
-      duration: 200,
-      hold: 1500,
-      yoyo: true,
-      yoyoDelay: 0,
-      completeDelay: 0,
-      ease: 'Linear',
-      onYoyo: () => {
-        // fade out over 500ms handled by yoyo
-      },
-    });
-    // Override yoyo duration to 500ms by using timeline
-    this.tweens.killTweensOf(this.saveIndicator);
     this.tweens.chain({
       targets: this.saveIndicator,
       tweens: [

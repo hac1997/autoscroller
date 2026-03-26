@@ -49,13 +49,13 @@ describe('DifficultyScaler', () => {
 
   it('getLoopSpeed returns base speed at loop 1', () => {
     const speed = getLoopSpeed(1);
-    expect(speed).toBe(60);
+    expect(speed).toBe(240);
   });
 
   it('getLoopSpeed scales with loop count', () => {
     const speed = getLoopSpeed(10);
-    // 60 * 1.02^9 = 60 * 1.19509 ~ 71.705
-    expect(speed).toBeCloseTo(60 * Math.pow(1.02, 9), 2);
+    // 240 * 1.02^9
+    expect(speed).toBeCloseTo(240 * Math.pow(1.02, 9), 2);
   });
 
   it('getDifficultyConfig returns full config', () => {

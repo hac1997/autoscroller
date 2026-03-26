@@ -2,7 +2,7 @@
   "percentPerLoop": 0.10,
   "bossMultiplier": 2.0,
   "basicTileCombatChance": 0.10,
-  "baseSpeed": 60,
+  "baseSpeed": 240,
   "speedScalePerLoop": 1.02,
   "bossEveryNLoops": 5,
   "baseLoopLength": 15,

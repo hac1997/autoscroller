@@ -72,7 +72,8 @@ export class PostCombatScene extends Scene {
       if (shouldOfferReward(enemyType, mathRng)) {
         this.scene.start('RewardScene');
       } else {
-        this.scene.start('Game');
+        this.scene.stop();
+        this.scene.resume('GameScene');
       }
     });
 

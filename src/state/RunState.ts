@@ -3,6 +3,7 @@
 // Fully JSON-serializable: no Map, no class instances, no functions.
 
 import { nanoid } from 'nanoid';
+import { WARRIOR_STARTER_DECK } from '../systems/hero/WarriorClass';
 
 // ── State Interfaces ────────────────────────────────────────
 
@@ -93,7 +94,7 @@ export function createNewRun(generation: number = 1): RunState {
       moveSpeed: 2,
     },
     deck: {
-      active: [],
+      active: [...WARRIOR_STARTER_DECK],
       inventory: {},
     },
     loop: {
@@ -104,7 +105,7 @@ export function createNewRun(generation: number = 1): RunState {
     },
     economy: {
       gold: 0,
-      tilePoints: 0,
+      tilePoints: 10,
       tileInventory: {},
     },
     relics: [],
