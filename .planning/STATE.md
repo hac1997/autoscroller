@@ -3,13 +3,13 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: unknown
-stopped_at: Completed 03-01-PLAN.md
-last_updated: "2026-03-26T20:26:51.318Z"
+stopped_at: Completed 03-02-PLAN.md
+last_updated: "2026-03-26T20:32:00.000Z"
 progress:
   total_phases: 4
   completed_phases: 0
   total_plans: 12
-  completed_plans: 5
+  completed_plans: 6
 ---
 
 # Project State
@@ -24,7 +24,7 @@ See: .planning/PROJECT.md (updated 2026-03-25)
 ## Current Position
 
 Phase: 03 (loop-tile-world) — EXECUTING
-Plan: 2 of 3
+Plan: 3 of 3
 
 ## Performance Metrics
 
@@ -49,6 +49,7 @@ Plan: 2 of 3
 *Updated after each plan completion*
 | Phase 02-01 P01 | 8min | 2 tasks | 18 files |
 | Phase 03-01 P01 | 5min | 2 tasks | 16 files |
+| Phase 03-02 P02 | 4min | 2 tasks | 13 files |
 
 ## Accumulated Context
 
@@ -78,6 +79,11 @@ Recent decisions affecting current work:
 - [Phase 03-01]: New tiles.json at src/data/ (not src/data/json/) to separate Phase 3 tile world configs from legacy data
 - [Phase 03-01]: LoopRunner uses injectable RNG + emit callback for pure testing (same DI pattern as CombatEngine)
 - [Phase 03-01]: TILE_SIZE=80 constant exported from LoopRunner matching existing MapManager
+- [Phase 03-02]: ShopSystem uses static methods on class for namespace grouping (pure functions on RunState)
+- [Phase 03-02]: RestSiteSystem accepts injectable rng for deterministic testing
+- [Phase 03-02]: Events migrated from EventDefinitions.ts to events.json (data-driven)
+- [Phase 03-02]: Placeholder relic IDs used until relic system is complete
+- [Phase 03-02]: add_curse effect is no-op placeholder returning applied:false
 
 ### Pending Todos
 
@@ -91,6 +97,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-26T20:26:51.315Z
-Stopped at: Completed 03-01-PLAN.md
+Last session: 2026-03-26T20:32:00Z
+Stopped at: Completed 03-02-PLAN.md
 Resume file: None

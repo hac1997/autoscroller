@@ -43,7 +43,7 @@ Requirements for initial release. Each maps to roadmap phases.
 ### Loop System
 
 - [x] **LOOP-01**: Hero traverses tiles in an infinite loop (side-view, autoscroll)
-- [ ] **LOOP-02**: Player places terrain tiles on the path during the run
+- [x] **LOOP-02**: Player places terrain tiles on the path during the run
 - [x] **LOOP-03**: Adjacent tiles interact with each other (synergy/combo effects)
 - [x] **LOOP-04**: Terrains spawn specific enemies and provide resources/buffs
 - [x] **LOOP-05**: Difficulty scales each loop (enemy stats increase)
@@ -55,9 +55,9 @@ Requirements for initial release. Each maps to roadmap phases.
 
 - [x] **TILE-01**: Player earns tile points each loop completed (accumulable for better tiles)
 - [x] **TILE-02**: Rare tile drops from enemies (free, inserted at end of loop)
-- [ ] **TILE-03**: Tile drops can be sold for tile points (at reduced rate)
+- [x] **TILE-03**: Tile drops can be sold for tile points (at reduced rate)
 - [x] **TILE-04**: 6+ functional tile types: combat terrain, shop, rest, treasure, event, boss
-- [ ] **TILE-05**: Tile placement UI allows positioning tiles during the run
+- [x] **TILE-05**: Tile placement UI allows positioning tiles during the run
 
 ### Hero and Class
 
@@ -75,11 +75,11 @@ Requirements for initial release. Each maps to roadmap phases.
 
 ### Tiles — Special
 
-- [ ] **SPEC-01**: Shop tile: buy cards, remove cards, reorder deck, buy relics
-- [ ] **SPEC-02**: Event tile: narrative encounters with meaningful choices
-- [ ] **SPEC-03**: Rest tile: recover HP
-- [ ] **SPEC-04**: Treasure tile: guaranteed loot (cards, gold, relics)
-- [ ] **SPEC-05**: Boss tile: special combat encounter with better rewards
+- [x] **SPEC-01**: Shop tile: buy cards, remove cards, reorder deck, buy relics
+- [x] **SPEC-02**: Event tile: narrative encounters with meaningful choices
+- [x] **SPEC-03**: Rest tile: recover HP
+- [x] **SPEC-04**: Treasure tile: guaranteed loot (cards, gold, relics)
+- [x] **SPEC-05**: Boss tile: special combat encounter with better rewards
 
 ### Meta-Progression
 
@@ -194,7 +194,7 @@ Updated during roadmap creation.
 | HERO-04 | Phase 2 | Complete |
 | PLSH-01 | Phase 2 | Pending |
 | LOOP-01 | Phase 3 | Complete |
-| LOOP-02 | Phase 3 | Pending |
+| LOOP-02 | Phase 3 | Complete |
 | LOOP-03 | Phase 3 | Complete |
 | LOOP-04 | Phase 3 | Complete |
 | LOOP-05 | Phase 3 | Complete |
@@ -203,14 +203,14 @@ Updated during roadmap creation.
 | LOOP-08 | Phase 3 | Complete |
 | TILE-01 | Phase 3 | Complete |
 | TILE-02 | Phase 3 | Complete |
-| TILE-03 | Phase 3 | Pending |
+| TILE-03 | Phase 3 | Complete |
 | TILE-04 | Phase 3 | Complete |
-| TILE-05 | Phase 3 | Pending |
-| SPEC-01 | Phase 3 | Pending |
-| SPEC-02 | Phase 3 | Pending |
-| SPEC-03 | Phase 3 | Pending |
-| SPEC-04 | Phase 3 | Pending |
-| SPEC-05 | Phase 3 | Pending |
+| TILE-05 | Phase 3 | Complete |
+| SPEC-01 | Phase 3 | Complete |
+| SPEC-02 | Phase 3 | Complete |
+| SPEC-03 | Phase 3 | Complete |
+| SPEC-04 | Phase 3 | Complete |
+| SPEC-05 | Phase 3 | Complete |
 | RELC-01 | Phase 4 | Pending |
 | RELC-02 | Phase 4 | Pending |
 | RELC-03 | Phase 4 | Pending |
