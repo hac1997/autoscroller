@@ -25,6 +25,10 @@ import { PlanningOverlay } from './scenes/PlanningOverlay'
 import { RestSiteScene } from './scenes/RestSiteScene'
 import { TreasureScene } from './scenes/TreasureScene'
 import { BossExitScene } from './scenes/BossExitScene'
+import { CityHubScene } from './scenes/CityHubScene'
+import { BuildingPanelScene } from './scenes/BuildingPanelScene'
+import { TavernPanelScene } from './scenes/TavernPanelScene'
+import { CollectionScene } from './scenes/CollectionScene'
 
 const config: Phaser.Types.Core.GameConfig = {
     type: Phaser.AUTO,
@@ -63,7 +67,11 @@ const config: Phaser.Types.Core.GameConfig = {
         ShopDeckEditor,
         PlanningOverlay,
         TreasureScene,
-        BossExitScene
+        BossExitScene,
+        CityHubScene,
+        BuildingPanelScene,
+        TavernPanelScene,
+        CollectionScene
     ]
 }
 
