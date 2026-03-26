@@ -10,9 +10,9 @@ Requirements for initial release. Each maps to roadmap phases.
 ### Architecture
 
 - [ ] **ARCH-01**: Game logic (combat, loop, tiles) runs as pure TypeScript systems, decoupled from Phaser scenes
-- [ ] **ARCH-02**: Single centralized RunState object owns all mutable run data (HP, gold, deck, relics, tile inventory)
-- [ ] **ARCH-03**: Typed EventBus decouples cross-system communication (no direct scene-to-scene coupling)
-- [ ] **ARCH-04**: Object pooling and cleanup conventions prevent memory leaks over 1h+ runs
+- [x] **ARCH-02**: Single centralized RunState object owns all mutable run data (HP, gold, deck, relics, tile inventory)
+- [x] **ARCH-03**: Typed EventBus decouples cross-system communication (no direct scene-to-scene coupling)
+- [x] **ARCH-04**: Object pooling and cleanup conventions prevent memory leaks over 1h+ runs
 
 ### Combat
 
@@ -164,9 +164,9 @@ Updated during roadmap creation.
 | Requirement | Phase | Status |
 |-------------|-------|--------|
 | ARCH-01 | Phase 1 | Pending |
-| ARCH-02 | Phase 1 | Pending |
-| ARCH-03 | Phase 1 | Pending |
-| ARCH-04 | Phase 1 | Pending |
+| ARCH-02 | Phase 1 | Complete |
+| ARCH-03 | Phase 1 | Complete |
+| ARCH-04 | Phase 1 | Complete |
 | PERS-01 | Phase 1 | Pending |
 | CMBT-01 | Phase 2 | Pending |
 | CMBT-02 | Phase 2 | Pending |
