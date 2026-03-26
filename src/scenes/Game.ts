@@ -5,6 +5,8 @@ import { saveManager } from '../core/SaveManager';
 import { MapManager } from '../objects/MapManager';
 import { Player } from '../objects/Player';
 import { getRandomEnemy } from '../data/EnemyDefinitions';
+import { RelicHudStrip } from '../ui/RelicHudStrip';
+import { SeedDisplay } from '../ui/SeedDisplay';
 
 export class Game extends Scene {
   // Gameplay objects
@@ -26,12 +28,13 @@ export class Game extends Scene {
   private hpText!: Phaser.GameObjects.Text;
   private loopText!: Phaser.GameObjects.Text;
   private saveIndicator!: Phaser.GameObjects.Text;
+  private relicHudStrip!: RelicHudStrip;
 
   constructor() {
     super('Game');
   }
 
-  create(): void {
+  create(data?: { seed?: string; manualSeed?: boolean }): void {
     const run = getRun();
     this.inEncounter = false;
 
@@ -122,6 +125,15 @@ export class Game extends Scene {
       this.showSaveIndicator();
     };
     eventBus.on('save:completed', this.onSaveCompleted);
+
+    // ── Relic HUD Strip ────────────────────────────────────
+    this.relicHudStrip = new RelicHudStrip(this, 600, 80);
+    this.relicHudStrip.updateRelics(run.relics);
+
+    // ── Seed Display ─────────────────────────────────────
+    if (data?.seed && data?.manualSeed) {
+      new SeedDisplay(this, data.seed);
+    }
 
     // ── Controls hint ──────────────────────────────────────
     this.add.text(10, 550, '[D] Deck | [R] Relics | [ESC] Pause', {
