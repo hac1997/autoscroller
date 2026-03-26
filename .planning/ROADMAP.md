@@ -46,12 +46,12 @@ Plans:
   3. After combat ends, a summary screen shows damage dealt/received, cards played, and combos triggered
   4. Player can add cards (free), remove cards (escalating gold cost), and reorder cards in the deck via the shop interface
   5. Warrior class has defined base stats, earns persistent XP per run, and unlocks passive skills that modify combat (e.g., +damage after consecutive attacks)
-**Plans**: TBD
+**Plans**: 3 plans
 
 Plans:
-- [ ] 02-01: CombatEngine (pure TS) + card cooldowns + resource system
-- [ ] 02-02: Deck management + synergy system + card reward choices
-- [ ] 02-03: Combat UI (card queue, synergy highlights, post-combat summary, death screen) + warrior class/XP
+- [ ] 02-01-PLAN.md — CombatEngine (pure TS) + card cooldowns + synergy system + enemy AI + combat stats
+- [ ] 02-02-PLAN.md — Deck management (add/remove/reorder) + loot system + warrior class + XP + passive skills
+- [ ] 02-03-PLAN.md — Combat UI scenes (CombatScene, PostCombat, Rewards, DeckView, ShopEditor, Death) + visual checkpoint
 
 ### Phase 3: Loop + Tile World
 **Goal**: Players traverse an infinite loop of tiles, place terrain during the run, and encounter all special tile types (shop, rest, event, treasure, boss)
