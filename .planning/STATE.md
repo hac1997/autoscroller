@@ -3,13 +3,13 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: unknown
-stopped_at: Completed 03-03-PLAN.md (Phase 03 complete)
+stopped_at: Completed 04-02-PLAN.md
 last_updated: "2026-03-26T22:11:15.861Z"
 progress:
   total_phases: 4
   completed_phases: 1
   total_plans: 12
-  completed_plans: 7
+  completed_plans: 8
 ---
 
 # Project State
@@ -24,7 +24,7 @@ See: .planning/PROJECT.md (updated 2026-03-25)
 ## Current Position
 
 Phase: 04 (content-meta-progression-persistence) — EXECUTING
-Plan: 2 of 3
+Plan: 3 of 3
 
 ## Performance Metrics
 
@@ -52,6 +52,7 @@ Plan: 2 of 3
 | Phase 03-01 P01 | 5min | 2 tasks | 16 files |
 | Phase 03-02 P02 | 4min | 2 tasks | 13 files |
 | Phase 03-03 P03 | 36min | 3 tasks | 40 files |
+| Phase 04-02 P02 | 7min | 4 tasks | 15 files |
 | Phase 04-01 P01 | 5min | 2 tasks | 11 files |
 
 ## Accumulated Context
@@ -92,6 +93,11 @@ Recent decisions affecting current work:
 - [Phase 03-03]: Hero world position increases continuously; tiles cycle via modulo for seamless loop wrap
 - [Phase 03-03]: Scene key 'Game' renamed to 'GameScene' across all scenes for consistency
 - [Phase 03-03]: Starter deck initialization added to RunState for combat to work end-to-end
+- [Phase 04-02]: MetaState, buildings.json, passives.json created as Plan 01 dependencies (needed by Plan 02 systems)
+- [Phase 04-02]: Cards/relics JSON extended with unlockSource/unlockTier for gated content (4 starter cards, 3 starter relics always available)
+- [Phase 04-02]: UnlockManager uses pure functions filtering by string[] unlock lists (no Phaser dependency)
+- [Phase 04-02]: structuredClone used for immutable state updates in MetaProgressionSystem
+- [Phase 04-02]: Backward-compatible optional unlockState parameter in all Phase 3 loot systems
 - [Phase 04-01]: Relic format changed from nested effects[] to flat top-level trigger/effectType for simpler runtime resolution
 - [Phase 04-01]: All card unlock gating uses forge building (not library) to consolidate card unlocks
 - [Phase 04-01]: arcane_crystal reclassified as common per user decision for 3 always-available relics
@@ -109,6 +115,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-26T22:17:31Z
-Stopped at: Completed 04-01-PLAN.md
+Last session: 2026-03-26T22:19:07Z
+Stopped at: Completed 04-02-PLAN.md
 Resume file: None

@@ -69,8 +69,8 @@ Requirements for initial release. Each maps to roadmap phases.
 ### Relics
 
 - [x] **RELC-01**: Passive relic items with unique effects (no fixed slots, Slay the Spire style)
-- [ ] **RELC-02**: Relics can modify cooldowns, stats, and combat mechanics
-- [ ] **RELC-03**: Relics obtained from drops, shop, and events
+- [x] **RELC-02**: Relics can modify cooldowns, stats, and combat mechanics
+- [x] **RELC-03**: Relics obtained from drops, shop, and events
 - [x] **RELC-04**: ~8 relics available in v1
 
 ### Tiles — Special
@@ -84,9 +84,9 @@ Requirements for initial release. Each maps to roadmap phases.
 ### Meta-Progression
 
 - [ ] **META-01**: Visual hub (camp/village) between runs displaying unlocks and progression
-- [ ] **META-02**: Permanent unlock of new cards into the loot pool
-- [ ] **META-03**: Permanent unlock of new tile types
-- [ ] **META-04**: Class XP and passive skill tree persist across runs
+- [x] **META-02**: Permanent unlock of new cards into the loot pool
+- [x] **META-03**: Permanent unlock of new tile types
+- [x] **META-04**: Class XP and passive skill tree persist across runs
 
 ### Content
 
@@ -212,13 +212,13 @@ Updated during roadmap creation.
 | SPEC-04 | Phase 3 | Complete |
 | SPEC-05 | Phase 3 | Complete |
 | RELC-01 | Phase 4 | Complete |
-| RELC-02 | Phase 4 | Pending |
-| RELC-03 | Phase 4 | Pending |
+| RELC-02 | Phase 4 | Complete |
+| RELC-03 | Phase 4 | Complete |
 | RELC-04 | Phase 4 | Complete |
 | META-01 | Phase 4 | Pending |
-| META-02 | Phase 4 | Pending |
-| META-03 | Phase 4 | Pending |
-| META-04 | Phase 4 | Pending |
+| META-02 | Phase 4 | Complete |
+| META-03 | Phase 4 | Complete |
+| META-04 | Phase 4 | Complete |
 | CONT-01 | Phase 4 | Complete |
 | CONT-02 | Phase 4 | Complete |
 | CONT-03 | Phase 4 | Complete |
