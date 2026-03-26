@@ -4,7 +4,7 @@ milestone: v1.0
 milestone_name: milestone
 status: unknown
 stopped_at: Completed 03-03-PLAN.md (Phase 03 complete)
-last_updated: "2026-03-26T22:04:10.220Z"
+last_updated: "2026-03-26T22:11:15.861Z"
 progress:
   total_phases: 4
   completed_phases: 1
@@ -19,18 +19,18 @@ progress:
 See: .planning/PROJECT.md (updated 2026-03-25)
 
 **Core value:** Strategic deckbuilding where every card decision determines survival -- the player is an architect, not a fighter
-**Current focus:** Phase 04 — content-meta-persistence
+**Current focus:** Phase 04 — content-meta-progression-persistence
 
 ## Current Position
 
-Phase: 04 (content-meta-persistence) — READY
-Plan: 1 of 3
+Phase: 04 (content-meta-progression-persistence) — EXECUTING
+Plan: 2 of 3
 
 ## Performance Metrics
 
 **Velocity:**
 
-- Total plans completed: 6
+- Total plans completed: 7
 - Average duration: 10.3min
 - Total execution time: 1.03 hours
 
@@ -52,6 +52,7 @@ Plan: 1 of 3
 | Phase 03-01 P01 | 5min | 2 tasks | 16 files |
 | Phase 03-02 P02 | 4min | 2 tasks | 13 files |
 | Phase 03-03 P03 | 36min | 3 tasks | 40 files |
+| Phase 04-01 P01 | 5min | 2 tasks | 11 files |
 
 ## Accumulated Context
 
@@ -91,6 +92,10 @@ Recent decisions affecting current work:
 - [Phase 03-03]: Hero world position increases continuously; tiles cycle via modulo for seamless loop wrap
 - [Phase 03-03]: Scene key 'Game' renamed to 'GameScene' across all scenes for consistency
 - [Phase 03-03]: Starter deck initialization added to RunState for combat to work end-to-end
+- [Phase 04-01]: Relic format changed from nested effects[] to flat top-level trigger/effectType for simpler runtime resolution
+- [Phase 04-01]: All card unlock gating uses forge building (not library) to consolidate card unlocks
+- [Phase 04-01]: arcane_crystal reclassified as common per user decision for 3 always-available relics
+- [Phase 04-01]: Passives use xpCost (explicit cost) instead of xpThreshold (milestone-based)
 
 ### Pending Todos
 
@@ -104,6 +109,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-26T21:13:38Z
-Stopped at: Completed 03-03-PLAN.md (Phase 03 complete)
+Last session: 2026-03-26T22:17:31Z
+Stopped at: Completed 04-01-PLAN.md
 Resume file: None

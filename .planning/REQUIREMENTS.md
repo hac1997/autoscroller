@@ -68,10 +68,10 @@ Requirements for initial release. Each maps to roadmap phases.
 
 ### Relics
 
-- [ ] **RELC-01**: Passive relic items with unique effects (no fixed slots, Slay the Spire style)
+- [x] **RELC-01**: Passive relic items with unique effects (no fixed slots, Slay the Spire style)
 - [ ] **RELC-02**: Relics can modify cooldowns, stats, and combat mechanics
 - [ ] **RELC-03**: Relics obtained from drops, shop, and events
-- [ ] **RELC-04**: ~8 relics available in v1
+- [x] **RELC-04**: ~8 relics available in v1
 
 ### Tiles — Special
 
@@ -90,16 +90,16 @@ Requirements for initial release. Each maps to roadmap phases.
 
 ### Content
 
-- [ ] **CONT-01**: ~15 unique cards with distinct stats, cooldowns, and targeting
-- [ ] **CONT-02**: ~8 relics with unique passive effects
-- [ ] **CONT-03**: 2-3 boss types (stats-based, unique mechanics deferred)
-- [ ] **CONT-04**: ~5 narrative events with choices and consequences
+- [x] **CONT-01**: ~15 unique cards with distinct stats, cooldowns, and targeting
+- [x] **CONT-02**: ~8 relics with unique passive effects
+- [x] **CONT-03**: 2-3 boss types (stats-based, unique mechanics deferred)
+- [x] **CONT-04**: ~5 narrative events with choices and consequences
 
 ### Persistence
 
 - [x] **PERS-01**: Run progress saved to IndexedDB (idb-keyval) — survives browser refresh
-- [ ] **PERS-02**: Meta-progression data persists across sessions (unlocks, XP, hub state)
-- [ ] **PERS-03**: Seeded RNG for reproducible runs (shareable seeds)
+- [x] **PERS-02**: Meta-progression data persists across sessions (unlocks, XP, hub state)
+- [x] **PERS-03**: Seeded RNG for reproducible runs (shareable seeds)
 
 ### Polish
 
@@ -211,20 +211,20 @@ Updated during roadmap creation.
 | SPEC-03 | Phase 3 | Complete |
 | SPEC-04 | Phase 3 | Complete |
 | SPEC-05 | Phase 3 | Complete |
-| RELC-01 | Phase 4 | Pending |
+| RELC-01 | Phase 4 | Complete |
 | RELC-02 | Phase 4 | Pending |
 | RELC-03 | Phase 4 | Pending |
-| RELC-04 | Phase 4 | Pending |
+| RELC-04 | Phase 4 | Complete |
 | META-01 | Phase 4 | Pending |
 | META-02 | Phase 4 | Pending |
 | META-03 | Phase 4 | Pending |
 | META-04 | Phase 4 | Pending |
-| CONT-01 | Phase 4 | Pending |
-| CONT-02 | Phase 4 | Pending |
-| CONT-03 | Phase 4 | Pending |
-| CONT-04 | Phase 4 | Pending |
-| PERS-02 | Phase 4 | Pending |
-| PERS-03 | Phase 4 | Pending |
+| CONT-01 | Phase 4 | Complete |
+| CONT-02 | Phase 4 | Complete |
+| CONT-03 | Phase 4 | Complete |
+| CONT-04 | Phase 4 | Complete |
+| PERS-02 | Phase 4 | Complete |
+| PERS-03 | Phase 4 | Complete |
 
 **Coverage:**
 - v1 requirements: 62 total
