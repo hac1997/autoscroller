@@ -7,8 +7,12 @@ import type { RunState } from '../state/RunState';
 export interface GameEvents {
   // Combat events
   'combat:start': { enemyId: string; isElite: boolean; isBoss: boolean };
-  'combat:end': { victory: boolean; goldEarned: number; cardDrops: string[] };
-  'combat:card-played': { cardId: string; damage: number };
+  'combat:end': { result: 'victory' | 'defeat'; enemyId: string };
+  'combat:card-played': { cardId: string; damage: number; healed: number; armorGained: number };
+  'combat:card-skipped': { cardId: string; reason: string };
+  'combat:synergy-triggered': { displayName: string; bonus: { type: string; value: number; target: string } };
+  'combat:deck-reshuffled': { reshuffleCount: number };
+  'combat:enemy-attack': { damage: number; specialEffect: string | null };
   'combat:damage-dealt': { source: string; target: string; amount: number };
 
   // Hero events
