@@ -62,7 +62,7 @@ export class GameOverScene extends Scene {
     newRunBtn.on('pointerdown', async () => {
       await saveManager.clear();
       setRun(createNewRun());
-      this.scene.start('GameScene');
+      this.scene.start('CityHub');
     });
 
     // Main Menu button

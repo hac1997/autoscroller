@@ -124,7 +124,7 @@ export class MainMenu extends Scene {
     await saveManager.clear();
     setRun(createNewRun());
     await saveManager.save(getRun());
-    this.scene.start('GameScene');
+    this.scene.start('CityHub');
   }
 
   private cleanup(): void {
