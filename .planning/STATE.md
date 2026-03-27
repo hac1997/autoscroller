@@ -3,13 +3,13 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: unknown
-stopped_at: Completed 04-03-PLAN.md
-last_updated: "2026-03-27T01:38:52.960Z"
+stopped_at: Completed 04-04-PLAN.md
+last_updated: "2026-03-27T02:37:08.951Z"
 progress:
   total_phases: 4
   completed_phases: 2
-  total_plans: 12
-  completed_plans: 10
+  total_plans: 13
+  completed_plans: 11
 ---
 
 # Project State
@@ -23,8 +23,8 @@ See: .planning/PROJECT.md (updated 2026-03-25)
 
 ## Current Position
 
-Phase: 04 (content-meta-progression-persistence) — COMPLETE
-Plan: 3 of 3 (ALL COMPLETE)
+Phase: 04 (content-meta-progression-persistence) — EXECUTING
+Plan: 4 of 4
 
 ## Performance Metrics
 
@@ -55,6 +55,7 @@ Plan: 3 of 3 (ALL COMPLETE)
 | Phase 04-02 P02 | 7min | 4 tasks | 15 files |
 | Phase 04-01 P01 | 5min | 2 tasks | 11 files |
 | Phase 04 P03 | 4min | 4 tasks | 15 files |
+| Phase 04 P04 | 3min | 3 tasks | 6 files |
 
 ## Accumulated Context
 
@@ -105,6 +106,8 @@ Recent decisions affecting current work:
 - [Phase 04-01]: Passives use xpCost (explicit cost) instead of xpThreshold (milestone-based)
 - [Phase 04]: Overlay backdrop uses 100ms delayed interactivity to prevent same-frame click-through
 - [Phase 04]: LootSystem generateCardReward falls back to any rarity when target pool empty, deduplicates picks
+- [Phase 04]: Legacy relic definitions renamed to LegacyRelicDefinition to coexist with new flat JSON RelicDefinition type
+- [Phase 04]: BossExitScene defaults bossesDefeated to 1 for safe exit (player just defeated a boss)
 
 ### Pending Todos
 
@@ -118,6 +121,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-27T01:38:52.956Z
-Stopped at: Completed 04-03-PLAN.md
+Last session: 2026-03-27T02:37:08.946Z
+Stopped at: Completed 04-04-PLAN.md
 Resume file: None
