@@ -29,7 +29,7 @@ export interface EventOutcome {
 interface RunState {
   hero: { hp: number; maxHp: number };
   deck: { cards: any[]; order: string[] };
-  economy: { gold: number; tilePoints: number; metaLoot: number };
+  economy: { gold: number; tilePoints: number; materials: Record<string, number> };
   relics: string[];
 }
 

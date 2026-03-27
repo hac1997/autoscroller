@@ -13,7 +13,7 @@ export interface TreasureResult {
 
 interface RunState {
   deck: { cards: any[]; order: string[] };
-  economy: { gold: number; tilePoints: number; metaLoot: number };
+  economy: { gold: number; tilePoints: number; materials: Record<string, number> };
   tileInventory: Array<{ tileType: string; count: number }>;
   relics: string[];
 }
