@@ -3,13 +3,13 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: unknown
-stopped_at: Completed 05-03-PLAN.md
-last_updated: "2026-03-27T19:42:00.000Z"
+stopped_at: Completed 05-04-PLAN.md (awaiting visual verification checkpoint)
+last_updated: "2026-03-27T19:53:59.668Z"
 progress:
   total_phases: 7
-  completed_phases: 2
+  completed_phases: 3
   total_plans: 17
-  completed_plans: 14
+  completed_plans: 15
 ---
 
 # Project State
@@ -59,6 +59,7 @@ Plan: 4 of 4
 | Phase 05 P01 | 11min | 3 tasks | 22 files |
 | Phase 05 P03 | 7min | 2 tasks | 14 files |
 | Phase 05 P02 | 5min | 2 tasks | 6 files |
+| Phase 05 P04 | 8min | 3 tasks | 14 files |
 
 ## Accumulated Context
 
@@ -122,6 +123,9 @@ Recent decisions affecting current work:
 - [Phase 05-02]: Card damage increased ~2.5x from Plan 01 values to achieve 5-8s fight target with 40% non-damage starter deck
 - [Phase 05-02]: Synergy bonuses scaled proportionally to new card damage levels
 - [Phase 05-02]: Balance validation uses real CombatEngine tick simulation, not mocked math
+- [Phase 05]: Storehouse building positioned at x:500 y:400 in CityHub layout (6th building)
+- [Phase 05]: LoopHUD uses single-letter abbreviations for materials (W/S/I/C/B/H/E), shows top 4
+- [Phase 05]: CombatScene writes back heroStamina/heroMana after victory for 50% recovery
 
 ### Pending Todos
 
@@ -141,6 +145,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-27T19:42:00Z
-Stopped at: Completed 05-03-PLAN.md
-Resume file: .planning/phases/05-balance-economy-overhaul/05-03-SUMMARY.md
+Last session: 2026-03-27T19:53:59.639Z
+Stopped at: Completed 05-04-PLAN.md (awaiting visual verification checkpoint)
+Resume file: None
