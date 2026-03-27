@@ -105,7 +105,7 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4
 **Goal:** Rebalance combat for 5-8s fights, replace single metaLoot with 7-material economy, implement scaling gold prices with caps, add Storehouse building, rework difficulty curve with diminishing loop growth
 **Requirements**: BAL-TYPES, BAL-DATA, BAL-COMBAT, BAL-RESET, BAL-SHOP, BAL-MATERIALS, BAL-DEATH, BAL-LOOP, BAL-STOREHOUSE, BAL-INTEGRATION, BAL-MIGRATION
 **Depends on:** Phase 4
-**Plans:** 4 plans
+**Plans:** 2/4 plans executed
 
 Plans:
 - [ ] 05-01-PLAN.md — MetaState v2 types + materials.json + rebalanced JSON + migration tests (Wave 1)
