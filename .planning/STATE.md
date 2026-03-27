@@ -4,12 +4,12 @@ milestone: v1.0
 milestone_name: milestone
 status: unknown
 stopped_at: Phase 5 context gathered
-last_updated: "2026-03-27T18:41:34.859Z"
+last_updated: "2026-03-27T19:20:12.676Z"
 progress:
   total_phases: 7
   completed_phases: 2
-  total_plans: 13
-  completed_plans: 11
+  total_plans: 17
+  completed_plans: 12
 ---
 
 # Project State
@@ -19,18 +19,18 @@ progress:
 See: .planning/PROJECT.md (updated 2026-03-25)
 
 **Core value:** Strategic deckbuilding where every card decision determines survival -- the player is an architect, not a fighter
-**Current focus:** Phase 04 — content-meta-progression-persistence
+**Current focus:** Phase 05 — balance-economy-overhaul
 
 ## Current Position
 
-Phase: 04 (content-meta-progression-persistence) — EXECUTING
-Plan: 4 of 4
+Phase: 05 (balance-economy-overhaul) — EXECUTING
+Plan: 2 of 4
 
 ## Performance Metrics
 
 **Velocity:**
 
-- Total plans completed: 7
+- Total plans completed: 8
 - Average duration: 10.3min
 - Total execution time: 1.03 hours
 
@@ -56,6 +56,7 @@ Plan: 4 of 4
 | Phase 04-01 P01 | 5min | 2 tasks | 11 files |
 | Phase 04 P03 | 4min | 4 tasks | 15 files |
 | Phase 04 P04 | 3min | 3 tasks | 6 files |
+| Phase 05 P01 | 11min | 3 tasks | 22 files |
 
 ## Accumulated Context
 
@@ -108,6 +109,11 @@ Recent decisions affecting current work:
 - [Phase 04]: LootSystem generateCardReward falls back to any rarity when target pool empty, deduplicates picks
 - [Phase 04]: Legacy relic definitions renamed to LegacyRelicDefinition to coexist with new flat JSON RelicDefinition type
 - [Phase 04]: BossExitScene defaults bossesDefeated to 1 for safe exit (player just defeated a boss)
+- [Phase 05-01]: Multi-material costs use Record<string, number> for flexible recipe system
+- [Phase 05-01]: Migration converts metaLoot to materials.essence (backward-compatible)
+- [Phase 05-01]: Compound balance: ~20% damage nerf + ~30% HP buff = ~2x TTK increase (5-8s target)
+- [Phase 05-01]: Storehouse building has 8 tiers mixing gathering boost and death retention
+- [Phase 05-01]: Death penalty reduced from 25% to 10% (materials harder to earn individually)
 
 ### Pending Todos
 
@@ -127,6 +133,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-27T18:41:34.856Z
-Stopped at: Phase 5 context gathered
-Resume file: .planning/phases/05-balance-economy-overhaul/05-CONTEXT.md
+Last session: 2026-03-27T19:31:23Z
+Stopped at: Completed 05-01-PLAN.md
+Resume file: .planning/phases/05-balance-economy-overhaul/05-01-SUMMARY.md
