@@ -1,10 +1,10 @@
 // DeathScene -- run statistics on death.
-// Shows "Run Over", cause of death, accumulated stats, meta-loot summary, XP warning.
+// Shows "Run Over", cause of death, accumulated stats, material retention summary.
 
 import { Scene } from 'phaser';
 import { getRun, clearRun } from '../state/RunState';
 import { loseAllRunXP } from '../systems/hero/XPSystem';
-import { bankRunRewards } from '../systems/MetaProgressionSystem';
+import { bankRunRewards, getStorehouseEffects } from '../systems/MetaProgressionSystem';
 import { loadMetaState, saveMetaState } from '../systems/MetaPersistence';
 import type { CombatStats } from '../systems/combat/CombatStats';
 
@@ -46,21 +46,26 @@ export class DeathScene extends Scene {
     const labelX = 240;
     const valueX = 560;
 
-    // Calculate materials earned from run economy
-    const runMaterials = (run.economy as any).materials ?? {};
-    const legacyLoot = (run.economy as any).metaLoot ?? 0;
-    const materialsEarned: Record<string, number> = { ...runMaterials };
-    if (legacyLoot > 0 && !materialsEarned.essence) materialsEarned.essence = legacyLoot;
-    if (Object.keys(materialsEarned).length === 0) materialsEarned.essence = Math.max(1, run.loop.count * 5);
-    const totalMaterialsEarned = Object.values(materialsEarned).reduce((a, b) => a + b, 0);
+    // Calculate materials retained on death (10% base, storehouse may increase)
+    const materialsEarned: Record<string, number> = { ...(run.economy.materials ?? {}) };
     const xpEarned = run.hero.runXP ?? 0;
+    const metaState = await loadMetaState();
+    const storehouseLevel = metaState.buildings.storehouse?.level ?? 0;
+    const { deathRetention } = getStorehouseEffects(storehouseLevel);
+    const retentionPct = Math.round(deathRetention * 100);
+
+    // Build per-material retention display
+    const retainedLines = Object.entries(materialsEarned)
+      .filter(([, v]) => v > 0)
+      .map(([k, v]) => `${k}: ${Math.floor(v * deathRetention)}`)
+      .join(', ') || 'None';
 
     const statRows: Array<{ label: string; value: string; color: string }> = [
       { label: 'Loops Completed', value: `${run.loop.count}`, color: '#ffffff' },
       { label: 'Total Damage Dealt', value: `${stats?.damageDealt ?? 0}`, color: '#ffffff' },
       { label: 'Total Cards Played', value: `${stats?.cardsPlayed ?? 0}`, color: '#ffffff' },
       { label: 'Total Combos', value: `${stats?.synergiesTriggered ?? 0}`, color: '#ff00ff' },
-      { label: 'Materials Earned', value: `+${Math.floor(totalMaterialsEarned * 0.10)} (10%)`, color: '#e040fb' },
+      { label: `Retained (${retentionPct}%)`, value: retainedLines, color: '#e040fb' },
     ];
 
     for (let i = 0; i < statRows.length; i++) {
@@ -89,8 +94,7 @@ export class DeathScene extends Scene {
       fontFamily,
     }).setOrigin(0.5);
 
-    // Bank run rewards to meta state
-    const metaState = await loadMetaState();
+    // Bank run rewards to meta state (metaState already loaded above for storehouse)
     const updatedState = bankRunRewards(
       materialsEarned,
       xpEarned,

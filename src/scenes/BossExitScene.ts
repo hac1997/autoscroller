@@ -43,7 +43,7 @@ export class BossExitScene extends Scene {
       economy: {
         gold: run.economy.gold,
         tilePoints: run.economy.tilePoints,
-        metaLoot: (run.economy as any).metaLoot ?? 0,
+        materials: run.economy.materials ?? {},
       },
     };
     const choiceData = getBossExitChoiceData(bossAdapter);
@@ -58,13 +58,21 @@ export class BossExitScene extends Scene {
       fontSize: '24px', fontStyle: 'bold', color: '#00ff00', fontFamily,
     }).setOrigin(0.5));
 
-    this.exitPanel.add(this.add.text(0, -35, 'Bank all meta-loot\nand XP safely.', {
+    this.exitPanel.add(this.add.text(0, -35, 'Bank all materials\nand XP safely.', {
       fontSize: '16px', color: '#ffffff', fontFamily, align: 'center',
       wordWrap: { width: 200 },
     }).setOrigin(0.5));
 
     const reward = choiceData.safeExitReward;
-    this.exitPanel.add(this.add.text(0, 30, `+${reward.metaLoot} Meta-Loot\n+${reward.xp} XP`, {
+    const materialLines = Object.entries(reward.materials)
+      .filter(([, v]) => v > 0)
+      .map(([k, v]) => `${k}: ${v}`)
+      .join(', ') || 'None';
+    this.exitPanel.add(this.add.text(0, 20, materialLines, {
+      fontSize: '12px', color: '#00ff00', fontFamily, align: 'center',
+      wordWrap: { width: 200 },
+    }).setOrigin(0.5));
+    this.exitPanel.add(this.add.text(0, 50, `+${reward.xp} XP`, {
       fontSize: '14px', color: '#00ff00', fontFamily, align: 'center',
     }).setOrigin(0.5));
 
@@ -96,7 +104,7 @@ export class BossExitScene extends Scene {
       wordWrap: { width: 200 },
     }).setOrigin(0.5));
 
-    this.continuePanel.add(this.add.text(0, 30, 'Death means 25%\nmeta-loot, zero XP.', {
+    this.continuePanel.add(this.add.text(0, 30, 'Death means 10%\nmaterials, zero XP.', {
       fontSize: '14px', color: '#ff0000', fontFamily, align: 'center',
     }).setOrigin(0.5));
 
@@ -149,14 +157,9 @@ export class BossExitScene extends Scene {
     if (this.selectedChoice === 'exit') {
       this.loopRunner.onBossChoice('exit');
 
-      // Bank 100% meta-loot and XP for safe exit
+      // Bank 100% materials and XP for safe exit
       const run = getRun();
-      // Convert legacy metaLoot to materials for backward compat
-      const runMaterials = (run.economy as any).materials ?? {};
-      const legacyLoot = (run.economy as any).metaLoot ?? 0;
-      const materialsEarned: Record<string, number> = { ...runMaterials };
-      if (legacyLoot > 0 && !materialsEarned.essence) materialsEarned.essence = legacyLoot;
-      if (Object.keys(materialsEarned).length === 0) materialsEarned.essence = Math.max(1, run.loop.count * 5);
+      const materialsEarned: Record<string, number> = { ...(run.economy.materials ?? {}) };
       const xpEarned = run.hero.runXP ?? 0;
       const metaState = await loadMetaState();
       const updatedState = bankRunRewards(

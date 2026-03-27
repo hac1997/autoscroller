@@ -10,6 +10,7 @@ const BUILDING_COLORS: Record<string, number> = {
   tavern: 0xff8c00,
   workshop: 0x228B22,
   shrine: 0x9370db,
+  storehouse: 0x8B6914,
 };
 
 const BUILDING_DESCRIPTIONS: Record<string, string> = {
@@ -17,6 +18,7 @@ const BUILDING_DESCRIPTIONS: Record<string, string> = {
   library: 'Unlock passive skill tiers for the Warrior.',
   workshop: 'Unlock new tile types for your loops.',
   shrine: 'Unlock relics from ancient powers.',
+  storehouse: 'Boost gathering rates and retain more on death.',
 };
 
 export class BuildingPanelScene extends Scene {
@@ -146,10 +148,15 @@ export class BuildingPanelScene extends Scene {
       }).setOrigin(0.5);
     } else {
       const nextTier = tierData.tiers.find((t: any) => t.level === currentLevel + 1);
-      const cost = nextTier?.cost ?? 0;
-      // TODO: Phase 5 Plan 02+ will implement multi-material cost checking
-      const totalMaterials = Object.values(this.metaState.materials).reduce((a, b) => a + b, 0);
-      const canAfford = typeof cost === 'number' ? totalMaterials >= cost : true;
+      const cost = (nextTier?.cost ?? {}) as Record<string, number>;
+      // Check affordability against all required materials
+      const missingMats: string[] = [];
+      for (const [mat, required] of Object.entries(cost)) {
+        if ((this.metaState.materials[mat] ?? 0) < required) {
+          missingMats.push(mat);
+        }
+      }
+      const canAfford = missingMats.length === 0;
 
       const upgradeBtn = this.add.text(400, 370, 'Upgrade Building', {
         fontSize: '24px',
@@ -162,19 +169,21 @@ export class BuildingPanelScene extends Scene {
         upgradeBtn.setAlpha(0.4);
       }
 
-      // Cost label
-      this.add.text(400, 400, `${cost} Meta-Loot`, {
-        fontSize: '14px',
-        color: canAfford ? '#e040fb' : '#ff0000',
-        fontFamily,
-      }).setOrigin(0.5);
-
-      if (!canAfford) {
-        this.add.text(400, 420, `Need ${cost} Meta-Loot to upgrade.`, {
-          fontSize: '14px',
-          color: '#ff0000',
+      // Multi-material cost display
+      const costEntries = Object.entries(cost);
+      const costParts = costEntries.map(([mat, required]) => {
+        const owned = this.metaState.materials[mat] ?? 0;
+        const color = owned >= required ? '#00ff00' : '#ff0000';
+        return { text: `${mat}: ${required}`, color };
+      });
+      let costY = 400;
+      for (const part of costParts) {
+        this.add.text(400, costY, part.text, {
+          fontSize: '13px',
+          color: part.color,
           fontFamily,
         }).setOrigin(0.5);
+        costY += 18;
       }
 
       upgradeBtn.on('pointerdown', async () => {

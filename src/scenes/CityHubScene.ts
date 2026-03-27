@@ -8,6 +8,7 @@ const BUILDING_COLORS: Record<string, number> = {
   tavern: 0xff8c00,
   workshop: 0x228B22,
   shrine: 0x9370db,
+  storehouse: 0x8B6914,
 };
 
 const BUILDING_ICONS: Record<string, string> = {
@@ -16,6 +17,7 @@ const BUILDING_ICONS: Record<string, string> = {
   tavern: 'T',
   workshop: 'W',
   shrine: 'S',
+  storehouse: 'H',
 };
 
 const BUILDING_NAMES: Record<string, string> = {
@@ -24,6 +26,7 @@ const BUILDING_NAMES: Record<string, string> = {
   tavern: 'Tavern',
   workshop: 'Workshop',
   shrine: 'Shrine',
+  storehouse: 'Storehouse',
 };
 
 interface BuildingLayout {
@@ -37,7 +40,8 @@ const BUILDING_LAYOUT: BuildingLayout[] = [
   { key: 'forge', x: 200, y: 260 },
   { key: 'tavern', x: 400, y: 260 },
   { key: 'workshop', x: 600, y: 260 },
-  { key: 'shrine', x: 400, y: 400 },
+  { key: 'shrine', x: 300, y: 400 },
+  { key: 'storehouse', x: 500, y: 400 },
 ];
 
 export class CityHubScene extends Scene {
@@ -56,9 +60,13 @@ export class CityHubScene extends Scene {
 
     const fontFamily = 'Inter, system-ui, Avenir, Helvetica, Arial, sans-serif';
 
-    // Top bar: meta-loot balance (top-left)
-    this.add.text(24, 24, `\u2605 ${Object.values(this.metaState.materials).reduce((a, b) => a + b, 0)} Materials`, {
-      fontSize: '16px',
+    // Top bar: material inventory (top-left)
+    const matEntries = Object.entries(this.metaState.materials).filter(([, v]) => v > 0);
+    const matDisplay = matEntries.length > 0
+      ? matEntries.map(([k, v]) => `${k}: ${v}`).join(' | ')
+      : 'No materials';
+    this.add.text(24, 24, matDisplay, {
+      fontSize: '14px',
       color: '#e040fb',
       fontFamily,
     });
