@@ -99,3 +99,36 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4
 | 2. Combat + Deck Engine | 1/3 | In Progress|  |
 | 3. Loop + Tile World | 3/3 | Complete | 2026-03-26 |
 | 4. Content, Meta-Progression + Persistence | 3/4 | In Progress|  |
+
+### Phase 5: Balance & Economy Overhaul
+
+**Goal:** Rebalance combat for 5-8s fights, replace single metaLoot with 7-material economy, implement scaling gold prices with caps, add Storehouse building, rework difficulty curve with diminishing loop growth
+**Requirements**: BAL-TYPES, BAL-DATA, BAL-COMBAT, BAL-RESET, BAL-SHOP, BAL-MATERIALS, BAL-DEATH, BAL-LOOP, BAL-STOREHOUSE, BAL-INTEGRATION, BAL-MIGRATION
+**Depends on:** Phase 4
+**Plans:** 4 plans
+
+Plans:
+- [ ] 05-01-PLAN.md — MetaState v2 types + materials.json + rebalanced cards/enemies/buildings/difficulty JSON (Wave 1)
+- [ ] 05-02-PLAN.md — 50% resource recovery in CombatState + combat balance validation tests (Wave 1)
+- [ ] 05-03-PLAN.md — ShopSystem scaling prices + LootGenerator materials + MetaProgressionSystem multi-material + RunEndResolver death penalty + DifficultyScaler loop growth (Wave 2)
+- [ ] 05-04-PLAN.md — Wire materials into all scenes/HUD/LoopRunner/persistence + MetaState migration + visual checkpoint (Wave 3)
+
+### Phase 6: Content Expansion
+
+**Goal:** [To be planned]
+**Requirements**: TBD
+**Depends on:** Phase 5
+**Plans:** 0 plans
+
+Plans:
+- [ ] TBD (run /gsd:plan-phase 6 to break down)
+
+### Phase 7: Polish & Release
+
+**Goal:** [To be planned]
+**Requirements**: TBD
+**Depends on:** Phase 6
+**Plans:** 0 plans
+
+Plans:
+- [ ] TBD (run /gsd:plan-phase 7 to break down)
