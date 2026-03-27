@@ -80,12 +80,13 @@ Plans:
   3. Player visits a visual hub (camp/village) between runs that shows unlocks and progression; new cards and tile types unlock permanently into the loot pool
   4. 2-3 boss types and ~5 narrative events with choices provide encounter variety across runs
   5. Meta-progression data (unlocks, class XP, passive tree) persists across browser sessions, and runs use seeded RNG for reproducibility
-**Plans**: 3 plans
+**Plans**: 4 plans
 
 Plans:
 - [ ] 04-01-PLAN.md — JSON content data (cards, relics, enemies, events, buildings, passives) + MetaState type + SeededRNG + MetaPersistence + content tests (Wave 1)
 - [ ] 04-02-PLAN.md — UnlockManager + MetaProgressionSystem + CollectionRegistry + unit tests (Wave 1)
 - [ ] 04-03-PLAN.md — CityHubScene + BuildingPanel + TavernPanel + CollectionScene + RelicHUD + SeedDisplay + run-end extensions + visual checkpoint (Wave 2)
+- [ ] 04-04-PLAN.md — Gap closure: BossExitScene safe exit banking + MainMenu/GameOver CityHub routing + RelicDefinition type fix (Wave 3)
 
 ## Progress
 
@@ -97,4 +98,4 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4
 | 1. Architecture Foundation | 0/3 | Not started | - |
 | 2. Combat + Deck Engine | 1/3 | In Progress|  |
 | 3. Loop + Tile World | 3/3 | Complete | 2026-03-26 |
-| 4. Content, Meta-Progression + Persistence | 2/3 | In Progress|  |
+| 4. Content, Meta-Progression + Persistence | 3/4 | In Progress|  |
