@@ -3,7 +3,7 @@ import type { RunState } from '../state/RunState';
 
 /**
  * LoopHUD -- fixed HUD overlay for GameScene.
- * Displays: gold, loop counter, difficulty, HP bar, tile points, meta-loot.
+ * Displays: gold, loop counter, difficulty, HP bar, tile points, materials.
  */
 export class LoopHUD extends Phaser.GameObjects.Container {
   private goldText: Phaser.GameObjects.Text;
@@ -13,7 +13,7 @@ export class LoopHUD extends Phaser.GameObjects.Container {
   private hpBg: Phaser.GameObjects.Rectangle;
   private hpText: Phaser.GameObjects.Text;
   private tpText: Phaser.GameObjects.Text;
-  private metaLootText: Phaser.GameObjects.Text;
+  private materialsText: Phaser.GameObjects.Text;
 
   constructor(scene: Phaser.Scene) {
     super(scene, 0, 0);
@@ -73,16 +73,11 @@ export class LoopHUD extends Phaser.GameObjects.Container {
     });
     this.add(this.tpText);
 
-    // Right-side: Meta-loot
-    const metaIcon = scene.add.text(600, 36, '\u2605', {
-      fontSize: '14px', color: '#e040fb', fontFamily,
+    // Right-side: Materials
+    this.materialsText = scene.add.text(600, 36, '', {
+      fontSize: '12px', color: '#e040fb', fontFamily,
     });
-    this.add(metaIcon);
-
-    this.metaLootText = scene.add.text(620, 36, '0', {
-      fontSize: '14px', color: '#e040fb', fontFamily,
-    });
-    this.add(this.metaLootText);
+    this.add(this.materialsText);
 
     scene.add.existing(this);
   }
@@ -101,9 +96,13 @@ export class LoopHUD extends Phaser.GameObjects.Container {
     // Tile points
     this.tpText.setText(`${runState.economy.tilePoints} TP`);
 
-    // Meta-loot (stored in economy as metaLoot or tileInventory -- use economy for now)
-    const metaLoot = (runState.economy as any).metaLoot ?? 0;
-    this.metaLootText.setText(`${metaLoot}`);
+    // Materials display: compact format with first letter abbreviation
+    const ABBREV: Record<string, string> = { wood: 'W', stone: 'S', iron: 'I', crystal: 'C', bone: 'B', herbs: 'H', essence: 'E' };
+    const matEntries = Object.entries(runState.economy.materials ?? {}).filter(([, v]) => v > 0);
+    const matStr = matEntries.length > 0
+      ? matEntries.slice(0, 4).map(([k, v]) => `${ABBREV[k] ?? k[0].toUpperCase()}:${v}`).join(' ')
+      : '';
+    this.materialsText.setText(matStr);
   }
 
   private getHpColor(ratio: number): number {

@@ -49,7 +49,7 @@ export class GameScene extends Scene {
       economy: {
         gold: run.economy.gold,
         tilePoints: run.economy.tilePoints,
-        metaLoot: (run.economy as any).metaLoot ?? 0,
+        materials: run.economy.materials ?? {},
       },
       tileInventory: [],
       hero: { xp: run.hero.runXP ?? 0 },
@@ -109,6 +109,10 @@ export class GameScene extends Scene {
       const run = getRun();
       this.loopRunState.economy.gold = run.economy.gold;
       this.loopRunState.economy.tilePoints = run.economy.tilePoints;
+      // Sync materials both ways
+      for (const [mat, amount] of Object.entries(run.economy.materials ?? {})) {
+        this.loopRunState.economy.materials[mat] = amount;
+      }
 
       // Flush tile pool so world tiles re-render with updated data
       for (const [, tv] of this.tilePool) {
@@ -163,7 +167,10 @@ export class GameScene extends Scene {
     run.loop.difficulty = this.loopRunState.loop.difficultyMultiplier;
     run.economy.gold = this.loopRunState.economy.gold;
     run.economy.tilePoints = this.loopRunState.economy.tilePoints;
-    (run.economy as any).metaLoot = this.loopRunState.economy.metaLoot;
+    // Sync materials from loop runner to global state
+    for (const [mat, amount] of Object.entries(this.loopRunState.economy.materials)) {
+      run.economy.materials[mat] = amount;
+    }
   }
 
   private handleLoopEvent(event: string, data: any): void {

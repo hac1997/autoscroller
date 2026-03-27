@@ -54,7 +54,7 @@ export class EventScene extends Scene {
       economy: {
         gold: run.economy.gold,
         tilePoints: run.economy.tilePoints,
-        metaLoot: (run.economy as any).metaLoot ?? 0,
+        materials: run.economy.materials ?? {},
       },
       relics: [...run.relics],
     };
@@ -140,7 +140,7 @@ export class EventScene extends Scene {
       economy: {
         gold: run.economy.gold,
         tilePoints: run.economy.tilePoints,
-        metaLoot: (run.economy as any).metaLoot ?? 0,
+        materials: run.economy.materials ?? {},
       },
       relics: [...run.relics],
     };
@@ -152,7 +152,7 @@ export class EventScene extends Scene {
     run.hero.maxHP = adapter.hero.maxHp;
     run.economy.gold = adapter.economy.gold;
     run.economy.tilePoints = adapter.economy.tilePoints;
-    (run.economy as any).metaLoot = adapter.economy.metaLoot;
+    // Materials are not modified by events (only gold/HP/cards/relics)
     run.deck.active = [...adapter.deck.order];
     run.relics = [...adapter.relics];
 

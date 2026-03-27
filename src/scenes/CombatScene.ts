@@ -165,9 +165,11 @@ export class CombatScene extends Scene {
         if (eventData.result === 'victory') {
           // Award XP
           earnXP(currentRun, getXPForEnemy(enemyDef.type));
-          // Write HP back to RunState
+          // Write HP, stamina, and mana back to RunState for 50% recovery between fights
           const finalState = this.engine.getState();
           currentRun.hero.currentHP = finalState.heroHP;
+          currentRun.hero.currentStamina = finalState.heroStamina;
+          currentRun.hero.currentMana = finalState.heroMana;
           // Flag boss defeat for GameScene to trigger BossExitScene
           if (enemyDef.type === 'boss') {
             (currentRun as any)._lastBossDefeated = true;

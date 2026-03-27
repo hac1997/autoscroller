@@ -59,7 +59,7 @@ export class ShopScene extends Scene {
     const run = getRun();
     const runAdapter = this.getRunAdapter();
     const availableCards = ['strike', 'defend', 'fury', 'heal', 'bash'];
-    const shopCards = ShopSystem.getShopCards(runAdapter, availableCards);
+    const shopCards = ShopSystem.getShopCards(runAdapter, availableCards, run.loop.count);
 
     this.add.text(140, 110, 'Buy Cards', {
       fontSize: '16px', fontStyle: 'bold', color: '#ffffff', fontFamily,
@@ -132,7 +132,8 @@ export class ShopScene extends Scene {
       fontSize: '16px', fontStyle: 'bold', color: '#ffffff', fontFamily,
     });
 
-    const reorderBtn = this.add.text(320, 270, 'Pay 30 Gold', {
+    const reorderCost = ShopSystem.getReorderPrice(0);
+    const reorderBtn = this.add.text(320, 270, `Pay ${reorderCost} Gold`, {
       fontSize: '14px', color: '#ffd700', fontFamily,
     }).setInteractive({ useHandCursor: true });
 
@@ -241,7 +242,6 @@ export class ShopScene extends Scene {
       economy: {
         gold: run.economy.gold,
         tilePoints: run.economy.tilePoints,
-        metaLoot: (run.economy as any).metaLoot ?? 0,
       },
       tileInventory: Object.entries(run.economy.tileInventory)
         .filter(([_, count]) => count > 0)
@@ -255,7 +255,6 @@ export class ShopScene extends Scene {
     const run = getRun();
     run.economy.gold = adapter.economy.gold;
     run.economy.tilePoints = adapter.economy.tilePoints;
-    (run.economy as any).metaLoot = adapter.economy.metaLoot;
     run.deck.active = [...adapter.deck.order];
     run.relics = [...adapter.relics];
     // Sync tile inventory

@@ -34,7 +34,7 @@ export class TreasureScene extends Scene {
       economy: {
         gold: run.economy.gold,
         tilePoints: run.economy.tilePoints,
-        metaLoot: (run.economy as any).metaLoot ?? 0,
+        materials: run.economy.materials ?? {},
       },
       tileInventory: Object.entries(run.economy.tileInventory)
         .filter(([_, count]) => count > 0)
@@ -47,7 +47,6 @@ export class TreasureScene extends Scene {
     // Sync adapter back
     run.economy.gold = adapter.economy.gold;
     run.economy.tilePoints = adapter.economy.tilePoints;
-    (run.economy as any).metaLoot = adapter.economy.metaLoot;
     run.deck.active = [...adapter.deck.order];
     run.relics = [...adapter.relics];
     // Sync tile inventory
