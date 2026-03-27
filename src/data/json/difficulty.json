@@ -10,7 +10,8 @@
     "eventChance": 0.25,
     "shopCost": {
       "cardBase": 60,
-      "removeCard": 75,
+      "removeCard": 50,
+      "reorder": 15,
       "upgrade": 100
     }
   },
@@ -25,7 +26,8 @@
     "eventChance": 0.2,
     "shopCost": {
       "cardBase": 80,
-      "removeCard": 100,
+      "removeCard": 65,
+      "reorder": 20,
       "upgrade": 150
     }
   }

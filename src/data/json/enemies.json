@@ -3,7 +3,7 @@
     "id": "slime",
     "name": "Slime",
     "type": "normal",
-    "baseHP": 100,
+    "baseHP": 130,
     "baseDefense": 0,
     "attack": {
       "damage": 8,
@@ -11,14 +11,14 @@
     },
     "attackCooldown": 2500,
     "goldReward": { "min": 10, "max": 20 },
-    "metaLootReward": { "min": 1, "max": 3 },
+    "materialReward": { "chance": 0.3, "bonusMaterial": "herbs", "bonusAmount": { "min": 1, "max": 2 } },
     "color": 65280
   },
   {
     "id": "goblin",
     "name": "Goblin",
     "type": "normal",
-    "baseHP": 75,
+    "baseHP": 100,
     "baseDefense": 0,
     "attack": {
       "damage": 6,
@@ -27,14 +27,14 @@
     },
     "attackCooldown": 1500,
     "goldReward": { "min": 15, "max": 25 },
-    "metaLootReward": { "min": 1, "max": 3 },
+    "materialReward": { "chance": 0.25, "bonusMaterial": "iron", "bonusAmount": { "min": 1, "max": 2 } },
     "color": 9127187
   },
   {
     "id": "orc",
     "name": "Orc",
     "type": "normal",
-    "baseHP": 175,
+    "baseHP": 230,
     "baseDefense": 10,
     "attack": {
       "damage": 12,
@@ -43,14 +43,14 @@
     },
     "attackCooldown": 3000,
     "goldReward": { "min": 20, "max": 30 },
-    "metaLootReward": { "min": 1, "max": 3 },
+    "materialReward": { "chance": 0.35, "bonusMaterial": "iron", "bonusAmount": { "min": 1, "max": 3 } },
     "color": 5597999
   },
   {
     "id": "mage",
     "name": "Dark Mage",
     "type": "normal",
-    "baseHP": 85,
+    "baseHP": 110,
     "baseDefense": 0,
     "attack": {
       "damage": 7,
@@ -59,14 +59,14 @@
     },
     "attackCooldown": 2000,
     "goldReward": { "min": 25, "max": 35 },
-    "metaLootReward": { "min": 1, "max": 3 },
+    "materialReward": { "chance": 0.3, "bonusMaterial": "crystal", "bonusAmount": { "min": 1, "max": 2 } },
     "color": 9662683
   },
   {
     "id": "elite_knight",
     "name": "Elite Knight",
     "type": "elite",
-    "baseHP": 200,
+    "baseHP": 260,
     "baseDefense": 15,
     "attack": {
       "damage": 15,
@@ -75,14 +75,14 @@
     },
     "attackCooldown": 2000,
     "goldReward": { "min": 50, "max": 80 },
-    "metaLootReward": { "min": 5, "max": 10 },
+    "materialReward": { "chance": 0.4, "bonusMaterial": "essence", "bonusAmount": { "min": 1, "max": 2 } },
     "color": 12632256
   },
   {
     "id": "boss_demon",
     "name": "Demon Lord",
     "type": "boss",
-    "baseHP": 400,
+    "baseHP": 480,
     "baseDefense": 20,
     "attack": {
       "damage": 20,
@@ -92,7 +92,7 @@
     },
     "attackCooldown": 2500,
     "goldReward": { "min": 100, "max": 150 },
-    "metaLootReward": { "min": 10, "max": 18 },
+    "materialReward": { "chance": 1.0, "bonusMaterial": "essence", "bonusAmount": { "min": 3, "max": 6 } },
     "color": 9109504
   },
   {
@@ -100,7 +100,7 @@
     "name": "Iron Golem",
     "type": "boss",
     "bossType": "tank",
-    "baseHP": 1200,
+    "baseHP": 1440,
     "baseDefense": 30,
     "attack": {
       "damage": 16,
@@ -109,7 +109,7 @@
     },
     "attackCooldown": 3000,
     "goldReward": { "min": 120, "max": 180 },
-    "metaLootReward": { "min": 15, "max": 25 },
+    "materialReward": { "chance": 1.0, "bonusMaterial": "essence", "bonusAmount": { "min": 3, "max": 6 } },
     "color": 8421504
   },
   {
@@ -117,7 +117,7 @@
     "name": "Blood Reaver",
     "type": "boss",
     "bossType": "berserker",
-    "baseHP": 600,
+    "baseHP": 720,
     "baseDefense": 10,
     "attack": {
       "damage": 40,
@@ -126,7 +126,7 @@
     },
     "attackCooldown": 1800,
     "goldReward": { "min": 100, "max": 160 },
-    "metaLootReward": { "min": 12, "max": 20 },
+    "materialReward": { "chance": 1.0, "bonusMaterial": "essence", "bonusAmount": { "min": 3, "max": 6 } },
     "color": 11141120
   },
   {
@@ -134,7 +134,7 @@
     "name": "Lich King",
     "type": "boss",
     "bossType": "mage",
-    "baseHP": 800,
+    "baseHP": 960,
     "baseDefense": 15,
     "attack": {
       "damage": 24,
@@ -143,7 +143,7 @@
     },
     "attackCooldown": 2200,
     "goldReward": { "min": 110, "max": 170 },
-    "metaLootReward": { "min": 14, "max": 22 },
+    "materialReward": { "chance": 1.0, "bonusMaterial": "essence", "bonusAmount": { "min": 3, "max": 6 } },
     "color": 6684927
   }
 ]

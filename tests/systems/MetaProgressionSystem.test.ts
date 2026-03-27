@@ -9,12 +9,14 @@ import {
 
 describe('MetaProgressionSystem', () => {
   describe('upgradeBuilding', () => {
-    it('upgrades forge from 0 to 1 when enough materials, unlocking cards', () => {
+    it('upgrades forge from 0 to 1 when enough materials, deducting cost and unlocking cards', () => {
       const state = createDefaultMetaState();
-      // Give enough total materials for the cost check (temporary until multi-material cost)
       state.materials = { iron: 50, crystal: 50 };
       const result = upgradeBuilding('forge', state);
       expect(result.success).toBe(true);
+      // Forge tier 1 costs: iron 8, crystal 3
+      expect(result.updatedState!.materials.iron).toBe(42);
+      expect(result.updatedState!.materials.crystal).toBe(47);
       expect(result.updatedState!.buildings.forge.level).toBe(1);
       expect(result.updatedState!.unlockedCards).toContain('counter-strike');
       expect(result.updatedState!.unlockedCards).toContain('shield-wall');
@@ -130,6 +132,7 @@ describe('MetaProgressionSystem', () => {
       expect(data.maxLevel).toBe(4);
       expect(data.tiers).toHaveLength(4);
       expect(data.tiers[0].level).toBe(1);
+      expect(data.tiers[0].cost).toEqual({ iron: 8, crystal: 3 });
       expect(data.tiers[0].unlocks.cards).toEqual(['counter-strike', 'shield-wall']);
     });
   });

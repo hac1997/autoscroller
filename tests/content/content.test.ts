@@ -113,22 +113,23 @@ describe('events.json', () => {
 describe('buildings.json', () => {
   const buildings = buildingsData as any;
 
-  it('has exactly 5 buildings (forge, library, tavern, workshop, shrine)', () => {
+  it('has exactly 6 buildings (forge, library, tavern, workshop, shrine, storehouse)', () => {
     const keys = Object.keys(buildings);
     expect(keys).toContain('forge');
     expect(keys).toContain('library');
     expect(keys).toContain('tavern');
     expect(keys).toContain('workshop');
     expect(keys).toContain('shrine');
-    expect(keys.length).toBe(5);
+    expect(keys).toContain('storehouse');
+    expect(keys.length).toBe(6);
   });
 
-  it('each building has tiers array of length 3-5', () => {
+  it('each building has tiers array of length 3-8', () => {
     for (const key of Object.keys(buildings)) {
       const b = buildings[key];
       expect(Array.isArray(b.tiers)).toBe(true);
       expect(b.tiers.length).toBeGreaterThanOrEqual(3);
-      expect(b.tiers.length).toBeLessThanOrEqual(5);
+      expect(b.tiers.length).toBeLessThanOrEqual(8);
     }
   });
 

@@ -1,17 +1,32 @@
 {
-  "percentPerLoop": 0.10,
+  "percentPerLoop": 0.12,
   "bossMultiplier": 2.0,
   "basicTileCombatChance": 0.10,
   "baseSpeed": 240,
   "speedScalePerLoop": 1.02,
   "bossEveryNLoops": 5,
   "baseLoopLength": 15,
-  "loopGrowthOnBossKill": 3,
+  "loopGrowth": {
+    "schedule": [3, 2, 2, 1, 1],
+    "maxTileLength": 40
+  },
   "baseTilePointsPerLoop": 3,
   "tilePointScalePerLoop": 0.5,
-  "metaLootPerCombat": { "min": 1, "max": 2 },
-  "metaLootPerLoop": 5,
-  "metaLootPerBoss": 10,
-  "deathMetaLootPercent": 0.25,
-  "deathXpPercent": 0
+  "deathMaterialPercent": 0.10,
+  "deathXpPercent": 0,
+  "resourceResetPercent": 0.5,
+  "pricing": {
+    "cardBasePrice": 60,
+    "cardPricePerLoop": 8,
+    "cardPriceCap": 150,
+    "removeBasePrice": 50,
+    "removeEscalation": 25,
+    "removeCap": 200,
+    "reorderBasePrice": 15,
+    "reorderEscalation": 20,
+    "reorderCap": 150,
+    "relicPriceByRarity": { "common": 80, "rare": 150, "epic": 250, "legendary": 400 },
+    "relicPricePerLoop": 10,
+    "relicPriceCap": { "common": 150, "rare": 280, "epic": 450, "legendary": 600 }
+  }
 }

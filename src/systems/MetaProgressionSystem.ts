@@ -11,7 +11,7 @@ export interface UpgradeResult {
 
 export interface BuildingTierInfo {
   level: number;
-  cost: number;
+  cost: Record<string, number>;
   unlocks: Record<string, string[]>;
   description?: string;
 }
@@ -27,11 +27,19 @@ export function upgradeBuilding(buildingKey: string, state: MetaState): UpgradeR
   if (currentLevel >= building.maxLevel) return { success: false, reason: 'max_level' };
 
   const nextTier = building.tiers.find((t: any) => t.level === currentLevel + 1);
-  // TODO: Phase 5 Plan 02+ will implement multi-material cost deduction
-  const totalMaterials = Object.values(state.materials).reduce((a, b) => a + b, 0);
-  if (typeof nextTier.cost === 'number' && totalMaterials < nextTier.cost) return { success: false, reason: 'insufficient_meta_loot' };
+  // Check multi-material cost affordability
+  const cost = nextTier.cost as Record<string, number>;
+  for (const [mat, required] of Object.entries(cost)) {
+    if ((state.materials[mat] ?? 0) < required) {
+      return { success: false, reason: 'insufficient_meta_loot' };
+    }
+  }
 
   const updated = structuredClone(state);
+  // Deduct material costs
+  for (const [mat, required] of Object.entries(cost)) {
+    updated.materials[mat] = (updated.materials[mat] ?? 0) - required;
+  }
   (updated.buildings as any)[buildingKey].level = currentLevel + 1;
 
   const newUnlocks: Record<string, string[]> = {};

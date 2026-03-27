@@ -2,7 +2,7 @@
   {
     "cardA": "defend",
     "cardB": "strike",
-    "bonus": { "type": "damage", "value": 8, "target": "enemy" },
+    "bonus": { "type": "damage", "value": 6, "target": "enemy" },
     "classRestriction": "warrior",
     "displayName": "Counter Attack!"
   },
@@ -16,14 +16,14 @@
   {
     "cardA": "heavy-hit",
     "cardB": "heavy-hit",
-    "bonus": { "type": "damage", "value": 20, "target": "enemy" },
+    "bonus": { "type": "damage", "value": 16, "target": "enemy" },
     "classRestriction": "warrior",
     "displayName": "Berserker Rage!"
   },
   {
     "cardA": "heal",
     "cardB": "fireball",
-    "bonus": { "type": "damage", "value": 10, "target": "enemy" },
+    "bonus": { "type": "damage", "value": 8, "target": "enemy" },
     "displayName": "Channeled Fire!"
   },
   {
@@ -35,7 +35,7 @@
   {
     "cardA": "fortify",
     "cardB": "strike",
-    "bonus": { "type": "damage", "value": 12, "target": "enemy" },
+    "bonus": { "type": "damage", "value": 10, "target": "enemy" },
     "displayName": "Iron Fist!"
   }
 ]
