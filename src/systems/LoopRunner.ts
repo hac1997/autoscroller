@@ -1,6 +1,6 @@
 import { createBasicLoop, createTileSlot, getTileConfig, type TileSlot, type TileInventoryEntry } from './TileRegistry';
 import { resolveAdjacencySynergies, type SynergyBuff } from './SynergyResolver';
-import { getLoopSpeed, getDifficultyConfig } from './DifficultyScaler';
+import { getLoopSpeed, getDifficultyConfig, getLoopGrowth } from './DifficultyScaler';
 import { getEnemyPoolForTerrain } from './LootGenerator';
 import { resolveRunEnd, type RunEndResult } from './RunEndResolver';
 
@@ -21,7 +21,7 @@ export interface LoopStateData {
 export interface EconomyData {
   gold: number;
   tilePoints: number;
-  metaLoot: number;
+  materials: Record<string, number>;
 }
 
 export interface LoopRunState {
@@ -64,6 +64,7 @@ export class LoopRunner {
     this.runState.loop.difficultyMultiplier = 1.0;
     this.lastTileIndex = -1;
     this.activeBuffs = [];
+    this.bossKillCount = 0;
     this.state = 'traversing';
   }
 
@@ -185,28 +186,35 @@ export class LoopRunner {
     this.emit('boss-defeated', { loopCount: this.runState.loop.count });
   }
 
+  /** Track boss kills for diminishing loop growth */
+  private bossKillCount: number = 0;
+
   onBossChoice(choice: 'exit' | 'continue'): RunEndResult | void {
     if (choice === 'exit') {
       this.state = 'run-ended';
       const result = resolveRunEnd(
         'safe',
-        this.runState.economy.metaLoot,
+        this.runState.economy.materials,
         this.runState.hero?.xp ?? 0
       );
       this.emit('run-exited', result);
       return result;
     }
 
-    // Continue: grow loop by +3 basic tiles before boss position
+    // Continue: grow loop by diminishing amount based on boss kills
+    const growth = getLoopGrowth(this.bossKillCount);
+    this.bossKillCount++;
     const diffConfig = getDifficultyConfig();
+    const maxLen = (diffConfig as any).loopGrowth?.maxTileLength ?? 40;
+    const actualGrowth = Math.min(growth, maxLen - this.runState.loop.length);
     const newTiles: TileSlot[] = Array.from(
-      { length: diffConfig.loopGrowthOnBossKill },
+      { length: Math.max(0, actualGrowth) },
       () => createTileSlot('basic')
     );
     // Insert before the last position (boss position)
     const insertAt = this.runState.loop.length - 1;
     this.runState.loop.tiles.splice(insertAt, 0, ...newTiles);
-    this.runState.loop.length += diffConfig.loopGrowthOnBossKill;
+    this.runState.loop.length += Math.max(0, actualGrowth);
 
     this.state = 'planning';
     this.emit('planning-phase-started', { loopCount: this.runState.loop.count });

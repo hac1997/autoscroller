@@ -1,5 +1,5 @@
 import { scaleEnemyForLoop, type ScaledEnemyStats } from './DifficultyScaler';
-import { rollMetaLoot } from './LootGenerator';
+import { rollMaterialDrops } from './LootGenerator';
 import { resolveRunEnd, type RunEndResult } from './RunEndResolver';
 
 export interface BossEncounterData {
@@ -19,7 +19,7 @@ const BOSS_BASE_STATS = {
 interface RunState {
   hero: { hp: number; maxHp: number; xp: number };
   loop: { count: number };
-  economy: { gold: number; tilePoints: number; metaLoot: number };
+  economy: { gold: number; tilePoints: number; materials: Record<string, number> };
 }
 
 export function triggerBossCombat(runState: RunState): BossEncounterData {
@@ -31,17 +31,19 @@ export function triggerBossCombat(runState: RunState): BossEncounterData {
   };
 }
 
-export function onBossVictory(runState: RunState): { metaLootAwarded: number } {
-  const metaLoot = rollMetaLoot('boss', runState.loop.count);
-  runState.economy.metaLoot += metaLoot;
-  return { metaLootAwarded: metaLoot };
+export function onBossVictory(runState: RunState): { materialsAwarded: Record<string, number> } {
+  const materials = rollMaterialDrops('boss', '', runState.loop.count);
+  for (const [mat, amount] of Object.entries(materials)) {
+    runState.economy.materials[mat] = (runState.economy.materials[mat] ?? 0) + amount;
+  }
+  return { materialsAwarded: materials };
 }
 
 export function getBossExitChoiceData(runState: RunState): {
   safeExitReward: RunEndResult;
   continueRisk: string;
 } {
-  const safeExitReward = resolveRunEnd('safe', runState.economy.metaLoot, runState.hero.xp);
-  const continueRisk = 'Loop grows by 3 tiles. Death means 25% meta-loot, zero XP.';
+  const safeExitReward = resolveRunEnd('safe', runState.economy.materials, runState.hero.xp);
+  const continueRisk = 'Loop grows by diminishing tiles. Death means 10% materials, zero XP.';
   return { safeExitReward, continueRisk };
 }

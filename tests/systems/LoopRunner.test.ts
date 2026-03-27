@@ -15,7 +15,7 @@ function createTestRunState(): LoopRunState {
       positionInLoop: 0,
       difficultyMultiplier: 1.0,
     },
-    economy: { gold: 0, tilePoints: 0, metaLoot: 50 },
+    economy: { gold: 0, tilePoints: 0, materials: { essence: 50, wood: 20 } },
     tileInventory: [],
     hero: { xp: 30 },
   };
@@ -216,24 +216,25 @@ describe('LoopRunner', () => {
     expect(result).toBe(false);
   });
 
-  it('onBossChoice exit resolves run with 100% meta-loot', () => {
+  it('onBossChoice exit resolves run with 100% materials', () => {
     runner.startRun(runState);
-    runState.economy.metaLoot = 100;
+    runState.economy.materials = { essence: 100, wood: 30 };
     runState.hero = { xp: 50 };
     // Simulate boss defeat
     runner.onBossDefeated();
     expect(runner.getState()).toBe('boss-choice');
     const result = runner.onBossChoice('exit');
     expect(runner.getState()).toBe('run-ended');
-    expect(result).toEqual({ exitType: 'safe', metaLoot: 100, xp: 50 });
+    expect(result).toEqual({ exitType: 'safe', materials: { essence: 100, wood: 30 }, xp: 50 });
     expect(events.some(e => e.event === 'run-exited')).toBe(true);
   });
 
-  it('onBossChoice continue grows loop by 3 tiles', () => {
+  it('onBossChoice continue grows loop by first schedule value (3 tiles)', () => {
     runner.startRun(runState);
     const originalLength = runState.loop.length;
     runner.onBossDefeated();
     runner.onBossChoice('continue');
+    // First boss kill: schedule[0] = 3
     expect(runState.loop.length).toBe(originalLength + 3);
     expect(runState.loop.tiles).toHaveLength(originalLength + 3);
     expect(runner.getState()).toBe('planning');

@@ -1,27 +1,33 @@
 import difficultyConfig from '../data/difficulty.json';
+import { getStorehouseEffects } from './MetaProgressionSystem';
 
 export interface RunEndResult {
   exitType: 'safe' | 'death';
-  metaLoot: number;
+  materials: Record<string, number>;
   xp: number;
 }
 
 const config = difficultyConfig as {
-  deathMetaLootPercent: number;
   deathXpPercent: number;
 };
 
 export function resolveRunEnd(
   exitType: 'safe' | 'death',
-  currentMetaLoot: number,
-  currentXp: number
+  currentMaterials: Record<string, number>,
+  currentXp: number,
+  storehouseLevel: number = 0
 ): RunEndResult {
   if (exitType === 'safe') {
-    return { exitType: 'safe', metaLoot: currentMetaLoot, xp: currentXp };
+    return { exitType: 'safe', materials: { ...currentMaterials }, xp: currentXp };
+  }
+  const { deathRetention } = getStorehouseEffects(storehouseLevel);
+  const retainedMaterials: Record<string, number> = {};
+  for (const [mat, amount] of Object.entries(currentMaterials)) {
+    retainedMaterials[mat] = Math.floor(amount * deathRetention);
   }
   return {
     exitType: 'death',
-    metaLoot: Math.floor(currentMetaLoot * config.deathMetaLootPercent),
+    materials: retainedMaterials,
     xp: Math.floor(currentXp * config.deathXpPercent),
   };
 }

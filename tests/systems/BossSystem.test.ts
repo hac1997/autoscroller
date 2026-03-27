@@ -1,4 +1,4 @@
-import { describe, it, expect, beforeEach, afterEach } from 'vitest';
+import { describe, it, expect, afterEach } from 'vitest';
 import { triggerBossCombat, onBossVictory, getBossExitChoiceData } from '../../src/systems/BossSystem';
 import { setRNG, resetRNG } from '../../src/systems/LootGenerator';
 
@@ -7,7 +7,7 @@ function makeRunState() {
     hero: { hp: 100, maxHp: 100, stamina: 50, maxStamina: 50, mana: 30, maxMana: 30, xp: 200 },
     deck: { cards: [], order: ['strike', 'defend'] },
     loop: { count: 3, length: 15, tiles: [], positionInLoop: 0, difficultyMultiplier: 1.2 },
-    economy: { gold: 100, tilePoints: 5, metaLoot: 20 },
+    economy: { gold: 100, tilePoints: 5, materials: { essence: 20, crystal: 10 } },
     tileInventory: [],
     relics: [],
   };
@@ -39,21 +39,22 @@ describe('BossSystem', () => {
     expect(enc5.scaledStats.hp).toBeGreaterThan(enc1.scaledStats.hp);
   });
 
-  it('onBossVictory awards meta-loot to runState', () => {
-    // metaLootPerBoss = 10 from difficulty.json
-    setRNG({ next: () => 0.5 });
+  it('onBossVictory awards boss material drops to runState', () => {
+    // Boss drops: essence 3-6, crystal 2-4 with rng=0 -> min values
+    setRNG({ next: () => 0 });
     const run = makeRunState();
-    const origMetaLoot = run.economy.metaLoot;
+    const origEssence = run.economy.materials.essence;
     const result = onBossVictory(run);
-    expect(result.metaLootAwarded).toBe(10);
-    expect(run.economy.metaLoot).toBe(origMetaLoot + 10);
+    expect(result.materialsAwarded.essence).toBeGreaterThanOrEqual(3);
+    expect(result.materialsAwarded.crystal).toBeGreaterThanOrEqual(2);
+    expect(run.economy.materials.essence).toBe(origEssence + result.materialsAwarded.essence);
   });
 
-  it('getBossExitChoiceData returns safe exit with 100% meta-loot', () => {
+  it('getBossExitChoiceData returns safe exit with full materials', () => {
     const run = makeRunState();
     const data = getBossExitChoiceData(run);
     expect(data.safeExitReward.exitType).toBe('safe');
-    expect(data.safeExitReward.metaLoot).toBe(run.economy.metaLoot);
+    expect(data.safeExitReward.materials).toEqual(run.economy.materials);
     expect(data.safeExitReward.xp).toBe(run.hero.xp);
   });
 

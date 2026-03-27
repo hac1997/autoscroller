@@ -4,7 +4,7 @@ import passivesData from '../data/json/passives.json';
 
 export interface UpgradeResult {
   success: boolean;
-  reason?: 'insufficient_meta_loot' | 'max_level';
+  reason?: 'insufficient_materials' | 'max_level';
   updatedState?: MetaState;
   newUnlocks?: { cards?: string[]; relics?: string[]; tiles?: string[]; passives?: string[] };
 }
@@ -31,7 +31,7 @@ export function upgradeBuilding(buildingKey: string, state: MetaState): UpgradeR
   const cost = nextTier.cost as Record<string, number>;
   for (const [mat, required] of Object.entries(cost)) {
     if ((state.materials[mat] ?? 0) < required) {
-      return { success: false, reason: 'insufficient_meta_loot' };
+      return { success: false, reason: 'insufficient_materials' };
     }
   }
 
@@ -61,6 +61,24 @@ export function upgradeBuilding(buildingKey: string, state: MetaState): UpgradeR
   return { success: true, updatedState: updated, newUnlocks };
 }
 
+// ── Storehouse effects ───────────────────────────────────────
+
+export function getStorehouseEffects(storehouseLevel: number): { gatheringBoost: number; deathRetention: number } {
+  if (storehouseLevel === 0) return { gatheringBoost: 0, deathRetention: 0.10 };
+  const building = (buildingsData as any).storehouse;
+  let gatheringBoost = 0;
+  let deathRetention = 0.10; // base death retention
+  for (const tier of building.tiers) {
+    if (tier.level <= storehouseLevel) {
+      if (tier.effect?.gatheringBoost !== undefined) gatheringBoost = tier.effect.gatheringBoost;
+      if (tier.effect?.deathRetention !== undefined) deathRetention = tier.effect.deathRetention;
+    }
+  }
+  return { gatheringBoost, deathRetention };
+}
+
+// ── Run reward banking ───────────────────────────────────────
+
 export function bankRunRewards(
   materialsEarned: Record<string, number>,
   xpEarned: number,
@@ -68,23 +86,21 @@ export function bankRunRewards(
   runSummary: { seed: string; loopsCompleted: number; bossesDefeated: number },
   state: MetaState
 ): MetaState {
-  const lootMultiplier = exitType === 'safe' ? 1.0 : 0.10;
+  const storehouseEffects = getStorehouseEffects(state.buildings.storehouse.level);
+  const materialMultiplier = exitType === 'safe' ? 1.0 : storehouseEffects.deathRetention;
   const xpMultiplier = exitType === 'safe' ? 1.0 : 0.0;
+
   const updated = structuredClone(state);
-  // Bank materials with exit multiplier
+  const bankedMaterials: Record<string, number> = {};
   for (const [mat, amount] of Object.entries(materialsEarned)) {
-    const banked = Math.floor(amount * lootMultiplier);
+    const banked = Math.floor(amount * materialMultiplier);
     if (banked > 0) {
       updated.materials[mat] = (updated.materials[mat] ?? 0) + banked;
     }
+    bankedMaterials[mat] = banked;
   }
   updated.classXP.warrior += Math.floor(xpEarned * xpMultiplier);
   updated.totalRuns += 1;
-  const bankedMaterials: Record<string, number> = {};
-  for (const [mat, amount] of Object.entries(materialsEarned)) {
-    const banked = Math.floor(amount * lootMultiplier);
-    if (banked > 0) bankedMaterials[mat] = banked;
-  }
   updated.runHistory.push({
     seed: runSummary.seed,
     loopsCompleted: runSummary.loopsCompleted,
@@ -96,6 +112,8 @@ export function bankRunRewards(
   });
   return updated;
 }
+
+// ── Passive unlocks ──────────────────────────────────────────
 
 export function checkPassiveUnlocks(state: MetaState): { updatedState: MetaState; newPassives: string[] } {
   const warriorPassives = (passivesData as any).warrior as Array<{ id: string; xpCost: number }>;

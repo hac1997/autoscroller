@@ -1,5 +1,5 @@
 import terrainEnemiesData from '../data/terrain-enemies.json';
-import difficultyConfig from '../data/difficulty.json';
+import materialsConfig from '../data/json/materials.json';
 import { getAllPlaceableTiles, type TileInventoryEntry } from './TileRegistry';
 import { getAvailableCards, getAvailableRelics } from './UnlockManager';
 
@@ -9,9 +9,10 @@ export interface UnlockState {
 }
 
 export interface LootItem {
-  type: 'gold' | 'card' | 'relic' | 'tile';
+  type: 'gold' | 'card' | 'relic' | 'tile' | 'material';
   id?: string;
   amount?: number;
+  materials?: Record<string, number>;
 }
 
 export interface LootResult {
@@ -24,12 +25,6 @@ interface TerrainPool {
 }
 
 const terrainEnemies = terrainEnemiesData as Record<string, TerrainPool>;
-
-const config = difficultyConfig as {
-  metaLootPerCombat: { min: number; max: number };
-  metaLootPerLoop: number;
-  metaLootPerBoss: number;
-};
 
 // Injectable RNG for testing
 export interface RNG {
@@ -47,6 +42,55 @@ export function setRNG(rng: RNG): void {
 export function resetRNG(): void {
   activeRNG = defaultRNG;
 }
+
+// ── Material drop system ─────────────────────────────────────
+
+export function rollMaterialDrops(
+  source: 'terrain' | 'enemy' | 'boss',
+  sourceKey: string,
+  loopCount: number,
+  rng: RNG = activeRNG,
+  gatheringBoost: number = 0
+): Record<string, number> {
+  const drops: Record<string, number> = {};
+  const boostMult = 1 + gatheringBoost;
+
+  switch (source) {
+    case 'terrain': {
+      const terrain = materialsConfig.terrainDrops[sourceKey as keyof typeof materialsConfig.terrainDrops];
+      if (!terrain) return drops;
+      const range = terrain.baseAmount.max - terrain.baseAmount.min + 1;
+      const amount = Math.floor((terrain.baseAmount.min + Math.floor(rng.next() * range)) * boostMult);
+      drops[terrain.primary] = amount;
+      if ((terrain as any).secondary && terrain.secondaryChance > 0 && rng.next() < terrain.secondaryChance) {
+        drops[(terrain as any).secondary] = Math.max(1, Math.floor(1 * boostMult));
+      }
+      break;
+    }
+    case 'enemy': {
+      const enemy = materialsConfig.enemyBonusDrops[sourceKey as keyof typeof materialsConfig.enemyBonusDrops];
+      if (!enemy) return drops;
+      if (rng.next() < enemy.chance) {
+        const range = enemy.amount.max - enemy.amount.min + 1;
+        const amount = Math.floor((enemy.amount.min + Math.floor(rng.next() * range)) * boostMult);
+        drops[enemy.material] = amount;
+      }
+      break;
+    }
+    case 'boss': {
+      const bossDrops = materialsConfig.bossDrops.materials;
+      for (const [mat, range] of Object.entries(bossDrops)) {
+        const r = (range as any).max - (range as any).min + 1;
+        const amount = Math.floor(((range as any).min + Math.floor(rng.next() * r)) * boostMult);
+        drops[mat] = amount;
+      }
+      break;
+    }
+  }
+  return drops;
+}
+
+// ── Legacy loot functions (unchanged) ────────────────────────
 
 export function rollTreasureLoot(loopCount: number, rng: RNG = activeRNG, unlockState?: UnlockState): LootResult {
   const itemCount = 1 + Math.floor(rng.next() * 3); // 1-3 items
@@ -114,23 +158,6 @@ export function rollTileDrops(
     return [{ tileType: terrainKey, count: 1 }];
   }
   return [];
-}
-
-export function rollMetaLoot(
-  source: 'combat' | 'loop' | 'boss',
-  loopCount: number,
-  rng: RNG = activeRNG
-): number {
-  switch (source) {
-    case 'combat': {
-      const range = config.metaLootPerCombat.max - config.metaLootPerCombat.min + 1;
-      return config.metaLootPerCombat.min + Math.floor(rng.next() * range);
-    }
-    case 'loop':
-      return config.metaLootPerLoop + Math.floor(loopCount * 0.5);
-    case 'boss':
-      return config.metaLootPerBoss;
-  }
 }
 
 export function getEnemyPoolForTerrain(terrainKey: string, loopCount: number): string[] {

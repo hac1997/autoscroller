@@ -1,6 +1,6 @@
-import { describe, it, expect, beforeEach, afterEach } from 'vitest';
+import { describe, it, expect, afterEach } from 'vitest';
 import {
-  rollMetaLoot,
+  rollMaterialDrops,
   getEnemyPoolForTerrain,
   rollTreasureLoot,
   rollTileDrops,
@@ -25,30 +25,65 @@ describe('LootGenerator', () => {
     resetRNG();
   });
 
-  describe('rollMetaLoot', () => {
-    it('combat returns 1-2 meta-loot', () => {
-      // rng.next() = 0 -> min + floor(0 * 2) = 1
-      const rng = createDeterministicRNG([0]);
-      const result = rollMetaLoot('combat', 1, rng);
-      expect(result).toBe(1);
+  describe('rollMaterialDrops', () => {
+    it('terrain forest returns wood between 2-4', () => {
+      // rng.next()=0 -> min + floor(0 * range) = 2; boostMult=1
+      const rng = createDeterministicRNG([0, 0.99]); // first for amount, second for secondary chance
+      const drops = rollMaterialDrops('terrain', 'forest', 1, rng);
+      expect(drops.wood).toBeGreaterThanOrEqual(2);
+      expect(drops.wood).toBeLessThanOrEqual(4);
     });
 
-    it('combat returns max 2 meta-loot', () => {
-      // rng.next() = 0.99 -> 1 + floor(0.99 * 2) = 1 + 1 = 2
-      const rng = createDeterministicRNG([0.99]);
-      const result = rollMetaLoot('combat', 1, rng);
-      expect(result).toBe(2);
+    it('terrain forest can drop secondary herbs on low roll', () => {
+      // amount roll=0.5 -> 2+floor(0.5*3)=3; secondary roll=0.1 < 0.2 -> herbs
+      const rng = createDeterministicRNG([0.5, 0.1]);
+      const drops = rollMaterialDrops('terrain', 'forest', 1, rng);
+      expect(drops.wood).toBe(3);
+      expect(drops.herbs).toBe(1);
     });
 
-    it('loop returns 5 + floor(loopCount * 0.5)', () => {
-      expect(rollMetaLoot('loop', 1)).toBe(5); // 5 + floor(0.5) = 5
-      expect(rollMetaLoot('loop', 4)).toBe(7); // 5 + floor(2) = 7
-      expect(rollMetaLoot('loop', 10)).toBe(10); // 5 + floor(5) = 10
+    it('terrain forest no secondary herbs on high roll', () => {
+      const rng = createDeterministicRNG([0.5, 0.5]); // 0.5 >= 0.2
+      const drops = rollMaterialDrops('terrain', 'forest', 1, rng);
+      expect(drops.wood).toBe(3);
+      expect(drops.herbs).toBeUndefined();
     });
 
-    it('boss returns 10 meta-loot', () => {
-      expect(rollMetaLoot('boss', 1)).toBe(10);
-      expect(rollMetaLoot('boss', 10)).toBe(10);
+    it('enemy slime returns herbs based on chance', () => {
+      // roll=0.1 < 0.3 (chance) -> drops; amount roll=0 -> min=1
+      const rng = createDeterministicRNG([0.1, 0]);
+      const drops = rollMaterialDrops('enemy', 'slime', 1, rng);
+      expect(drops.herbs).toBeGreaterThanOrEqual(1);
+    });
+
+    it('enemy slime returns empty when roll fails', () => {
+      // roll=0.5 >= 0.3 -> no drop
+      const rng = createDeterministicRNG([0.5]);
+      const drops = rollMaterialDrops('enemy', 'slime', 1, rng);
+      expect(Object.keys(drops)).toHaveLength(0);
+    });
+
+    it('boss returns essence and crystal', () => {
+      // essence: 3+floor(0*4)=3; crystal: 2+floor(0*3)=2
+      const rng = createDeterministicRNG([0, 0]);
+      const drops = rollMaterialDrops('boss', '', 1, rng);
+      expect(drops.essence).toBeGreaterThanOrEqual(3);
+      expect(drops.crystal).toBeGreaterThanOrEqual(2);
+    });
+
+    it('gatheringBoost increases material amounts', () => {
+      // With 20% boost: wood = floor(2 * 1.2) = 2 (min roll)
+      // With 20% boost and roll=0.99: wood = floor(4 * 1.2) = 4
+      const rng = createDeterministicRNG([0.99, 0.99]); // high roll, no secondary
+      const drops = rollMaterialDrops('terrain', 'forest', 1, rng, 0.20);
+      // 2+floor(0.99*3)=4, then floor(4*1.2)=4
+      expect(drops.wood).toBe(4);
+    });
+
+    it('unknown terrain returns empty', () => {
+      const rng = createDeterministicRNG([0.5]);
+      const drops = rollMaterialDrops('terrain', 'nonexistent', 1, rng);
+      expect(Object.keys(drops)).toHaveLength(0);
     });
   });
 
@@ -88,7 +123,6 @@ describe('LootGenerator', () => {
 
   describe('rollTreasureLoot', () => {
     it('returns 1-3 items', () => {
-      // itemCount = 1 + floor(0 * 3) = 1; roll = 0.1 < 0.40 -> gold; gold amount = floor((20 + 0.1*30) * sqrt(3))
       const rng = createDeterministicRNG([0, 0.1, 0.1]);
       const result = rollTreasureLoot(3, rng);
       expect(result.items.length).toBeGreaterThanOrEqual(1);
@@ -98,13 +132,13 @@ describe('LootGenerator', () => {
 
   describe('rollTileDrops', () => {
     it('returns tile drop with 15% chance', () => {
-      const rng = createDeterministicRNG([0.1]); // < 0.15 -> drop
+      const rng = createDeterministicRNG([0.1]);
       const drops = rollTileDrops('forest', 1, rng);
       expect(drops).toEqual([{ tileType: 'forest', count: 1 }]);
     });
 
     it('returns empty when roll fails', () => {
-      const rng = createDeterministicRNG([0.5]); // >= 0.15 -> no drop
+      const rng = createDeterministicRNG([0.5]);
       const drops = rollTileDrops('forest', 1, rng);
       expect(drops).toEqual([]);
     });

@@ -5,6 +5,7 @@ import {
   bankRunRewards,
   checkPassiveUnlocks,
   getBuildingTierData,
+  getStorehouseEffects,
 } from '../../src/systems/MetaProgressionSystem';
 
 describe('MetaProgressionSystem', () => {
@@ -23,12 +24,12 @@ describe('MetaProgressionSystem', () => {
       expect(result.newUnlocks!.cards).toEqual(['counter-strike', 'shield-wall']);
     });
 
-    it('returns insufficient_meta_loot when materials < cost', () => {
+    it('returns insufficient_materials when materials < cost', () => {
       const state = createDefaultMetaState();
       state.materials = { iron: 1 };
       const result = upgradeBuilding('forge', state);
       expect(result.success).toBe(false);
-      expect(result.reason).toBe('insufficient_meta_loot');
+      expect(result.reason).toBe('insufficient_materials');
     });
 
     it('returns max_level when forge is already at maxLevel', () => {
@@ -62,6 +63,31 @@ describe('MetaProgressionSystem', () => {
     });
   });
 
+  describe('getStorehouseEffects', () => {
+    it('level 0 returns base 10% death retention and no gathering boost', () => {
+      const effects = getStorehouseEffects(0);
+      expect(effects.gatheringBoost).toBe(0);
+      expect(effects.deathRetention).toBe(0.10);
+    });
+
+    it('level 1 returns 10% gathering boost', () => {
+      const effects = getStorehouseEffects(1);
+      expect(effects.gatheringBoost).toBe(0.10);
+      expect(effects.deathRetention).toBe(0.10); // no deathRetention tier at level 1
+    });
+
+    it('level 5 returns 20% gathering boost and 25% death retention', () => {
+      const effects = getStorehouseEffects(5);
+      expect(effects.gatheringBoost).toBe(0.20);
+      expect(effects.deathRetention).toBe(0.25);
+    });
+
+    it('level 8 returns max death retention of 50%', () => {
+      const effects = getStorehouseEffects(8);
+      expect(effects.deathRetention).toBe(0.50);
+    });
+  });
+
   describe('bankRunRewards', () => {
     it('adds 100% materials and 100% XP on safe exit', () => {
       const state = createDefaultMetaState();
@@ -70,11 +96,19 @@ describe('MetaProgressionSystem', () => {
       expect(result.classXP.warrior).toBe(50);
     });
 
-    it('adds 10% materials and 0 XP on death', () => {
+    it('adds 10% materials and 0 XP on death (no storehouse)', () => {
       const state = createDefaultMetaState();
       const result = bankRunRewards({ essence: 100, wood: 50 }, 50, 'death', { seed: 'abc', loopsCompleted: 3, bossesDefeated: 1 }, state);
       expect(result.materials).toEqual({ essence: 10, wood: 5 });
       expect(result.classXP.warrior).toBe(0);
+    });
+
+    it('death with storehouse level 5 retains 25% materials', () => {
+      const state = createDefaultMetaState();
+      state.buildings.storehouse.level = 5;
+      const result = bankRunRewards({ essence: 100, wood: 40 }, 50, 'death', { seed: 'abc', loopsCompleted: 3, bossesDefeated: 1 }, state);
+      expect(result.materials.essence).toBe(25);
+      expect(result.materials.wood).toBe(10);
     });
 
     it('appends a RunHistoryEntry with correct fields', () => {
