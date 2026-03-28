@@ -1,6 +1,7 @@
 import { Scene } from 'phaser';
 import { getRun } from '../state/RunState';
 import { ShopSystem } from '../systems/ShopSystem';
+import { getCardById } from '../data/DataLoader';
 
 /**
  * ShopScene -- overlay for deck management, relic purchasing, tile selling.
@@ -40,6 +41,7 @@ export class ShopScene extends Scene {
     this.buildBuyCardsSection(fontFamily);
     this.buildRemoveCardsSection(fontFamily);
     this.buildReorderSection(fontFamily);
+    this.buildUpgradeSection(fontFamily);
     this.buildBuyRelicsSection(fontFamily);
     this.buildSellTilesSection(fontFamily);
 
@@ -153,18 +155,74 @@ export class ShopScene extends Scene {
     });
   }
 
+  private buildUpgradeSection(fontFamily: string): void {
+    const run = getRun();
+    const deckCards = run.deck.active;
+    const upgradedCards = run.deck.upgradedCards ?? [];
+
+    this.add.text(140, 300, 'Upgrade Cards', {
+      fontSize: '16px', fontStyle: 'bold', color: '#ffffff', fontFamily,
+    });
+
+    const maxShow = Math.min(deckCards.length, 4);
+    for (let i = 0; i < maxShow; i++) {
+      const cardId = deckCards[i];
+      const card = getCardById(cardId);
+      const rarity = card?.rarity ?? 'common';
+      const cardName = card?.name ?? cardId;
+      const isUpgraded = upgradedCards.includes(cardId);
+      const price = ShopSystem.getUpgradePrice(rarity);
+
+      const x = 180 + i * 120;
+      const y = 340;
+      const bg = this.add.rectangle(x, y, 110, 44, 0x333333).setInteractive({ useHandCursor: true });
+      const displayName = isUpgraded ? `${cardName}+` : cardName;
+      const nameColor = isUpgraded ? '#888888' : '#ffffff';
+      const label = this.add.text(x, y - 8, displayName, {
+        fontSize: '12px', color: nameColor, fontFamily,
+      }).setOrigin(0.5);
+
+      if (isUpgraded) {
+        const upgLabel = this.add.text(x, y + 10, 'UPGRADED', {
+          fontSize: '10px', color: '#888888', fontFamily,
+        }).setOrigin(0.5);
+        bg.setAlpha(0.4); label.setAlpha(0.4); upgLabel.setAlpha(0.4);
+      } else {
+        const priceLabel = this.add.text(x, y + 10, `${price} Gold`, {
+          fontSize: '10px', color: '#ffd700', fontFamily,
+        }).setOrigin(0.5);
+
+        if (run.economy.gold < price) {
+          bg.setAlpha(0.4); label.setAlpha(0.4); priceLabel.setAlpha(0.4);
+        } else {
+          bg.on('pointerdown', () => {
+            if (ShopSystem.upgradeCard(run as any, cardId, rarity)) {
+              this.refreshBalances();
+              label.setText(`${cardName}+`);
+              label.setColor('#ffd700');
+              priceLabel.setText('UPGRADED');
+              priceLabel.setColor('#888888');
+              bg.setAlpha(0.4);
+              bg.removeInteractive();
+            }
+          });
+        }
+      }
+    }
+  }
+
   private buildBuyRelicsSection(fontFamily: string): void {
     const run = getRun();
     const runAdapter = this.getRunAdapter();
     const availableRelics = ['mysterious_amulet', 'ancient_relic', 'fire_charm'];
     const shopRelics = ShopSystem.getShopRelics(runAdapter, availableRelics);
 
-    this.add.text(140, 310, 'Buy Relics', {
+    this.add.text(140, 385, 'Buy Relics', {
       fontSize: '16px', fontStyle: 'bold', color: '#ffffff', fontFamily,
     });
 
     if (shopRelics.length === 0) {
-      this.add.text(140, 340, 'No relics in stock this visit.', {
+      this.add.text(140, 415, 'No relics in stock this visit.', {
         fontSize: '14px', color: '#aaaaaa', fontFamily,
       });
       return;
@@ -172,7 +230,7 @@ export class ShopScene extends Scene {
 
     shopRelics.forEach((relic, i) => {
       const x = 220 + i * 180;
-      const y = 345;
+      const y = 420;
       const bg = this.add.rectangle(x, y, 160, 40, 0x333333).setInteractive({ useHandCursor: true });
       const label = this.add.text(x, y - 6, relic.name, {
         fontSize: '14px', color: '#ffffff', fontFamily,
@@ -200,7 +258,7 @@ export class ShopScene extends Scene {
   private buildSellTilesSection(fontFamily: string): void {
     const run = getRun();
 
-    this.add.text(140, 385, 'Sell Tiles', {
+    this.add.text(140, 455, 'Sell Tiles', {
       fontSize: '16px', fontStyle: 'bold', color: '#ffffff', fontFamily,
     });
 
@@ -208,7 +266,7 @@ export class ShopScene extends Scene {
     const entries = Object.entries(tileInv).filter(([_, count]) => count > 0);
 
     if (entries.length === 0) {
-      this.add.text(140, 415, 'No tiles to sell.', {
+      this.add.text(140, 480, 'No tiles to sell.', {
         fontSize: '14px', color: '#aaaaaa', fontFamily,
       });
       return;
@@ -216,7 +274,7 @@ export class ShopScene extends Scene {
 
     entries.forEach(([tileType, count], i) => {
       const x = 220 + i * 160;
-      const y = 420;
+      const y = 485;
       const bg = this.add.rectangle(x, y, 140, 36, 0x333333).setInteractive({ useHandCursor: true });
       this.add.text(x - 50, y, `${tileType} x${count}`, {
         fontSize: '12px', color: '#ffffff', fontFamily,

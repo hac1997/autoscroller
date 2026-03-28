@@ -152,9 +152,27 @@ export class EventScene extends Scene {
     run.hero.maxHP = adapter.hero.maxHp;
     run.economy.gold = adapter.economy.gold;
     run.economy.tilePoints = adapter.economy.tilePoints;
-    // Materials are not modified by events (only gold/HP/cards/relics)
+    if (adapter.economy.materials) {
+      run.economy.materials = { ...adapter.economy.materials };
+    }
     run.deck.active = [...adapter.deck.order];
     run.relics = [...adapter.relics];
+
+    // Handle upgrade_card effect: upgrade a random non-upgraded card
+    for (const effect of outcome.effects) {
+      if (effect.type === 'upgrade_card' && effect.applied) {
+        const upgradedCards = run.deck.upgradedCards ?? [];
+        const upgradeable = run.deck.active.filter(id => !upgradedCards.includes(id));
+        if (upgradeable.length > 0) {
+          const pick = upgradeable[Math.floor(Math.random() * upgradeable.length)];
+          run.deck.upgradedCards = [...upgradedCards, pick];
+          // Append upgrade result to outcome description
+          outcome.description = outcome.description.replace(/\.$/, '') + `. ${pick} was upgraded to ${pick}+!`;
+        } else {
+          outcome.description = outcome.description.replace(/\.$/, '') + '. No cards to upgrade.';
+        }
+      }
+    }
 
     // Show outcome panel
     const outcomeY = 380;

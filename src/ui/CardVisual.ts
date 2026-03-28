@@ -2,6 +2,7 @@
 // Renders a card with rarity border, type indicator, name, cost, cooldown.
 
 import { getCardById } from '../data/DataLoader';
+import { getRun } from '../state/RunState';
 import type { CardCategory } from '../data/types';
 
 // ── Color Constants ─────────────────────────────────────────
@@ -57,11 +58,20 @@ export function createCardVisual(
   const strip = scene.add.rectangle(0, -h / 2 + 2, w - 4, 4, categoryColor);
   container.add(strip);
 
-  // Card name
-  const name = card ? card.name : cardId;
-  const nameText = scene.add.text(0, -4, name, {
+  // Card name -- append "+" suffix and use gold color for upgraded cards
+  let isUpgraded = false;
+  try {
+    const run = getRun();
+    isUpgraded = run.deck.upgradedCards?.includes(cardId) ?? false;
+  } catch {
+    // No active run (e.g. in menus) -- not upgraded
+  }
+  const baseName = card ? card.name : cardId;
+  const displayName = isUpgraded ? `${baseName}+` : baseName;
+  const nameColor = isUpgraded ? '#ffd700' : '#ffffff';
+  const nameText = scene.add.text(0, -4, displayName, {
     fontSize: `${Math.round(16 * scale)}px`,
-    color: '#ffffff',
+    color: nameColor,
     wordWrap: { width: w - 8 },
     align: 'center',
   }).setOrigin(0.5);
