@@ -115,13 +115,15 @@ Plans:
 
 ### Phase 6: Content Expansion
 
-**Goal:** [To be planned]
-**Requirements**: TBD
+**Goal:** Expand game content to v2 targets: 30+ cards with epic tier and upgrade system, 15+ relics with build-around types, 5+ boss types with behavioral patterns, 15+ events with material integration, 10+ synergy pairs
+**Requirements**: CONT-05, CONT-06, CONT-07, CONT-08, CONT-09
 **Depends on:** Phase 5
-**Plans:** 0 plans
+**Plans:** 3 plans
 
 Plans:
-- [ ] TBD (run /gsd:plan-phase 6 to break down)
+- [ ] 06-01-PLAN.md — Type extensions (epic rarity, CardUpgrade, BossBehavior) + all JSON content expansion (30 cards, 15 relics, 5 bosses, 15 events, 10 synergies) + building tier extensions + content tests (Wave 1)
+- [ ] 06-02-PLAN.md — Card upgrade system (ShopSystem + CardResolver + RunState) + boss behavioral patterns (EnemyAI) + event material effects (EventResolver) + unit tests (Wave 2)
+- [ ] 06-03-PLAN.md — ShopScene upgrade UI + CombatScene upgrade visuals + EventScene upgrade handling + visual checkpoint (Wave 3)
 
 ### Phase 7: Polish & Release
 
