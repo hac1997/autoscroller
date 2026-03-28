@@ -22,6 +22,13 @@ export interface MetaState {
   unlockedTiles: string[];
   runHistory: RunHistoryEntry[];
   totalRuns: number;
+  tutorialSeen: boolean;
+  audioPrefs: {
+    sfxVolume: number;   // 0-1 range
+    sfxEnabled: boolean;
+  };
+  gameSpeed: number;     // 1 or 2
+  autoSave: boolean;     // default true
   version: number;
 }
 
@@ -53,11 +60,16 @@ export function createDefaultMetaState(): MetaState {
     unlockedTiles: [],
     runHistory: [],
     totalRuns: 0,
-    version: 2,
+    tutorialSeen: false,
+    audioPrefs: { sfxVolume: 1, sfxEnabled: true },
+    gameSpeed: 1,
+    autoSave: true,
+    version: 3,
   };
 }
 
 export function migrateMetaState(raw: any): MetaState {
+  // v1 -> v2 migration
   if (!raw || !raw.version || raw.version < 2) {
     const materials: Record<string, number> = {};
     if (typeof raw?.metaLoot === 'number' && raw.metaLoot > 0) {
@@ -73,7 +85,7 @@ export function migrateMetaState(raw: any): MetaState {
         ? { essence: entry.metaLootEarned }
         : (entry.materialsEarned ?? {}),
     }));
-    return {
+    raw = {
       ...createDefaultMetaState(),
       ...raw,
       materials,
@@ -82,5 +94,18 @@ export function migrateMetaState(raw: any): MetaState {
       version: 2,
     };
   }
+
+  // v2 -> v3 migration
+  if (raw.version === 2) {
+    raw = {
+      ...raw,
+      tutorialSeen: raw.tutorialSeen ?? false,
+      audioPrefs: raw.audioPrefs ?? { sfxVolume: 1, sfxEnabled: true },
+      gameSpeed: raw.gameSpeed ?? 1,
+      autoSave: raw.autoSave ?? true,
+      version: 3,
+    };
+  }
+
   return raw as MetaState;
 }
