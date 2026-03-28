@@ -127,10 +127,12 @@ Plans:
 
 ### Phase 7: Polish & Release
 
-**Goal:** [To be planned]
-**Requirements**: TBD
+**Goal:** Final v1 polish pass: rewrite tutorial with accurate gameplay content, add Web Audio API sound effects, standardize UI styling and scene transitions across all scenes, expand settings with volume/speed/save controls, close remaining requirement gaps (CMBT-05, PLSH-01)
+**Requirements**: POLISH-AUDIO, POLISH-STYLE, POLISH-TUTORIAL, POLISH-SPEED, POLISH-SETTINGS, POLISH-TRANSITIONS, POLISH-META, CMBT-05, PLSH-01
 **Depends on:** Phase 6
-**Plans:** 0 plans
+**Plans:** 3 plans
 
 Plans:
-- [ ] TBD (run /gsd:plan-phase 7 to break down)
+- [ ] 07-01-PLAN.md — StyleConstants + SoundDefinitions + AudioManager Web Audio rewrite + MetaState v3 migration (Wave 1)
+- [ ] 07-02-PLAN.md — Tutorial rewrite + SettingsScene expansion + game speed wiring + CMBT-05/PLSH-01 status updates (Wave 2)
+- [ ] 07-03-PLAN.md — Camera fade transitions + visual consistency pass across all ~25 scenes + human verification checkpoint (Wave 2)
