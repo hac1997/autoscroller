@@ -5,6 +5,7 @@ import { getDifficultyConfig } from '../systems/DifficultyScaler';
 import { LoopHUD } from '../ui/LoopHUD';
 import { LoopCelebration } from '../ui/LoopCelebration';
 import { TileVisual } from '../ui/TileVisual';
+import { loadMetaState } from '../systems/MetaPersistence';
 
 /**
  * GameScene -- thin Phaser wrapper over LoopRunner.
@@ -27,12 +28,19 @@ export class GameScene extends Scene {
   private worldOffset: number = 0;
   private celebrationPlaying: boolean = false;
 
+  // Game speed multiplier (1x or 2x from settings)
+  private gameSpeed: number = 1;
+
   constructor() {
     super('GameScene');
   }
 
-  create(): void {
+  async create(): Promise<void> {
     const run = getRun();
+
+    // Load game speed from settings
+    const metaState = await loadMetaState();
+    this.gameSpeed = metaState.gameSpeed ?? 1;
 
     // Background
     this.cameras.main.setBackgroundColor(0x1a1a2e);
@@ -144,8 +152,8 @@ export class GameScene extends Scene {
   update(_time: number, delta: number): void {
     if (this.scene.isPaused() || this.celebrationPlaying) return;
 
-    // Tick the loop runner
-    this.loopRunner.tick(delta);
+    // Tick the loop runner (game speed multiplier from settings)
+    this.loopRunner.tick(delta * this.gameSpeed);
 
     // Update hero world position
     const heroWorldX = this.worldOffset + this.loopRunState.loop.positionInLoop;

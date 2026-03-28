@@ -20,7 +20,7 @@ Requirements for initial release. Each maps to roadmap phases.
 - [x] **CMBT-02**: Each card has its own cooldown (light cards are fast, heavy cards are slow)
 - [x] **CMBT-03**: Card queue is visible during combat — player sees entire deck order and upcoming cards
 - [x] **CMBT-04**: Synergy triggers are visually highlighted during combat (combo indicator)
-- [ ] **CMBT-05**: Post-combat summary screen shows damage dealt/received, cards played, combos triggered
+- [x] **CMBT-05**: Post-combat summary screen shows damage dealt/received, cards played, combos triggered
 - [x] **CMBT-06**: When deck is exhausted, it reshuffles and restarts
 - [x] **CMBT-07**: Cards are typed: attacks, defenses, and spells
 - [x] **CMBT-08**: Attacks and defenses cost stamina; spells cost mana
@@ -103,7 +103,7 @@ Requirements for initial release. Each maps to roadmap phases.
 
 ### Polish
 
-- [ ] **PLSH-01**: Death screen with comprehensive run statistics (loops completed, damage dealt, cards played, cause of death)
+- [x] **PLSH-01**: Death screen with comprehensive run statistics (loops completed, damage dealt, cards played, cause of death)
 
 ## v2 Requirements
 
@@ -172,7 +172,7 @@ Updated during roadmap creation.
 | CMBT-02 | Phase 2 | Complete |
 | CMBT-03 | Phase 2 | Complete |
 | CMBT-04 | Phase 2 | Complete |
-| CMBT-05 | Phase 2 | Pending |
+| CMBT-05 | Phase 2 | Complete |
 | CMBT-06 | Phase 2 | Complete |
 | CMBT-07 | Phase 2 | Complete |
 | CMBT-08 | Phase 2 | Complete |
@@ -192,7 +192,7 @@ Updated during roadmap creation.
 | HERO-02 | Phase 2 | Complete |
 | HERO-03 | Phase 2 | Complete |
 | HERO-04 | Phase 2 | Complete |
-| PLSH-01 | Phase 2 | Pending |
+| PLSH-01 | Phase 2 | Complete |
 | LOOP-01 | Phase 3 | Complete |
 | LOOP-02 | Phase 3 | Complete |
 | LOOP-03 | Phase 3 | Complete |

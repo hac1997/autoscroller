@@ -13,6 +13,7 @@ import { showSynergyFlash } from '../ui/SynergyFlash';
 import { CombatEffects } from '../effects/CombatEffects';
 import { earnXP, getXPForEnemy, loseAllRunXP } from '../systems/hero/XPSystem';
 import { scaleEnemy } from '../data/EnemyDefinitions';
+import { loadMetaState } from '../systems/MetaPersistence';
 
 export class CombatScene extends Scene {
   private engine!: CombatEngine;
@@ -26,6 +27,9 @@ export class CombatScene extends Scene {
   private heroLabel!: Phaser.GameObjects.Text;
   private enemyLabel!: Phaser.GameObjects.Text;
 
+  // Game speed multiplier (1x or 2x from settings)
+  private gameSpeed: number = 1;
+
   // Event handler references for cleanup
   private onCardPlayed!: (data: GameEvents['combat:card-played']) => void;
   private onSynergyTriggered!: (data: GameEvents['combat:synergy-triggered']) => void;
@@ -38,9 +42,13 @@ export class CombatScene extends Scene {
     super('CombatScene');
   }
 
-  create(data: { enemyId: string }): void {
+  async create(data: { enemyId: string }): Promise<void> {
     const run = getRun();
     run.isInCombat = true;
+
+    // Load game speed from settings
+    const metaState = await loadMetaState();
+    this.gameSpeed = metaState.gameSpeed ?? 1;
 
     // Background
     this.cameras.main.setBackgroundColor(0x1a1a2e);
@@ -200,7 +208,7 @@ export class CombatScene extends Scene {
 
   update(_time: number, delta: number): void {
     if (this.engine && !this.engine.isComplete()) {
-      this.engine.tick(delta);
+      this.engine.tick(delta * this.gameSpeed);
 
       // Update HUD each frame
       this.hud.update(
