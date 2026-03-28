@@ -2,7 +2,7 @@
 // Zero Phaser imports. Fully mutable during combat tick loop.
 
 import type { RunState } from '../../state/RunState';
-import type { EnemyDefinition } from '../../data/types';
+import type { EnemyDefinition, BossBehavior } from '../../data/types';
 import { SeededRNG } from '../SeededRNG';
 
 export interface CombatState {
@@ -34,6 +34,10 @@ export interface CombatState {
 
   /** Flag set by EnemyAI stun effect -- skips next hero card */
   heroStunned: boolean;
+  /** Card IDs that are upgraded for this combat */
+  upgradedCards: string[];
+  /** Boss behavioral patterns (empty for non-boss enemies) */
+  behaviors: BossBehavior[];
 }
 
 /**
@@ -67,5 +71,7 @@ export function createCombatState(run: RunState, enemy: EnemyDefinition): Combat
 
     activePassives: [],
     heroStunned: false,
+    upgradedCards: run.deck.upgradedCards ?? [],
+    behaviors: (enemy as any).behaviors ?? [],
   };
 }

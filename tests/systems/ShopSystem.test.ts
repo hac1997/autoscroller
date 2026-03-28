@@ -184,4 +184,51 @@ describe('ShopSystem', () => {
       expect(r.relicId).not.toBe('fire_ring');
     }
   });
+
+  // ── Card Upgrades ──────────────────────────────────────────
+  describe('card upgrades', () => {
+    it('getUpgradePrice returns correct prices per rarity', () => {
+      expect(ShopSystem.getUpgradePrice('common')).toBe(50);
+      expect(ShopSystem.getUpgradePrice('uncommon')).toBe(80);
+      expect(ShopSystem.getUpgradePrice('rare')).toBe(120);
+      expect(ShopSystem.getUpgradePrice('epic')).toBe(200);
+    });
+
+    it('getUpgradePrice returns 100 for unknown rarity', () => {
+      expect(ShopSystem.getUpgradePrice('mythic')).toBe(100);
+    });
+
+    it('upgradeCard deducts gold and tracks cardId', () => {
+      const run = makeRunState();
+      run.deck.upgradedCards = [];
+      const result = ShopSystem.upgradeCard(run, 'strike', 'common');
+      expect(result).toBe(true);
+      expect(run.economy.gold).toBe(150); // 200 - 50
+      expect(run.deck.upgradedCards).toContain('strike');
+    });
+
+    it('upgradeCard returns false if insufficient gold', () => {
+      const run = makeRunState({ economy: { gold: 10, tilePoints: 0, tileInventory: {}, materials: {} } });
+      run.deck.upgradedCards = [];
+      const result = ShopSystem.upgradeCard(run, 'strike', 'common');
+      expect(result).toBe(false);
+      expect(run.economy.gold).toBe(10);
+    });
+
+    it('upgradeCard returns false if already upgraded', () => {
+      const run = makeRunState();
+      run.deck.upgradedCards = ['strike'];
+      const result = ShopSystem.upgradeCard(run, 'strike', 'common');
+      expect(result).toBe(false);
+      expect(run.economy.gold).toBe(200); // unchanged
+    });
+
+    it('upgradeCard initializes upgradedCards if missing', () => {
+      const run = makeRunState();
+      // upgradedCards not set (undefined)
+      const result = ShopSystem.upgradeCard(run, 'defend', 'common');
+      expect(result).toBe(true);
+      expect(run.deck.upgradedCards).toContain('defend');
+    });
+  });
 });

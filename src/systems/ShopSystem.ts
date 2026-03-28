@@ -17,7 +17,7 @@ export interface ShopRelic {
 }
 
 interface RunState {
-  deck: { cards: any[]; order: string[] };
+  deck: { cards: any[]; order: string[]; upgradedCards?: string[] };
   economy: { gold: number; tilePoints: number };
   tileInventory: Array<{ tileType: string; count: number }>;
   relics: string[];
@@ -114,6 +114,32 @@ export class ShopSystem {
 
   static buildAvailableCardIds(metaUnlockedCards: string[]): string[] {
     return getAvailableCards(metaUnlockedCards).map(c => c.id);
+  }
+
+  // ── Card upgrade operations ──────────────────────────────────
+
+  static getUpgradePrice(rarity: string): number {
+    const basePrices: Record<string, number> = {
+      common: 50, uncommon: 80, rare: 120, epic: 200,
+    };
+    return basePrices[rarity] ?? 100;
+  }
+
+  static upgradeCard(
+    runState: RunState,
+    cardId: string,
+    rarity: string,
+  ): boolean {
+    const upgradedCards = runState.deck.upgradedCards ?? [];
+    const price = ShopSystem.getUpgradePrice(rarity);
+    if (runState.economy.gold < price) return false;
+    if (upgradedCards.includes(cardId)) return false;
+    runState.economy.gold -= price;
+    upgradedCards.push(cardId);
+    if (!runState.deck.upgradedCards) {
+      runState.deck.upgradedCards = upgradedCards;
+    }
+    return true;
   }
 
   static buildAvailableRelicIds(metaUnlockedRelics: string[]): string[] {

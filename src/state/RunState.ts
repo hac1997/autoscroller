@@ -31,6 +31,8 @@ export interface DeckState {
   active: string[];
   /** Card IDs in inventory (not currently in deck) mapped to quantity */
   inventory: Record<string, number>;
+  /** Card IDs that have been upgraded (display as CardName+) */
+  upgradedCards: string[];
 }
 
 export interface TileData {
@@ -98,6 +100,7 @@ export function createNewRun(generation: number = 1): RunState {
     deck: {
       active: [...WARRIOR_STARTER_DECK],
       inventory: {},
+      upgradedCards: [],
     },
     loop: {
       count: 0,

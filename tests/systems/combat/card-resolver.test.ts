@@ -232,4 +232,73 @@ describe('CardResolver', () => {
       expect(state.heroMana).toBe(30); // capped at max
     });
   });
+
+  describe('upgrade resolution', () => {
+    it('uses upgraded effects when card is in upgradedCards', () => {
+      const state = makeState({ upgradedCards: ['strike'] } as any);
+      const card = makeCard({
+        id: 'strike',
+        effects: [{ type: 'damage', value: 10, target: 'enemy' }],
+        upgraded: {
+          effects: [{ type: 'damage', value: 15, target: 'enemy' }],
+        },
+      });
+      const result = resolver.resolve(card, state, null);
+      expect(result.totalDamage).toBe(15);
+      expect(state.enemyHP).toBe(85);
+    });
+
+    it('uses base effects when card is not in upgradedCards', () => {
+      const state = makeState({ upgradedCards: [] } as any);
+      const card = makeCard({
+        id: 'strike',
+        effects: [{ type: 'damage', value: 10, target: 'enemy' }],
+        upgraded: {
+          effects: [{ type: 'damage', value: 15, target: 'enemy' }],
+        },
+      });
+      const result = resolver.resolve(card, state, null);
+      expect(result.totalDamage).toBe(10);
+      expect(state.enemyHP).toBe(90);
+    });
+
+    it('uses upgraded cost when card is in upgradedCards', () => {
+      const state = makeState({ upgradedCards: ['fireball'], heroMana: 30 } as any);
+      const card = makeCard({
+        id: 'fireball',
+        effects: [{ type: 'damage', value: 15, target: 'enemy' }],
+        cost: { mana: 5 },
+        upgraded: {
+          cost: { mana: 3 },
+        },
+      });
+      resolver.resolve(card, state, null);
+      expect(state.heroMana).toBe(27); // 30 - 3 (upgraded cost)
+    });
+
+    it('uses base cost when card is not in upgradedCards', () => {
+      const state = makeState({ upgradedCards: [], heroMana: 30 } as any);
+      const card = makeCard({
+        id: 'fireball',
+        effects: [{ type: 'damage', value: 15, target: 'enemy' }],
+        cost: { mana: 5 },
+        upgraded: {
+          cost: { mana: 3 },
+        },
+      });
+      resolver.resolve(card, state, null);
+      expect(state.heroMana).toBe(25); // 30 - 5 (base cost)
+    });
+
+    it('canAfford uses upgraded cost when card is in upgradedCards', () => {
+      const state = makeState({ upgradedCards: ['fireball'], heroMana: 4 } as any);
+      const card = makeCard({
+        id: 'fireball',
+        cost: { mana: 5 },
+        upgraded: { cost: { mana: 3 } },
+      });
+      // base cost 5 > mana 4, but upgraded cost 3 <= mana 4
+      expect(resolver.canAfford(card, state)).toBe(true);
+    });
+  });
 });
