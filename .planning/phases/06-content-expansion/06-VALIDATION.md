@@ -38,14 +38,12 @@ created: 2026-03-28
 
 | Task ID | Plan | Wave | Requirement | Test Type | Automated Command | File Exists | Status |
 |---------|------|------|-------------|-----------|-------------------|-------------|--------|
-| 06-01-01 | 01 | 1 | CONT-05 | unit | `npx vitest run src/data/__tests__/cards.test.ts` | ❌ W0 | ⬜ pending |
-| 06-01-02 | 01 | 1 | CONT-06 | unit | `npx vitest run src/data/__tests__/relics.test.ts` | ❌ W0 | ⬜ pending |
-| 06-01-03 | 01 | 1 | CONT-07 | unit | `npx vitest run src/data/__tests__/enemies.test.ts` | ❌ W0 | ⬜ pending |
-| 06-02-01 | 02 | 1 | CONT-08 | unit | `npx vitest run src/data/__tests__/events.test.ts` | ❌ W0 | ⬜ pending |
-| 06-02-02 | 02 | 1 | CONT-09 | unit | `npx vitest run src/systems/__tests__/card-upgrade.test.ts` | ❌ W0 | ⬜ pending |
-| 06-03-01 | 03 | 2 | CONT-07 | unit | `npx vitest run src/systems/__tests__/boss-ai.test.ts` | ❌ W0 | ⬜ pending |
-| 06-03-02 | 03 | 2 | CONT-05 | unit | `npx vitest run src/systems/__tests__/synergy.test.ts` | ❌ W0 | ⬜ pending |
-| 06-04-01 | 04 | 3 | CONT-09 | unit | `npx vitest run src/scenes/__tests__/shop-upgrade.test.ts` | ❌ W0 | ⬜ pending |
+| 06-01-01 | 01 | 1 | CONT-05/06/07/08 | unit | `npx vitest run tests/content/content.test.ts` | ✅ (update assertions) | ⬜ pending |
+| 06-01-02 | 01 | 1 | CONT-05/06/07/08 | unit | `npx vitest run tests/content/content.test.ts --reporter=verbose` | ✅ | ⬜ pending |
+| 06-02-01 | 02 | 2 | CONT-09 | unit | `npx vitest run tests/systems/ShopSystem.test.ts tests/systems/combat/card-resolver.test.ts` | ✅ | ⬜ pending |
+| 06-02-02 | 02 | 2 | CONT-07/08 | unit | `npx vitest run tests/systems/combat/enemy-ai.test.ts tests/systems/EventResolver.test.ts` | ✅ | ⬜ pending |
+| 06-03-01 | 03 | 3 | CONT-09 | unit | `npx vitest run --reporter=verbose` | ✅ | ⬜ pending |
+| 06-03-02 | 03 | 3 | ALL | checkpoint | Human visual verification | N/A | ⬜ pending |
 
 *Status: ⬜ pending · ✅ green · ❌ red · ⚠️ flaky*
 
@@ -53,14 +51,11 @@ created: 2026-03-28
 
 ## Wave 0 Requirements
 
-- [ ] Update existing content count assertions in tests (cards: 15→30, relics: 8→15, enemies: 9→14, events: 5→15)
-- [ ] `src/data/__tests__/cards.test.ts` — card schema validation, rarity distribution, upgrade field presence
-- [ ] `src/data/__tests__/relics.test.ts` — relic schema validation, trigger coverage
-- [ ] `src/data/__tests__/enemies.test.ts` — boss behavioral pattern validation
-- [ ] `src/data/__tests__/events.test.ts` — event schema, effect type coverage, material integration
-- [ ] `src/systems/__tests__/card-upgrade.test.ts` — upgrade resolution, cost calculation
-- [ ] `src/systems/__tests__/boss-ai.test.ts` — enrage/shield/multi-hit/drain/summon patterns
-- [ ] `src/systems/__tests__/synergy.test.ts` — new synergy pair resolution
+- [ ] Update existing content count assertions in `tests/content/content.test.ts` (cards: 15→30, relics: 8→15, events: 5→15)
+- [ ] Add schema validation tests for new fields (epic rarity, upgraded object, behaviors array, material event effects)
+- [ ] Existing test files cover all system extensions: `tests/systems/ShopSystem.test.ts`, `tests/systems/combat/card-resolver.test.ts`, `tests/systems/combat/enemy-ai.test.ts`, `tests/systems/EventResolver.test.ts`
+
+*Note: `tests/content/content.test.ts` already exists — needs assertion count updates, not creation.*
 
 ---
 
