@@ -1,5 +1,6 @@
 import { Scene } from 'phaser';
 import { getRun } from '../state/RunState';
+import { COLORS, FONTS, LAYOUT, createButton } from '../ui/StyleConstants';
 import {
   getRandomEvent,
   isChoiceAvailable,
@@ -22,10 +23,10 @@ export class EventScene extends Scene {
 
   create(): void {
     this.choiceButtons = [];
-    const fontFamily = 'Inter, system-ui, Avenir, Helvetica, Arial, sans-serif';
+    const fontFamily = FONTS.family;
 
     // Overlay panel
-    this.add.rectangle(400, 300, 550, 400, 0x222222, 0.9).setInteractive();
+    this.add.rectangle(400, 300, 550, 400, COLORS.panel, LAYOUT.panelAlpha).setInteractive();
 
     // Title
     this.add.text(400, 120, 'Event', {
@@ -37,12 +38,12 @@ export class EventScene extends Scene {
 
     // Event title
     this.add.text(400, 150, this.currentEvent.title, {
-      fontSize: '18px', fontStyle: 'bold', color: '#ffffff', fontFamily,
+      fontSize: '18px', fontStyle: 'bold', color: COLORS.textPrimary, fontFamily,
     }).setOrigin(0.5);
 
     // Narrative text
     this.add.text(150, 175, this.currentEvent.description, {
-      fontSize: '16px', color: '#ffffff', fontFamily,
+      fontSize: '16px', color: COLORS.textPrimary, fontFamily,
       wordWrap: { width: 500 },
     });
 
@@ -71,7 +72,7 @@ export class EventScene extends Scene {
 
       // Choice text
       const choiceText = this.add.text(-220, 0, choice.text, {
-        fontSize: '16px', color: '#ffffff', fontFamily,
+        fontSize: '16px', color: COLORS.textPrimary, fontFamily,
       }).setOrigin(0, 0.5);
       container.add(choiceText);
 
@@ -87,7 +88,7 @@ export class EventScene extends Scene {
             : '';
         if (reqText) {
           const req = this.add.text(220, 0, reqText, {
-            fontSize: '12px', color: '#ff0000', fontFamily,
+            fontSize: '12px', color: COLORS.danger, fontFamily,
           }).setOrigin(1, 0.5);
           container.add(req);
         }
@@ -120,7 +121,7 @@ export class EventScene extends Scene {
   }
 
   private onChoiceSelected(choiceIndex: number): void {
-    const fontFamily = 'Inter, system-ui, Avenir, Helvetica, Arial, sans-serif';
+    const fontFamily = FONTS.family;
 
     // Fade out non-selected choices
     this.choiceButtons.forEach((container, i) => {
@@ -186,7 +187,7 @@ export class EventScene extends Scene {
     if (!outcomeStr) outcomeStr = outcome.description;
 
     const outcomeText = this.add.text(400, outcomeY, outcome.description, {
-      fontSize: '16px', color: '#ffffff', fontFamily,
+      fontSize: '16px', color: COLORS.textPrimary, fontFamily,
       wordWrap: { width: 480 },
       align: 'center',
     }).setOrigin(0.5).setAlpha(0);
@@ -198,9 +199,8 @@ export class EventScene extends Scene {
     });
 
     // "Continue" button
-    const continueBtn = this.add.text(400, 460, 'Continue', {
-      fontSize: '24px', fontStyle: 'bold', color: '#ffd700', fontFamily,
-    }).setOrigin(0.5).setInteractive({ useHandCursor: true }).setAlpha(0);
+    const continueBtn = createButton(this, 400, 460, 'Continue', () => this.close(), 'primary');
+    continueBtn.setAlpha(0);
 
     this.tweens.add({
       targets: continueBtn,
@@ -208,10 +208,6 @@ export class EventScene extends Scene {
       duration: 300,
       delay: 200,
     });
-
-    continueBtn.on('pointerover', () => continueBtn.setColor('#ffffff'));
-    continueBtn.on('pointerout', () => continueBtn.setColor('#ffd700'));
-    continueBtn.on('pointerdown', () => this.close());
   }
 
   private close(): void {

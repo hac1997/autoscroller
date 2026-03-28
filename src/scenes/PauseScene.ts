@@ -1,5 +1,6 @@
 import { Scene } from 'phaser';
 import { getRun } from '../state/RunState';
+import { COLORS, FONTS, LAYOUT, createButton } from '../ui/StyleConstants';
 
 /**
  * PauseScene -- overlay with Resume, Settings, Abandon Run buttons.
@@ -15,60 +16,40 @@ export class PauseScene extends Scene {
     getRun();
 
     // Overlay panel
-    this.add.rectangle(400, 300, 400, 500, 0x222222, 0.9).setInteractive();
+    this.add.rectangle(400, 300, 400, 500, COLORS.panel, LAYOUT.panelAlpha).setInteractive();
 
     // Title
     this.add.text(400, 120, 'PAUSED', {
       fontSize: '32px',
       fontStyle: 'bold',
-      color: '#ffffff',
+      color: COLORS.textPrimary,
+      fontFamily: FONTS.family,
     }).setOrigin(0.5);
 
     // Resume button
-    const resumeBtn = this.add.text(400, 220, 'Resume', {
-      fontSize: '24px',
-      fontStyle: 'bold',
-      color: '#ffd700',
-    }).setOrigin(0.5).setInteractive({ useHandCursor: true });
-
-    resumeBtn.on('pointerover', () => resumeBtn.setColor('#ffffff'));
-    resumeBtn.on('pointerout', () => resumeBtn.setColor('#ffd700'));
-    resumeBtn.on('pointerdown', () => this.resume());
+    createButton(this, 400, 220, 'Resume', () => this.resume(), 'primary');
 
     // View Deck button
-    const deckBtn = this.add.text(400, 280, 'View Deck', {
-      fontSize: '16px',
-      color: '#ffd700',
-    }).setOrigin(0.5).setInteractive({ useHandCursor: true });
-
-    deckBtn.on('pointerover', () => deckBtn.setColor('#ffffff'));
-    deckBtn.on('pointerout', () => deckBtn.setColor('#ffd700'));
-    deckBtn.on('pointerdown', () => {
+    createButton(this, 400, 280, 'View Deck', () => {
       this.scene.pause();
       this.scene.launch('DeckCustomizationScene');
-    });
+    }, 'secondary');
 
     // Settings button
-    const settingsBtn = this.add.text(400, 340, 'Settings', {
-      fontSize: '16px',
-      color: '#ffd700',
-    }).setOrigin(0.5).setInteractive({ useHandCursor: true });
-
-    settingsBtn.on('pointerover', () => settingsBtn.setColor('#ffffff'));
-    settingsBtn.on('pointerout', () => settingsBtn.setColor('#ffd700'));
-    settingsBtn.on('pointerdown', () => {
+    createButton(this, 400, 340, 'Settings', () => {
       this.scene.pause();
       this.scene.launch('SettingsScene');
-    });
+    }, 'secondary');
 
     // Abandon Run button
     const abandonBtn = this.add.text(400, 420, 'Abandon Run', {
       fontSize: '16px',
-      color: '#ff0000',
+      color: COLORS.danger,
+      fontFamily: FONTS.family,
     }).setOrigin(0.5).setInteractive({ useHandCursor: true });
 
-    abandonBtn.on('pointerover', () => abandonBtn.setColor('#ffffff'));
-    abandonBtn.on('pointerout', () => abandonBtn.setColor('#ff0000'));
+    abandonBtn.on('pointerover', () => abandonBtn.setColor(COLORS.accentHover));
+    abandonBtn.on('pointerout', () => abandonBtn.setColor(COLORS.danger));
     abandonBtn.on('pointerdown', () => {
       this.scene.stop('GameScene');
       this.scene.stop();

@@ -93,19 +93,19 @@ export class CombatScene extends Scene {
     // Hero (left side) - blue square with label
     this.heroSprite = this.add.rectangle(200, 350, 64, 64, 0x4488ff).setDepth(10);
     this.heroLabel = this.add.text(200, 300, 'Hero', {
-      fontSize: '16px', fontStyle: 'bold', color: '#ffffff',
+      fontSize: '16px', fontStyle: 'bold', color: COLORS.textPrimary,
     }).setOrigin(0.5).setDepth(10);
 
     // Enemy (right side) - colored square with name
     const enemyColor = enemyDef.color ?? 0xff0000;
     this.enemySprite = this.add.rectangle(550, 350, 64, 64, enemyColor).setDepth(10);
     this.enemyLabel = this.add.text(550, 300, enemyDef.name, {
-      fontSize: '16px', fontStyle: 'bold', color: '#ffffff',
+      fontSize: '16px', fontStyle: 'bold', color: COLORS.textPrimary,
     }).setOrigin(0.5).setDepth(10);
 
     // "VS" divider
     this.add.text(375, 350, 'VS', {
-      fontSize: '24px', fontStyle: 'bold', color: '#ffd700',
+      fontSize: '24px', fontStyle: 'bold', color: COLORS.accent,
     }).setOrigin(0.5).setDepth(10).setAlpha(0.6);
 
     // Create UI components
@@ -170,7 +170,7 @@ export class CombatScene extends Scene {
 
     this.onCombatEnd = (eventData) => {
       const resultText = eventData.result === 'victory' ? 'VICTORY' : 'DEFEAT';
-      const resultColor = eventData.result === 'victory' ? '#ffd700' : '#ff0000';
+      const resultColor = eventData.result === 'victory' ? COLORS.accent : COLORS.danger;
 
       const displayText = this.add.text(400, 300, resultText, {
         fontSize: '32px',

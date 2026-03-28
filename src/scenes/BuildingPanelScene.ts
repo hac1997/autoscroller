@@ -3,6 +3,7 @@ import { MetaState } from '../state/MetaState';
 import { upgradeBuilding, getBuildingTierData } from '../systems/MetaProgressionSystem';
 import { saveMetaState } from '../systems/MetaPersistence';
 import { playUnlockCelebration } from '../ui/UnlockCelebration';
+import { COLORS, FONTS, LAYOUT, createButton } from '../ui/StyleConstants';
 
 const BUILDING_COLORS: Record<string, number> = {
   forge: 0xcc3333,
@@ -40,7 +41,7 @@ export class BuildingPanelScene extends Scene {
     // Clear previous content
     this.children.removeAll(true);
 
-    const fontFamily = 'Inter, system-ui, Avenir, Helvetica, Arial, sans-serif';
+    const fontFamily = FONTS.family;
 
     // Semi-transparent backdrop -- delay interactivity to prevent same-frame click-through
     const backdrop = this.add.rectangle(400, 300, 800, 600, 0x000000, 0.5);
@@ -50,7 +51,7 @@ export class BuildingPanelScene extends Scene {
     });
 
     // Panel
-    const panel = this.add.rectangle(400, 300, 500, 420, 0x222222, 0.95);
+    const panel = this.add.rectangle(400, 300, 500, 420, COLORS.panel, 0.95);
     panel.setInteractive(); // absorb clicks
 
     const tierData = getBuildingTierData(this.buildingKey);
@@ -72,14 +73,14 @@ export class BuildingPanelScene extends Scene {
     // Description
     this.add.text(400, 143, BUILDING_DESCRIPTIONS[this.buildingKey] ?? '', {
       fontSize: '16px',
-      color: '#aaaaaa',
+      color: COLORS.textSecondary,
       fontFamily,
     }).setOrigin(0.5);
 
     // Current tier
     this.add.text(400, 167, `Level ${currentLevel} / ${maxLevel}`, {
       fontSize: '16px',
-      color: '#ffffff',
+      color: COLORS.textPrimary,
       fontFamily,
     }).setOrigin(0.5);
 
@@ -96,7 +97,7 @@ export class BuildingPanelScene extends Scene {
     this.add.text(200, 210, 'Unlocks:', {
       fontSize: '24px',
       fontStyle: 'bold',
-      color: '#ffffff',
+      color: COLORS.textPrimary,
       fontFamily,
     });
 
@@ -111,7 +112,7 @@ export class BuildingPanelScene extends Scene {
       const tierLabel = `${prefix}Tier ${tier.level}:`;
       this.add.text(210, itemY, tierLabel, {
         fontSize: '14px',
-        color: isUnlocked ? '#aaaaaa' : '#ffffff',
+        color: isUnlocked ? COLORS.textSecondary : COLORS.textPrimary,
         fontFamily,
       }).setAlpha(alpha);
 
@@ -130,7 +131,7 @@ export class BuildingPanelScene extends Scene {
           : '???';
         this.add.text(300, itemY, itemText, {
           fontSize: '14px',
-          color: isNext ? colorHex : isUnlocked ? '#aaaaaa' : '#666666',
+          color: isNext ? colorHex : isUnlocked ? COLORS.textSecondary : '#666666',
           fontFamily,
         }).setAlpha(alpha);
       }
@@ -143,7 +144,7 @@ export class BuildingPanelScene extends Scene {
       this.add.text(400, 370, 'Fully Upgraded', {
         fontSize: '24px',
         fontStyle: 'bold',
-        color: '#aaaaaa',
+        color: COLORS.textSecondary,
         fontFamily,
       }).setOrigin(0.5);
     } else {
@@ -158,35 +159,7 @@ export class BuildingPanelScene extends Scene {
       }
       const canAfford = missingMats.length === 0;
 
-      const upgradeBtn = this.add.text(400, 370, 'Upgrade Building', {
-        fontSize: '24px',
-        fontStyle: 'bold',
-        color: '#ffd700',
-        fontFamily,
-      }).setOrigin(0.5).setInteractive({ useHandCursor: true });
-
-      if (!canAfford) {
-        upgradeBtn.setAlpha(0.4);
-      }
-
-      // Multi-material cost display
-      const costEntries = Object.entries(cost);
-      const costParts = costEntries.map(([mat, required]) => {
-        const owned = this.metaState.materials[mat] ?? 0;
-        const color = owned >= required ? '#00ff00' : '#ff0000';
-        return { text: `${mat}: ${required}`, color };
-      });
-      let costY = 400;
-      for (const part of costParts) {
-        this.add.text(400, costY, part.text, {
-          fontSize: '13px',
-          color: part.color,
-          fontFamily,
-        }).setOrigin(0.5);
-        costY += 18;
-      }
-
-      upgradeBtn.on('pointerdown', async () => {
+      const upgradeBtn = createButton(this, 400, 370, 'Upgrade Building', async () => {
         if (!canAfford) return;
         const result = upgradeBuilding(this.buildingKey, this.metaState);
         if (result.success && result.updatedState) {
@@ -212,13 +185,34 @@ export class BuildingPanelScene extends Scene {
             this.renderPanel();
           });
         }
+      }, 'primary');
+
+      if (!canAfford) {
+        upgradeBtn.setAlpha(0.4);
+      }
+
+      // Multi-material cost display
+      const costEntries = Object.entries(cost);
+      const costParts = costEntries.map(([mat, required]) => {
+        const owned = this.metaState.materials[mat] ?? 0;
+        const costColor = owned >= required ? '#00ff00' : COLORS.danger;
+        return { text: `${mat}: ${required}`, color: costColor };
       });
+      let costY = 400;
+      for (const part of costParts) {
+        this.add.text(400, costY, part.text, {
+          fontSize: '13px',
+          color: part.color,
+          fontFamily,
+        }).setOrigin(0.5);
+        costY += 18;
+      }
     }
 
     // Close button
     const closeBtn = this.add.text(630, 100, 'X', {
       fontSize: '16px',
-      color: '#aaaaaa',
+      color: COLORS.textSecondary,
       fontFamily,
     }).setOrigin(0.5).setInteractive({ useHandCursor: true });
 

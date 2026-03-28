@@ -1,6 +1,7 @@
 import { Scene } from 'phaser';
 import { getRun } from '../state/RunState';
 import { applyRestChoice, getRestChoices, type RestChoice, type RestResult } from '../systems/RestSiteSystem';
+import { COLORS, FONTS, LAYOUT, createButton } from '../ui/StyleConstants';
 
 /**
  * RestSiteScene -- rest site overlay with 3-choice cards.
@@ -19,10 +20,10 @@ export class RestSiteScene extends Scene {
     this.selectedChoice = null;
     this.cardContainers = [];
 
-    const fontFamily = 'Inter, system-ui, Avenir, Helvetica, Arial, sans-serif';
+    const fontFamily = FONTS.family;
 
     // Overlay panel
-    this.add.rectangle(400, 300, 500, 350, 0x222222, 0.9).setInteractive();
+    this.add.rectangle(400, 300, 500, 350, COLORS.panel, LAYOUT.panelAlpha).setInteractive();
 
     // Title
     this.add.text(400, 145, 'Rest Site', {
@@ -31,7 +32,7 @@ export class RestSiteScene extends Scene {
 
     // Instruction
     this.add.text(400, 175, 'Choose one action.', {
-      fontSize: '16px', color: '#aaaaaa', fontFamily,
+      fontSize: '16px', color: COLORS.textSecondary, fontFamily,
     }).setOrigin(0.5);
 
     // Three option cards
@@ -55,13 +56,13 @@ export class RestSiteScene extends Scene {
 
       // Option name
       const nameText = this.add.text(0, -60, choice.name, {
-        fontSize: '24px', fontStyle: 'bold', color: '#ffffff', fontFamily,
+        fontSize: '24px', fontStyle: 'bold', color: COLORS.textPrimary, fontFamily,
       }).setOrigin(0.5);
       container.add(nameText);
 
       // Description
       const descText = this.add.text(0, 10, choice.description, {
-        fontSize: '16px', color: '#aaaaaa', fontFamily,
+        fontSize: '16px', color: COLORS.textSecondary, fontFamily,
         wordWrap: { width: 120 },
         align: 'center',
       }).setOrigin(0.5);
@@ -110,13 +111,8 @@ export class RestSiteScene extends Scene {
     });
 
     // "Choose" button (hidden until selection)
-    this.chooseBtn = this.add.text(400, 420, 'Choose', {
-      fontSize: '24px', fontStyle: 'bold', color: '#ffd700', fontFamily,
-    }).setOrigin(0.5).setInteractive({ useHandCursor: true }).setVisible(false);
-
-    this.chooseBtn.on('pointerover', () => this.chooseBtn!.setColor('#ffffff'));
-    this.chooseBtn.on('pointerout', () => this.chooseBtn!.setColor('#ffd700'));
-    this.chooseBtn.on('pointerdown', () => this.confirmChoice());
+    this.chooseBtn = createButton(this, 400, 420, 'Choose', () => this.confirmChoice(), 'primary');
+    this.chooseBtn.setVisible(false);
 
     this.events.on('shutdown', this.cleanup, this);
   }
@@ -124,7 +120,7 @@ export class RestSiteScene extends Scene {
   private confirmChoice(): void {
     if (!this.selectedChoice) return;
 
-    const fontFamily = 'Inter, system-ui, Avenir, Helvetica, Arial, sans-serif';
+    const fontFamily = FONTS.family;
     const run = getRun();
 
     // Build adapter for RestSiteSystem

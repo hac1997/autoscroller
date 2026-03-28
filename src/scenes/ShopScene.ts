@@ -2,6 +2,7 @@ import { Scene } from 'phaser';
 import { getRun } from '../state/RunState';
 import { ShopSystem } from '../systems/ShopSystem';
 import { getCardById } from '../data/DataLoader';
+import { COLORS, FONTS, LAYOUT, createButton } from '../ui/StyleConstants';
 
 /**
  * ShopScene -- overlay for deck management, relic purchasing, tile selling.
@@ -17,19 +18,19 @@ export class ShopScene extends Scene {
 
   create(): void {
     const run = getRun();
-    const fontFamily = 'Inter, system-ui, Avenir, Helvetica, Arial, sans-serif';
+    const fontFamily = FONTS.family;
 
     // Overlay panel
-    this.add.rectangle(400, 300, 650, 500, 0x222222, 0.9).setInteractive();
+    this.add.rectangle(400, 300, 650, 500, COLORS.panel, LAYOUT.panelAlpha).setInteractive();
 
     // Title
     this.add.text(400, 70, 'Shop', {
-      fontSize: '24px', fontStyle: 'bold', color: '#ffd700', fontFamily,
+      fontSize: '24px', fontStyle: 'bold', color: COLORS.accent, fontFamily,
     }).setOrigin(0.5);
 
     // Gold balance (top-right)
     this.goldText = this.add.text(680, 65, `\u25C6 ${run.economy.gold}`, {
-      fontSize: '16px', color: '#ffd700', fontFamily,
+      fontSize: '16px', color: COLORS.accent, fontFamily,
     }).setOrigin(1, 0);
 
     // Tile point balance
@@ -46,13 +47,7 @@ export class ShopScene extends Scene {
     this.buildSellTilesSection(fontFamily);
 
     // "Leave Shop" button
-    const closeBtn = this.add.text(400, 530, 'Leave Shop', {
-      fontSize: '24px', fontStyle: 'bold', color: '#ffd700', fontFamily,
-    }).setOrigin(0.5).setInteractive({ useHandCursor: true });
-
-    closeBtn.on('pointerover', () => closeBtn.setColor('#ffffff'));
-    closeBtn.on('pointerout', () => closeBtn.setColor('#ffd700'));
-    closeBtn.on('pointerdown', () => this.close());
+    createButton(this, 400, 530, 'Leave Shop', () => this.close(), 'primary');
 
     this.events.on('shutdown', this.cleanup, this);
   }
@@ -64,7 +59,7 @@ export class ShopScene extends Scene {
     const shopCards = ShopSystem.getShopCards(runAdapter, availableCards, run.loop.count);
 
     this.add.text(140, 110, 'Buy Cards', {
-      fontSize: '16px', fontStyle: 'bold', color: '#ffffff', fontFamily,
+      fontSize: '16px', fontStyle: 'bold', color: COLORS.textPrimary, fontFamily,
     });
 
     shopCards.forEach((card, i) => {
@@ -72,10 +67,10 @@ export class ShopScene extends Scene {
       const y = 155;
       const bg = this.add.rectangle(x, y, 120, 50, 0x333333).setInteractive({ useHandCursor: true });
       const label = this.add.text(x, y - 8, card.name, {
-        fontSize: '14px', color: '#ffffff', fontFamily,
+        fontSize: '14px', color: COLORS.textPrimary, fontFamily,
       }).setOrigin(0.5);
       const price = this.add.text(x, y + 12, `${card.price} Gold`, {
-        fontSize: '12px', color: '#ffd700', fontFamily,
+        fontSize: '12px', color: COLORS.accent, fontFamily,
       }).setOrigin(0.5);
 
       if (run.economy.gold < card.price) {
@@ -100,7 +95,7 @@ export class ShopScene extends Scene {
     const cost = ShopSystem.getRemoveCardCost(deckCards.length);
 
     this.add.text(140, 195, `Remove Cards (${cost} Gold each)`, {
-      fontSize: '16px', fontStyle: 'bold', color: '#ffffff', fontFamily,
+      fontSize: '16px', fontStyle: 'bold', color: COLORS.textPrimary, fontFamily,
     });
 
     const maxShow = Math.min(deckCards.length, 4);
@@ -110,7 +105,7 @@ export class ShopScene extends Scene {
       const cardId = deckCards[i];
       const bg = this.add.rectangle(x, y, 100, 36, 0x333333).setInteractive({ useHandCursor: true });
       const label = this.add.text(x, y, cardId, {
-        fontSize: '12px', color: '#ffffff', fontFamily,
+        fontSize: '12px', color: COLORS.textPrimary, fontFamily,
       }).setOrigin(0.5);
 
       if (run.economy.gold < cost || deckCards.length <= 3) {
@@ -131,12 +126,12 @@ export class ShopScene extends Scene {
 
   private buildReorderSection(fontFamily: string): void {
     this.add.text(140, 270, 'Reorder Deck', {
-      fontSize: '16px', fontStyle: 'bold', color: '#ffffff', fontFamily,
+      fontSize: '16px', fontStyle: 'bold', color: COLORS.textPrimary, fontFamily,
     });
 
     const reorderCost = ShopSystem.getReorderPrice(0);
     const reorderBtn = this.add.text(320, 270, `Pay ${reorderCost} Gold`, {
-      fontSize: '14px', color: '#ffd700', fontFamily,
+      fontSize: '14px', color: COLORS.accent, fontFamily,
     }).setInteractive({ useHandCursor: true });
 
     reorderBtn.on('pointerdown', () => {
@@ -161,7 +156,7 @@ export class ShopScene extends Scene {
     const upgradedCards = run.deck.upgradedCards ?? [];
 
     this.add.text(140, 300, 'Upgrade Cards', {
-      fontSize: '16px', fontStyle: 'bold', color: '#ffffff', fontFamily,
+      fontSize: '16px', fontStyle: 'bold', color: COLORS.textPrimary, fontFamily,
     });
 
     const maxShow = Math.min(deckCards.length, 4);
@@ -189,7 +184,7 @@ export class ShopScene extends Scene {
         bg.setAlpha(0.4); label.setAlpha(0.4); upgLabel.setAlpha(0.4);
       } else {
         const priceLabel = this.add.text(x, y + 10, `${price} Gold`, {
-          fontSize: '10px', color: '#ffd700', fontFamily,
+          fontSize: '10px', color: COLORS.accent, fontFamily,
         }).setOrigin(0.5);
 
         if (run.economy.gold < price) {
@@ -199,7 +194,7 @@ export class ShopScene extends Scene {
             if (ShopSystem.upgradeCard(run as any, cardId, rarity)) {
               this.refreshBalances();
               label.setText(`${cardName}+`);
-              label.setColor('#ffd700');
+              label.setColor(COLORS.accent);
               priceLabel.setText('UPGRADED');
               priceLabel.setColor('#888888');
               bg.setAlpha(0.4);
@@ -218,12 +213,12 @@ export class ShopScene extends Scene {
     const shopRelics = ShopSystem.getShopRelics(runAdapter, availableRelics);
 
     this.add.text(140, 385, 'Buy Relics', {
-      fontSize: '16px', fontStyle: 'bold', color: '#ffffff', fontFamily,
+      fontSize: '16px', fontStyle: 'bold', color: COLORS.textPrimary, fontFamily,
     });
 
     if (shopRelics.length === 0) {
       this.add.text(140, 415, 'No relics in stock this visit.', {
-        fontSize: '14px', color: '#aaaaaa', fontFamily,
+        fontSize: '14px', color: COLORS.textSecondary, fontFamily,
       });
       return;
     }
@@ -233,10 +228,10 @@ export class ShopScene extends Scene {
       const y = 420;
       const bg = this.add.rectangle(x, y, 160, 40, 0x333333).setInteractive({ useHandCursor: true });
       const label = this.add.text(x, y - 6, relic.name, {
-        fontSize: '14px', color: '#ffffff', fontFamily,
+        fontSize: '14px', color: COLORS.textPrimary, fontFamily,
       }).setOrigin(0.5);
       const price = this.add.text(x, y + 12, `${relic.price} Gold`, {
-        fontSize: '12px', color: '#ffd700', fontFamily,
+        fontSize: '12px', color: COLORS.accent, fontFamily,
       }).setOrigin(0.5);
 
       if (run.economy.gold < relic.price) {
@@ -259,7 +254,7 @@ export class ShopScene extends Scene {
     const run = getRun();
 
     this.add.text(140, 455, 'Sell Tiles', {
-      fontSize: '16px', fontStyle: 'bold', color: '#ffffff', fontFamily,
+      fontSize: '16px', fontStyle: 'bold', color: COLORS.textPrimary, fontFamily,
     });
 
     const tileInv = run.economy.tileInventory;
@@ -267,7 +262,7 @@ export class ShopScene extends Scene {
 
     if (entries.length === 0) {
       this.add.text(140, 480, 'No tiles to sell.', {
-        fontSize: '14px', color: '#aaaaaa', fontFamily,
+        fontSize: '14px', color: COLORS.textSecondary, fontFamily,
       });
       return;
     }
@@ -277,7 +272,7 @@ export class ShopScene extends Scene {
       const y = 485;
       const bg = this.add.rectangle(x, y, 140, 36, 0x333333).setInteractive({ useHandCursor: true });
       this.add.text(x - 50, y, `${tileType} x${count}`, {
-        fontSize: '12px', color: '#ffffff', fontFamily,
+        fontSize: '12px', color: COLORS.textPrimary, fontFamily,
       }).setOrigin(0, 0.5);
 
       bg.on('pointerdown', () => {

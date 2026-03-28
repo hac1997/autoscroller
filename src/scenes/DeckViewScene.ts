@@ -4,6 +4,7 @@
 import { Scene } from 'phaser';
 import { getRun } from '../state/RunState';
 import { createCardVisual } from '../ui/CardVisual';
+import { COLORS, FONTS, LAYOUT } from '../ui/StyleConstants';
 
 const COLS = 6;
 const CARD_WIDTH = 72;
@@ -24,32 +25,35 @@ export class DeckViewScene extends Scene {
     const run = getRun();
     const deckIds = run.deck.active;
 
-    this.cameras.main.setBackgroundColor(0x1a1a2e);
+    this.cameras.main.setBackgroundColor(COLORS.background);
 
     // Overlay panel
-    this.add.rectangle(PANEL_X, PANEL_Y, PANEL_W, PANEL_H, 0x222222, 0.9);
+    this.add.rectangle(PANEL_X, PANEL_Y, PANEL_W, PANEL_H, COLORS.panel, LAYOUT.panelAlpha);
 
     // Title
     this.add.text(PANEL_X - PANEL_W / 2 + 24, PANEL_Y - PANEL_H / 2 + 24, 'Your Deck', {
       fontSize: '24px',
       fontStyle: 'bold',
-      color: '#ffffff',
+      color: COLORS.textPrimary,
+      fontFamily: FONTS.family,
     });
 
     // Card count
     this.add.text(PANEL_X + PANEL_W / 2 - 24, PANEL_Y - PANEL_H / 2 + 28, `${deckIds.length} Cards`, {
       fontSize: '14px',
-      color: '#aaaaaa',
+      color: COLORS.textSecondary,
+      fontFamily: FONTS.family,
     }).setOrigin(1, 0);
 
     // Close button
     const closeBtn = this.add.text(PANEL_X + PANEL_W / 2 - 24, PANEL_Y - PANEL_H / 2 + 8, 'Close', {
       fontSize: '16px',
-      color: '#aaaaaa',
+      color: COLORS.textSecondary,
+      fontFamily: FONTS.family,
     }).setOrigin(1, 0).setInteractive({ useHandCursor: true });
 
-    closeBtn.on('pointerover', () => closeBtn.setColor('#ffffff'));
-    closeBtn.on('pointerout', () => closeBtn.setColor('#aaaaaa'));
+    closeBtn.on('pointerover', () => closeBtn.setColor(COLORS.textPrimary));
+    closeBtn.on('pointerout', () => closeBtn.setColor(COLORS.textSecondary));
     closeBtn.on('pointerdown', () => this.close());
 
     // Card grid -- scrollable container

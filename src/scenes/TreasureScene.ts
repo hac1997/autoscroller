@@ -1,6 +1,7 @@
 import { Scene } from 'phaser';
 import { getRun } from '../state/RunState';
 import { openTreasure, type TreasureResult, type TreasureItem } from '../systems/TreasureSystem';
+import { COLORS, FONTS, LAYOUT, createButton } from '../ui/StyleConstants';
 
 /**
  * TreasureScene -- treasure overlay with loot display and Take All.
@@ -12,10 +13,10 @@ export class TreasureScene extends Scene {
   }
 
   create(): void {
-    const fontFamily = 'Inter, system-ui, Avenir, Helvetica, Arial, sans-serif';
+    const fontFamily = FONTS.family;
 
     // Overlay panel
-    this.add.rectangle(400, 300, 500, 350, 0x222222, 0.9).setInteractive();
+    this.add.rectangle(400, 300, 500, 350, COLORS.panel, LAYOUT.panelAlpha).setInteractive();
 
     // Title
     this.add.text(400, 145, 'Treasure!', {
@@ -24,7 +25,7 @@ export class TreasureScene extends Scene {
 
     // "You found:"
     this.add.text(400, 175, 'You found:', {
-      fontSize: '16px', color: '#aaaaaa', fontFamily,
+      fontSize: '16px', color: COLORS.textSecondary, fontFamily,
     }).setOrigin(0.5);
 
     // Get treasure
@@ -58,18 +59,13 @@ export class TreasureScene extends Scene {
     if (result.items.length === 0) {
       // Empty state
       this.add.text(400, 260, 'Empty Chest', {
-        fontSize: '24px', color: '#aaaaaa', fontFamily,
+        fontSize: '24px', color: COLORS.textSecondary, fontFamily,
       }).setOrigin(0.5);
       this.add.text(400, 295, 'The chest was already looted.', {
-        fontSize: '16px', color: '#aaaaaa', fontFamily,
+        fontSize: '16px', color: COLORS.textSecondary, fontFamily,
       }).setOrigin(0.5);
 
-      const continueBtn = this.add.text(400, 420, 'Continue', {
-        fontSize: '24px', fontStyle: 'bold', color: '#ffd700', fontFamily,
-      }).setOrigin(0.5).setInteractive({ useHandCursor: true });
-      continueBtn.on('pointerover', () => continueBtn.setColor('#ffffff'));
-      continueBtn.on('pointerout', () => continueBtn.setColor('#ffd700'));
-      continueBtn.on('pointerdown', () => this.close());
+      createButton(this, 400, 420, 'Continue', () => this.close(), 'primary');
       return;
     }
 
@@ -86,14 +82,14 @@ export class TreasureScene extends Scene {
 
       // Item name
       const nameText = this.add.text(-155, 0, item.name, {
-        fontSize: '16px', color: '#ffffff', fontFamily,
+        fontSize: '16px', color: COLORS.textPrimary, fontFamily,
       }).setOrigin(0, 0.5);
       container.add(nameText);
 
       // Value text
       const valueStr = item.amount ? `+${item.amount} ${item.type}` : item.type;
       const valueText = this.add.text(180, 0, valueStr, {
-        fontSize: '14px', color: '#aaaaaa', fontFamily,
+        fontSize: '14px', color: COLORS.textSecondary, fontFamily,
       }).setOrigin(1, 0.5);
       container.add(valueText);
 
@@ -112,20 +108,7 @@ export class TreasureScene extends Scene {
     });
 
     // "Take All" button (appears after last item animates in)
-    const takeAllBtn = this.add.text(400, 420, 'Take All', {
-      fontSize: '24px', fontStyle: 'bold', color: '#ffd700', fontFamily,
-    }).setOrigin(0.5).setInteractive({ useHandCursor: true }).setAlpha(0);
-
-    this.tweens.add({
-      targets: takeAllBtn,
-      alpha: 1,
-      duration: 200,
-      delay: result.items.length * 200 + 100,
-    });
-
-    takeAllBtn.on('pointerover', () => takeAllBtn.setColor('#ffffff'));
-    takeAllBtn.on('pointerout', () => takeAllBtn.setColor('#ffd700'));
-    takeAllBtn.on('pointerdown', () => {
+    const takeAllBtn = createButton(this, 400, 420, 'Take All', () => {
       // Slide items left and fade out
       itemContainers.forEach((container, i) => {
         this.tweens.add({
@@ -143,6 +126,14 @@ export class TreasureScene extends Scene {
         delay: itemContainers.length * 150,
         onComplete: () => this.close(),
       });
+    }, 'primary');
+    takeAllBtn.setAlpha(0);
+
+    this.tweens.add({
+      targets: takeAllBtn,
+      alpha: 1,
+      duration: 200,
+      delay: result.items.length * 200 + 100,
     });
 
     this.events.on('shutdown', this.cleanup, this);

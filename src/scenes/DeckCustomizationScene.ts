@@ -1,5 +1,6 @@
 import { Scene } from 'phaser';
 import { getRun } from '../state/RunState';
+import { COLORS, FONTS, LAYOUT, createButton } from '../ui/StyleConstants';
 
 /**
  * DeckCustomizationScene -- overlay for viewing/reordering/removing cards.
@@ -13,19 +14,21 @@ export class DeckCustomizationScene extends Scene {
   create(): void {
     const run = getRun();
 
-    this.cameras.main.setBackgroundColor(0x1a1a2e);
+    this.cameras.main.setBackgroundColor(COLORS.background);
 
     // Title
     this.add.text(400, 60, 'Deck Customization', {
       fontSize: '32px',
       fontStyle: 'bold',
-      color: '#ffd700',
+      color: COLORS.accent,
+      fontFamily: FONTS.family,
     }).setOrigin(0.5);
 
     // Deck info
     this.add.text(400, 120, `Cards in deck: ${run.deck.active.length}`, {
       fontSize: '16px',
-      color: '#ffffff',
+      color: COLORS.textPrimary,
+      fontFamily: FONTS.family,
     }).setOrigin(0.5);
 
     // Card list
@@ -33,27 +36,21 @@ export class DeckCustomizationScene extends Scene {
     if (inventoryKeys.length > 0) {
       this.add.text(400, 160, `Cards in inventory: ${inventoryKeys.length}`, {
         fontSize: '14px',
-        color: '#aaaaaa',
+        color: COLORS.textSecondary,
+        fontFamily: FONTS.family,
       }).setOrigin(0.5);
     }
 
     // Placeholder
     this.add.text(400, 300, 'Deck management: Phase 2', {
       fontSize: '14px',
-      color: '#888888',
+      color: COLORS.textSecondary,
+      fontFamily: FONTS.family,
       fontStyle: 'italic',
     }).setOrigin(0.5);
 
     // Close button
-    const closeBtn = this.add.text(400, 520, 'Close (D)', {
-      fontSize: '24px',
-      fontStyle: 'bold',
-      color: '#ffd700',
-    }).setOrigin(0.5).setInteractive({ useHandCursor: true });
-
-    closeBtn.on('pointerover', () => closeBtn.setColor('#ffffff'));
-    closeBtn.on('pointerout', () => closeBtn.setColor('#ffd700'));
-    closeBtn.on('pointerdown', () => this.close());
+    createButton(this, 400, 520, 'Close (D)', () => this.close(), 'primary');
 
     this.input.keyboard?.on('keydown-D', () => this.close());
 

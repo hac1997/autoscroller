@@ -6,6 +6,7 @@ import { getRun } from '../state/RunState';
 import { removeCard, reorderDeck, getRemovalCost, REORDER_SESSION_COST } from '../systems/deck/DeckSystem';
 import { getCardById } from '../data/DataLoader';
 import { DragDropDeckEditor } from '../ui/DragDropDeckEditor';
+import { COLORS, FONTS, LAYOUT } from '../ui/StyleConstants';
 
 const PANEL_X = 400;
 const PANEL_Y = 300;
@@ -35,38 +36,38 @@ export class ShopDeckEditor extends Scene {
 
     const run = getRun();
 
-    this.cameras.main.setBackgroundColor(0x1a1a2e);
+    this.cameras.main.setBackgroundColor(COLORS.background);
 
     // Overlay panel
-    this.add.rectangle(PANEL_X, PANEL_Y, PANEL_W, PANEL_H, 0x222222, 0.9);
+    this.add.rectangle(PANEL_X, PANEL_Y, PANEL_W, PANEL_H, COLORS.panel, LAYOUT.panelAlpha);
 
     // Title
     this.add.text(PANEL_X - PANEL_W / 2 + 24, PANEL_Y - PANEL_H / 2 + 24, 'Reorder Deck', {
       fontSize: '24px',
       fontStyle: 'bold',
-      color: '#ffffff',
+      color: COLORS.textPrimary,
     });
 
     // Gold display (top-right)
     this.goldText = this.add.text(PANEL_X + PANEL_W / 2 - 24, PANEL_Y - PANEL_H / 2 + 28, `Gold: ${run.economy.gold}`, {
       fontSize: '14px',
-      color: '#ffd700',
+      color: COLORS.accent,
     }).setOrigin(1, 0);
 
     // Close button
     const closeBtn = this.add.text(PANEL_X + PANEL_W / 2 - 24, PANEL_Y - PANEL_H / 2 + 8, 'Close', {
       fontSize: '16px',
-      color: '#aaaaaa',
+      color: COLORS.textSecondary,
     }).setOrigin(1, 0).setInteractive({ useHandCursor: true });
 
-    closeBtn.on('pointerover', () => closeBtn.setColor('#ffffff'));
-    closeBtn.on('pointerout', () => closeBtn.setColor('#aaaaaa'));
+    closeBtn.on('pointerover', () => closeBtn.setColor(COLORS.textPrimary));
+    closeBtn.on('pointerout', () => closeBtn.setColor(COLORS.textSecondary));
     closeBtn.on('pointerdown', () => this.close());
 
     // Status label (shows "Drag cards to reorder." when active)
     this.statusLabel = this.add.text(PANEL_X, PANEL_Y - PANEL_H / 2 + 60, '', {
       fontSize: '16px',
-      color: '#ffd700',
+      color: COLORS.accent,
     }).setOrigin(0.5);
 
     // Create DragDropDeckEditor
@@ -88,11 +89,11 @@ export class ShopDeckEditor extends Scene {
     this.actionBtn = this.add.text(PANEL_X, PANEL_Y + PANEL_H / 2 - 40, `Start Reorder (${REORDER_SESSION_COST} Gold)`, {
       fontSize: '24px',
       fontStyle: 'bold',
-      color: '#ffd700',
+      color: COLORS.accent,
     }).setOrigin(0.5).setInteractive({ useHandCursor: true });
 
-    this.actionBtn.on('pointerover', () => this.actionBtn?.setColor('#ffffff'));
-    this.actionBtn.on('pointerout', () => this.actionBtn?.setColor('#ffd700'));
+    this.actionBtn.on('pointerover', () => this.actionBtn?.setColor(COLORS.accentHover));
+    this.actionBtn.on('pointerout', () => this.actionBtn?.setColor(COLORS.accent));
     this.actionBtn.on('pointerdown', () => this.handleActionButton());
 
     // Add remove buttons for each card
@@ -111,11 +112,11 @@ export class ShopDeckEditor extends Scene {
 
       const removeBtn = this.add.text(editorX + 580 - 8, y, `Remove (${cost} Gold)`, {
         fontSize: '14px',
-        color: '#ff0000',
+        color: COLORS.danger,
       }).setOrigin(1, 0.5).setInteractive({ useHandCursor: true });
 
       removeBtn.on('pointerover', () => removeBtn.setColor('#ff6666'));
-      removeBtn.on('pointerout', () => removeBtn.setColor('#ff0000'));
+      removeBtn.on('pointerout', () => removeBtn.setColor(COLORS.danger));
       removeBtn.on('pointerdown', () => this.showRemoveConfirmation(cardId, cost));
     }
   }
@@ -166,7 +167,7 @@ export class ShopDeckEditor extends Scene {
 
     const msg = this.add.text(0, -30, `Remove ${cardName}? This costs ${cost} gold and cannot be undone.`, {
       fontSize: '16px',
-      color: '#ffffff',
+      color: COLORS.textPrimary,
       wordWrap: { width: 260 },
       align: 'center',
     }).setOrigin(0.5);
@@ -175,7 +176,7 @@ export class ShopDeckEditor extends Scene {
     // "Yes, Remove" button
     const yesBtn = this.add.text(-60, 40, 'Yes, Remove', {
       fontSize: '14px',
-      color: '#ff0000',
+      color: COLORS.danger,
     }).setOrigin(0.5).setInteractive({ useHandCursor: true });
     yesBtn.on('pointerdown', () => {
       removeCard(cardId, run);
@@ -189,7 +190,7 @@ export class ShopDeckEditor extends Scene {
     // "Keep Card" button
     const noBtn = this.add.text(60, 40, 'Keep Card', {
       fontSize: '14px',
-      color: '#aaaaaa',
+      color: COLORS.textSecondary,
     }).setOrigin(0.5).setInteractive({ useHandCursor: true });
     noBtn.on('pointerdown', () => {
       this.destroyConfirmOverlay();
@@ -207,7 +208,7 @@ export class ShopDeckEditor extends Scene {
   private showFlashMessage(msg: string): void {
     const flash = this.add.text(PANEL_X, PANEL_Y + PANEL_H / 2 - 70, msg, {
       fontSize: '16px',
-      color: '#ff0000',
+      color: COLORS.danger,
     }).setOrigin(0.5).setDepth(300);
 
     this.tweens.add({

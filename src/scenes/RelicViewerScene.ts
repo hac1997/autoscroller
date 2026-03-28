@@ -1,5 +1,6 @@
 import { Scene } from 'phaser';
 import { getRun } from '../state/RunState';
+import { COLORS, FONTS, LAYOUT, createButton } from '../ui/StyleConstants';
 
 /**
  * RelicViewerScene -- overlay for viewing collected relics.
@@ -13,19 +14,21 @@ export class RelicViewerScene extends Scene {
   create(): void {
     const run = getRun();
 
-    this.cameras.main.setBackgroundColor(0x1a1a2e);
+    this.cameras.main.setBackgroundColor(COLORS.background);
 
     // Title
     this.add.text(400, 60, 'Your Relics', {
       fontSize: '32px',
       fontStyle: 'bold',
-      color: '#ffd700',
+      color: COLORS.accent,
+      fontFamily: FONTS.family,
     }).setOrigin(0.5);
 
     if (run.relics.length === 0) {
       this.add.text(400, 300, 'No relics yet.\n\nFind them in treasure chests and events!', {
         fontSize: '16px',
-        color: '#888888',
+        color: COLORS.textSecondary,
+        fontFamily: FONTS.family,
         align: 'center',
       }).setOrigin(0.5);
     } else {
@@ -33,21 +36,14 @@ export class RelicViewerScene extends Scene {
       run.relics.forEach((relicId, i) => {
         this.add.text(400, 140 + i * 30, relicId, {
           fontSize: '14px',
-          color: '#ffffff',
+          color: COLORS.textPrimary,
+          fontFamily: FONTS.family,
         }).setOrigin(0.5);
       });
     }
 
     // Close button
-    const closeBtn = this.add.text(400, 520, 'Close (R)', {
-      fontSize: '24px',
-      fontStyle: 'bold',
-      color: '#ffd700',
-    }).setOrigin(0.5).setInteractive({ useHandCursor: true });
-
-    closeBtn.on('pointerover', () => closeBtn.setColor('#ffffff'));
-    closeBtn.on('pointerout', () => closeBtn.setColor('#ffd700'));
-    closeBtn.on('pointerdown', () => this.close());
+    createButton(this, 400, 520, 'Close (R)', () => this.close(), 'primary');
 
     this.input.keyboard?.on('keydown-R', () => this.close());
 

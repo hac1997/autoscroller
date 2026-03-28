@@ -2,6 +2,7 @@ import { Scene } from 'phaser';
 import { MetaState } from '../state/MetaState';
 import { SeededRNG } from '../systems/SeededRNG';
 import { createNewRun, setRun } from '../state/RunState';
+import { COLORS, FONTS, LAYOUT, createButton } from '../ui/StyleConstants';
 
 export class TavernPanelScene extends Scene {
   private metaState!: MetaState;
@@ -15,7 +16,7 @@ export class TavernPanelScene extends Scene {
     this.metaState = data.metaState;
     this.seedInputValue = '';
 
-    const fontFamily = 'Inter, system-ui, Avenir, Helvetica, Arial, sans-serif';
+    const fontFamily = FONTS.family;
 
     // Semi-transparent backdrop -- delay interactivity to prevent same-frame click-through
     const backdrop = this.add.rectangle(400, 300, 800, 600, 0x000000, 0.5);
@@ -25,7 +26,7 @@ export class TavernPanelScene extends Scene {
     });
 
     // Panel
-    const panel = this.add.rectangle(400, 300, 500, 420, 0x222222, 0.95);
+    const panel = this.add.rectangle(400, 300, 500, 420, COLORS.panel, 0.95);
     panel.setInteractive(); // absorb clicks
 
     // Title
@@ -39,14 +40,14 @@ export class TavernPanelScene extends Scene {
     // Description
     this.add.text(400, 143, 'Prepare for your next expedition.', {
       fontSize: '16px',
-      color: '#aaaaaa',
+      color: COLORS.textSecondary,
       fontFamily,
     }).setOrigin(0.5);
 
     // Seed input label
     this.add.text(400, 170, 'Seed (optional)', {
       fontSize: '14px',
-      color: '#aaaaaa',
+      color: COLORS.textSecondary,
       fontFamily,
     }).setOrigin(0.5);
 
@@ -73,19 +74,7 @@ export class TavernPanelScene extends Scene {
     }
 
     // Start Run button
-    const startBtn = this.add.text(400, 260, 'Start Run', {
-      fontSize: '24px',
-      fontStyle: 'bold',
-      color: '#ffd700',
-      fontFamily,
-    }).setOrigin(0.5).setInteractive({ useHandCursor: true });
-
-    // Button background
-    this.add.rectangle(400, 260, 200, 48, 0x333333, 0.6).setDepth(-1);
-
-    startBtn.on('pointerover', () => startBtn.setColor('#ffffff'));
-    startBtn.on('pointerout', () => startBtn.setColor('#ffd700'));
-    startBtn.on('pointerdown', () => {
+    createButton(this, 400, 260, 'Start Run', () => {
       const seedValue = this.seedInputValue.trim() || undefined;
       const rng = new SeededRNG(seedValue);
 
@@ -97,13 +86,13 @@ export class TavernPanelScene extends Scene {
       this.scene.stop('CityHub');
       this.scene.stop();
       this.scene.start('GameScene', { seed: rng.seed, manualSeed: !!seedValue });
-    });
+    }, 'primary');
 
     // Run History section
     this.add.text(200, 290, 'Run History', {
       fontSize: '24px',
       fontStyle: 'bold',
-      color: '#ffffff',
+      color: COLORS.textPrimary,
       fontFamily,
     });
 
@@ -114,7 +103,7 @@ export class TavernPanelScene extends Scene {
     if (runHistory.length === 0) {
       this.add.text(400, 380, 'No completed runs yet.', {
         fontSize: '16px',
-        color: '#aaaaaa',
+        color: COLORS.textSecondary,
         fontFamily,
       }).setOrigin(0.5);
     } else {
@@ -134,7 +123,7 @@ export class TavernPanelScene extends Scene {
 
         this.add.text(200, histY, text, {
           fontSize: '14px',
-          color: isBest ? '#ffd700' : '#ffffff',
+          color: isBest ? COLORS.accent : COLORS.textPrimary,
           fontFamily,
         });
         histY += 18;
@@ -144,7 +133,7 @@ export class TavernPanelScene extends Scene {
     // Close button
     const closeBtn = this.add.text(630, 100, 'X', {
       fontSize: '16px',
-      color: '#aaaaaa',
+      color: COLORS.textSecondary,
       fontFamily,
     }).setOrigin(0.5).setInteractive({ useHandCursor: true });
 
