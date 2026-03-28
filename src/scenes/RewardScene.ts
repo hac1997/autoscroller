@@ -6,6 +6,7 @@ import { getRun } from '../state/RunState';
 import { generateCardReward, type RNG } from '../systems/deck/LootSystem';
 import { addCard } from '../systems/deck/DeckSystem';
 import { createCardVisual } from '../ui/CardVisual';
+import { COLORS, FONTS, LAYOUT, createButton } from '../ui/StyleConstants';
 
 /** Simple Math.random-based RNG for runtime use */
 const mathRng: RNG = { next: () => Math.random() };
@@ -14,16 +15,29 @@ export class RewardScene extends Scene {
   private selectedCardId: string | null = null;
   private cardContainers: Phaser.GameObjects.Container[] = [];
   private takeBtn: Phaser.GameObjects.Text | null = null;
+  private transitioning = false;
 
   constructor() {
     super('RewardScene');
   }
 
+  private fadeToScene(sceneKey: string, data?: any): void {
+    if (this.transitioning) return;
+    this.transitioning = true;
+    this.cameras.main.fadeOut(LAYOUT.fadeDuration, 0, 0, 0);
+    this.cameras.main.once('camerafadeoutcomplete', () => {
+      this.scene.start(sceneKey, data);
+    });
+  }
+
   create(): void {
+    this.transitioning = false;
+    this.cameras.main.fadeIn(LAYOUT.fadeDuration, 0, 0, 0);
+
     this.selectedCardId = null;
     this.cardContainers = [];
 
-    this.cameras.main.setBackgroundColor(0x1a1a2e);
+    this.cameras.main.setBackgroundColor(COLORS.background);
 
     // Overlay panel
     this.add.rectangle(400, 300, 600, 400, 0x222222, 0.9);

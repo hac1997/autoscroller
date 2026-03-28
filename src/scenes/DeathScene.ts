@@ -7,20 +7,36 @@ import { loseAllRunXP } from '../systems/hero/XPSystem';
 import { bankRunRewards, getStorehouseEffects } from '../systems/MetaProgressionSystem';
 import { loadMetaState, saveMetaState } from '../systems/MetaPersistence';
 import type { CombatStats } from '../systems/combat/CombatStats';
+import { COLORS, FONTS, LAYOUT, createButton } from '../ui/StyleConstants';
 
 export class DeathScene extends Scene {
+  private transitioning = false;
+
   constructor() {
     super('DeathScene');
   }
 
+  private fadeToScene(sceneKey: string, data?: any): void {
+    if (this.transitioning) return;
+    this.transitioning = true;
+    this.cameras.main.fadeOut(LAYOUT.fadeDuration, 0, 0, 0);
+    this.cameras.main.once('camerafadeoutcomplete', () => {
+      this.scene.stop('GameScene');
+      this.scene.start(sceneKey, data);
+    });
+  }
+
   async create(data?: { enemyName?: string; stats?: CombatStats }): Promise<void> {
+    this.transitioning = false;
+    this.cameras.main.fadeIn(LAYOUT.fadeDuration, 0, 0, 0);
+
     const run = getRun();
     const enemyName = data?.enemyName ?? 'Unknown';
     const stats = data?.stats;
 
-    this.cameras.main.setBackgroundColor(0x1a1a2e);
+    this.cameras.main.setBackgroundColor(COLORS.background);
 
-    const fontFamily = 'Inter, system-ui, Avenir, Helvetica, Arial, sans-serif';
+    const fontFamily = FONTS.family;
 
     // Title
     this.add.text(400, 60, 'Run Over', {
@@ -126,21 +142,11 @@ export class DeathScene extends Scene {
     });
 
     // "Return to City" button
-    const cityBtn = this.add.text(400, 520, 'Return to City', {
-      fontSize: '24px',
-      fontStyle: 'bold',
-      color: '#ffd700',
-      fontFamily,
-    }).setOrigin(0.5).setInteractive({ useHandCursor: true });
-
-    cityBtn.on('pointerover', () => cityBtn.setColor('#ffffff'));
-    cityBtn.on('pointerout', () => cityBtn.setColor('#ffd700'));
-    cityBtn.on('pointerdown', () => {
+    createButton(this, 400, 520, 'Return to City', () => {
       loseAllRunXP(run);
       clearRun();
-      this.scene.stop('GameScene');
-      this.scene.start('CityHub');
-    });
+      this.fadeToScene('CityHub');
+    }, 'primary');
 
     this.events.on('shutdown', this.cleanup, this);
   }

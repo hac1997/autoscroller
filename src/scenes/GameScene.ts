@@ -6,6 +6,7 @@ import { LoopHUD } from '../ui/LoopHUD';
 import { LoopCelebration } from '../ui/LoopCelebration';
 import { TileVisual } from '../ui/TileVisual';
 import { loadMetaState } from '../systems/MetaPersistence';
+import { COLORS, LAYOUT } from '../ui/StyleConstants';
 
 /**
  * GameScene -- thin Phaser wrapper over LoopRunner.
@@ -30,12 +31,25 @@ export class GameScene extends Scene {
 
   // Game speed multiplier (1x or 2x from settings)
   private gameSpeed: number = 1;
+  private transitioning = false;
 
   constructor() {
     super('GameScene');
   }
 
+  private fadeToScene(sceneKey: string, data?: any): void {
+    if (this.transitioning) return;
+    this.transitioning = true;
+    this.cameras.main.fadeOut(LAYOUT.fadeDuration, 0, 0, 0);
+    this.cameras.main.once('camerafadeoutcomplete', () => {
+      this.scene.start(sceneKey, data);
+    });
+  }
+
   async create(): Promise<void> {
+    this.transitioning = false;
+    this.cameras.main.fadeIn(LAYOUT.fadeDuration, 0, 0, 0);
+
     const run = getRun();
 
     // Load game speed from settings
@@ -43,7 +57,7 @@ export class GameScene extends Scene {
     this.gameSpeed = metaState.gameSpeed ?? 1;
 
     // Background
-    this.cameras.main.setBackgroundColor(0x1a1a2e);
+    this.cameras.main.setBackgroundColor(COLORS.background);
 
     // Build LoopRunState adapter from global RunState
     this.loopRunState = {
@@ -231,7 +245,7 @@ export class GameScene extends Scene {
       }
       case 'run-exited': {
         // Transition to GameOverScene with safe exit data
-        this.scene.start('GameOverScene', data);
+        this.fadeToScene('GameOverScene', data);
         break;
       }
     }

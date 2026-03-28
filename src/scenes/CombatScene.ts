@@ -14,6 +14,7 @@ import { CombatEffects } from '../effects/CombatEffects';
 import { earnXP, getXPForEnemy, loseAllRunXP } from '../systems/hero/XPSystem';
 import { scaleEnemy } from '../data/EnemyDefinitions';
 import { loadMetaState } from '../systems/MetaPersistence';
+import { COLORS, LAYOUT } from '../ui/StyleConstants';
 
 export class CombatScene extends Scene {
   private engine!: CombatEngine;
@@ -29,6 +30,7 @@ export class CombatScene extends Scene {
 
   // Game speed multiplier (1x or 2x from settings)
   private gameSpeed: number = 1;
+  private transitioning = false;
 
   // Event handler references for cleanup
   private onCardPlayed!: (data: GameEvents['combat:card-played']) => void;
@@ -42,7 +44,19 @@ export class CombatScene extends Scene {
     super('CombatScene');
   }
 
+  private fadeToScene(sceneKey: string, data?: any): void {
+    if (this.transitioning) return;
+    this.transitioning = true;
+    this.cameras.main.fadeOut(LAYOUT.fadeDuration, 0, 0, 0);
+    this.cameras.main.once('camerafadeoutcomplete', () => {
+      this.scene.start(sceneKey, data);
+    });
+  }
+
   async create(data: { enemyId: string }): Promise<void> {
+    this.transitioning = false;
+    this.cameras.main.fadeIn(LAYOUT.fadeDuration, 0, 0, 0);
+
     const run = getRun();
     run.isInCombat = true;
 
@@ -51,14 +65,14 @@ export class CombatScene extends Scene {
     this.gameSpeed = metaState.gameSpeed ?? 1;
 
     // Background
-    this.cameras.main.setBackgroundColor(0x1a1a2e);
+    this.cameras.main.setBackgroundColor(COLORS.background);
 
     // Look up and scale enemy
     const enemyDef = getEnemyById(data.enemyId);
     if (!enemyDef) {
       // Fallback: return to game if enemy not found
       run.isInCombat = false;
-      this.scene.start('GameScene');
+      this.fadeToScene('GameScene');
       return;
     }
 
@@ -185,7 +199,7 @@ export class CombatScene extends Scene {
 
           // Transition to PostCombatScene
           const stats = this.engine.getStats();
-          this.scene.start('PostCombatScene', {
+          this.fadeToScene('PostCombatScene', {
             stats,
             enemyType: enemyDef.type,
             xpEarned: getXPForEnemy(enemyDef.type),
@@ -193,7 +207,7 @@ export class CombatScene extends Scene {
         } else {
           // Defeat
           loseAllRunXP(currentRun);
-          this.scene.start('DeathScene', {
+          this.fadeToScene('DeathScene', {
             enemyName: enemyDef.name,
             stats: this.engine.getStats(),
           });

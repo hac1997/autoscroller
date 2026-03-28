@@ -1,6 +1,7 @@
 import { Scene } from 'phaser';
 import { loadMetaState } from '../systems/MetaPersistence';
 import { MetaState } from '../state/MetaState';
+import { COLORS, FONTS, LAYOUT, createButton } from '../ui/StyleConstants';
 
 const BUILDING_COLORS: Record<string, number> = {
   forge: 0xcc3333,
@@ -47,18 +48,31 @@ const BUILDING_LAYOUT: BuildingLayout[] = [
 export class CityHubScene extends Scene {
   private metaState!: MetaState;
   private hoverLabel: Phaser.GameObjects.Text | null = null;
+  private transitioning = false;
 
   constructor() {
     super('CityHub');
   }
 
+  private fadeToScene(sceneKey: string, data?: any): void {
+    if (this.transitioning) return;
+    this.transitioning = true;
+    this.cameras.main.fadeOut(LAYOUT.fadeDuration, 0, 0, 0);
+    this.cameras.main.once('camerafadeoutcomplete', () => {
+      this.scene.start(sceneKey, data);
+    });
+  }
+
   async create(): Promise<void> {
+    this.transitioning = false;
+    this.cameras.main.fadeIn(LAYOUT.fadeDuration, 0, 0, 0);
+
     this.metaState = await loadMetaState();
 
     // Background
-    this.cameras.main.setBackgroundColor(0x1a1a2e);
+    this.cameras.main.setBackgroundColor(COLORS.background);
 
-    const fontFamily = 'Inter, system-ui, Avenir, Helvetica, Arial, sans-serif';
+    const fontFamily = FONTS.family;
 
     // Top bar: material inventory (top-left)
     const matEntries = Object.entries(this.metaState.materials).filter(([, v]) => v > 0);
@@ -91,18 +105,10 @@ export class CityHubScene extends Scene {
     }
 
     // Bottom bar: Collection button
-    const collectionBtn = this.add.text(48, 560, 'Collection', {
-      fontSize: '24px',
-      fontStyle: 'bold',
-      color: '#ffd700',
-      fontFamily,
-    }).setOrigin(0, 1).setInteractive({ useHandCursor: true });
-
-    collectionBtn.on('pointerover', () => collectionBtn.setColor('#ffffff'));
-    collectionBtn.on('pointerout', () => collectionBtn.setColor('#ffd700'));
-    collectionBtn.on('pointerdown', () => {
-      this.scene.start('CollectionScene');
-    });
+    const collectionBtn = createButton(this, 48, 560, 'Collection', () => {
+      this.fadeToScene('CollectionScene');
+    }, 'primary');
+    collectionBtn.setOrigin(0, 1);
 
     // Navigation hint
     this.add.text(400, 560, 'Click a building to interact', {

@@ -1,19 +1,34 @@
 import { Scene } from 'phaser';
 import { getRun } from '../state/RunState';
+import { COLORS, FONTS, LAYOUT, createButton } from '../ui/StyleConstants';
 
 /**
  * SelectionScene -- card/heir reward selection.
  * Placeholder for Phase 2 reward system.
  */
 export class SelectionScene extends Scene {
+  private transitioning = false;
+
   constructor() {
     super('SelectionScene');
   }
 
+  private fadeToScene(sceneKey: string, data?: any): void {
+    if (this.transitioning) return;
+    this.transitioning = true;
+    this.cameras.main.fadeOut(LAYOUT.fadeDuration, 0, 0, 0);
+    this.cameras.main.once('camerafadeoutcomplete', () => {
+      this.scene.start(sceneKey, data);
+    });
+  }
+
   create(): void {
+    this.transitioning = false;
+    this.cameras.main.fadeIn(LAYOUT.fadeDuration, 0, 0, 0);
+
     const run = getRun();
 
-    this.cameras.main.setBackgroundColor(0x1a1a2e);
+    this.cameras.main.setBackgroundColor(COLORS.background);
 
     // Title
     this.add.text(400, 100, 'Selection', {
@@ -36,17 +51,9 @@ export class SelectionScene extends Scene {
     }).setOrigin(0.5);
 
     // Continue button
-    const continueBtn = this.add.text(400, 420, 'Continue', {
-      fontSize: '24px',
-      fontStyle: 'bold',
-      color: '#ffd700',
-    }).setOrigin(0.5).setInteractive({ useHandCursor: true });
-
-    continueBtn.on('pointerover', () => continueBtn.setColor('#ffffff'));
-    continueBtn.on('pointerout', () => continueBtn.setColor('#ffd700'));
-    continueBtn.on('pointerdown', () => {
-      this.scene.start('GameScene');
-    });
+    createButton(this, 400, 420, 'Continue', () => {
+      this.fadeToScene('GameScene');
+    }, 'primary');
 
     this.events.on('shutdown', this.cleanup, this);
   }

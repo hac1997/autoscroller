@@ -2,6 +2,7 @@ import { Scene } from 'phaser';
 import { loadMetaState } from '../systems/MetaPersistence';
 import { getCollectionStatus, getCompletionPercent, type CollectionStatus, type CategoryStatus } from '../systems/CollectionRegistry';
 import { MetaState } from '../state/MetaState';
+import { COLORS, FONTS, LAYOUT } from '../ui/StyleConstants';
 
 const TAB_NAMES = ['Cards', 'Relics', 'Tiles', 'Events', 'Bosses'] as const;
 type TabName = typeof TAB_NAMES[number];
@@ -29,21 +30,34 @@ export class CollectionScene extends Scene {
   private gridContainer!: Phaser.GameObjects.Container;
   private tabObjects: Phaser.GameObjects.Rectangle[] = [];
   private tabTexts: Phaser.GameObjects.Text[] = [];
+  private transitioning = false;
 
   constructor() {
     super('CollectionScene');
   }
 
+  private fadeToScene(sceneKey: string, data?: any): void {
+    if (this.transitioning) return;
+    this.transitioning = true;
+    this.cameras.main.fadeOut(LAYOUT.fadeDuration, 0, 0, 0);
+    this.cameras.main.once('camerafadeoutcomplete', () => {
+      this.scene.start(sceneKey, data);
+    });
+  }
+
   async create(): Promise<void> {
+    this.transitioning = false;
+    this.cameras.main.fadeIn(LAYOUT.fadeDuration, 0, 0, 0);
+
     this.metaState = await loadMetaState();
     this.collectionStatus = getCollectionStatus(this.metaState);
     const percent = getCompletionPercent(this.metaState);
     this.activeTab = 'Cards';
 
-    const fontFamily = 'Inter, system-ui, Avenir, Helvetica, Arial, sans-serif';
+    const fontFamily = FONTS.family;
 
     // Background
-    this.cameras.main.setBackgroundColor(0x1a1a2e);
+    this.cameras.main.setBackgroundColor(COLORS.background);
 
     // Title
     this.add.text(24, 24, 'Collection', {
@@ -68,7 +82,7 @@ export class CollectionScene extends Scene {
     }).setOrigin(1, 0).setInteractive({ useHandCursor: true });
 
     closeBtn.on('pointerdown', () => {
-      this.scene.start('CityHub');
+      this.fadeToScene('CityHub');
     });
 
     // Tab bar

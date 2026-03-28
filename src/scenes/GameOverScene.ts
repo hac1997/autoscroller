@@ -1,20 +1,35 @@
 import { Scene } from 'phaser';
 import { getRun, createNewRun, setRun, clearRun } from '../state/RunState';
 import { saveManager } from '../core/SaveManager';
+import { COLORS, FONTS, LAYOUT, createButton } from '../ui/StyleConstants';
 
 /**
  * GameOverScene -- displays final run statistics.
  * Offers New Run and Main Menu buttons.
  */
 export class GameOverScene extends Scene {
+  private transitioning = false;
+
   constructor() {
     super('GameOverScene');
   }
 
+  private fadeToScene(sceneKey: string, data?: any): void {
+    if (this.transitioning) return;
+    this.transitioning = true;
+    this.cameras.main.fadeOut(LAYOUT.fadeDuration, 0, 0, 0);
+    this.cameras.main.once('camerafadeoutcomplete', () => {
+      this.scene.start(sceneKey, data);
+    });
+  }
+
   create(): void {
+    this.transitioning = false;
+    this.cameras.main.fadeIn(LAYOUT.fadeDuration, 0, 0, 0);
+
     const run = getRun();
 
-    this.cameras.main.setBackgroundColor(0x1a1a2e);
+    this.cameras.main.setBackgroundColor(COLORS.background);
 
     // Title
     this.add.text(400, 80, 'GAME OVER', {
@@ -51,34 +66,18 @@ export class GameOverScene extends Scene {
     }).setOrigin(0.5);
 
     // New Run button
-    const newRunBtn = this.add.text(300, 420, 'New Run', {
-      fontSize: '24px',
-      fontStyle: 'bold',
-      color: '#ffd700',
-    }).setOrigin(0.5).setInteractive({ useHandCursor: true });
-
-    newRunBtn.on('pointerover', () => newRunBtn.setColor('#ffffff'));
-    newRunBtn.on('pointerout', () => newRunBtn.setColor('#ffd700'));
-    newRunBtn.on('pointerdown', async () => {
+    createButton(this, 300, 420, 'New Run', async () => {
       await saveManager.clear();
       setRun(createNewRun());
-      this.scene.start('CityHub');
-    });
+      this.fadeToScene('CityHub');
+    }, 'primary');
 
     // Main Menu button
-    const menuBtn = this.add.text(500, 420, 'Main Menu', {
-      fontSize: '24px',
-      fontStyle: 'bold',
-      color: '#ffd700',
-    }).setOrigin(0.5).setInteractive({ useHandCursor: true });
-
-    menuBtn.on('pointerover', () => menuBtn.setColor('#ffffff'));
-    menuBtn.on('pointerout', () => menuBtn.setColor('#ffd700'));
-    menuBtn.on('pointerdown', async () => {
+    createButton(this, 500, 420, 'Main Menu', async () => {
       await saveManager.clear();
       clearRun();
-      this.scene.start('MainMenu');
-    });
+      this.fadeToScene('MainMenu');
+    }, 'primary');
 
     this.events.on('shutdown', this.cleanup, this);
   }

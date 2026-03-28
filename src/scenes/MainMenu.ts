@@ -7,12 +7,16 @@ import { COLORS, FONTS, LAYOUT, createButton } from '../ui/StyleConstants';
 export class MainMenu extends Scene {
   private savedRun: RunState | null = null;
   private confirmOverlay: Phaser.GameObjects.Container | null = null;
+  private transitioning = false;
 
   constructor() {
     super('MainMenu');
   }
 
   create(): void {
+    this.transitioning = false;
+    this.cameras.main.fadeIn(LAYOUT.fadeDuration, 0, 0, 0);
+
     this.savedRun = this.registry.get('savedRun') as RunState | null;
     this.confirmOverlay = null;
 
@@ -40,10 +44,19 @@ export class MainMenu extends Scene {
     this.events.on('shutdown', this.cleanup, this);
   }
 
+  private fadeToScene(sceneKey: string, data?: any): void {
+    if (this.transitioning) return;
+    this.transitioning = true;
+    this.cameras.main.fadeOut(LAYOUT.fadeDuration, 0, 0, 0);
+    this.cameras.main.once('camerafadeoutcomplete', () => {
+      this.scene.start(sceneKey, data);
+    });
+  }
+
   private continueRun(): void {
     if (this.savedRun) {
       setRun(this.savedRun);
-      this.scene.start('GameScene');
+      this.fadeToScene('GameScene');
     }
   }
 
@@ -97,7 +110,7 @@ export class MainMenu extends Scene {
     await saveManager.clear();
     setRun(createNewRun());
     await saveManager.save(getRun());
-    this.scene.start('TutorialScene');
+    this.fadeToScene('TutorialScene');
   }
 
   private cleanup(): void {

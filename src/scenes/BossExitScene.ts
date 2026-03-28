@@ -4,6 +4,7 @@ import { getBossExitChoiceData } from '../systems/BossSystem';
 import { LoopRunner, type LoopRunState } from '../systems/LoopRunner';
 import { bankRunRewards } from '../systems/MetaProgressionSystem';
 import { loadMetaState, saveMetaState } from '../systems/MetaPersistence';
+import { COLORS, FONTS, LAYOUT } from '../ui/StyleConstants';
 
 /**
  * BossExitScene -- boss exit choice overlay with two-panel layout.
@@ -16,16 +17,29 @@ export class BossExitScene extends Scene {
   private confirmBtn: Phaser.GameObjects.Text | null = null;
   private exitPanel!: Phaser.GameObjects.Container;
   private continuePanel!: Phaser.GameObjects.Container;
+  private transitioning = false;
 
   constructor() {
     super('BossExitScene');
   }
 
+  private fadeToScene(sceneKey: string, data?: any): void {
+    if (this.transitioning) return;
+    this.transitioning = true;
+    this.cameras.main.fadeOut(LAYOUT.fadeDuration, 0, 0, 0);
+    this.cameras.main.once('camerafadeoutcomplete', () => {
+      this.scene.start(sceneKey, data);
+    });
+  }
+
   create(data: { loopRunner: LoopRunner; loopRunState: LoopRunState }): void {
+    this.transitioning = false;
+    this.cameras.main.fadeIn(LAYOUT.fadeDuration, 0, 0, 0);
+
     this.loopRunner = data.loopRunner;
     this.selectedChoice = null;
 
-    const fontFamily = 'Inter, system-ui, Avenir, Helvetica, Arial, sans-serif';
+    const fontFamily = FONTS.family;
 
     // Overlay panel
     this.add.rectangle(400, 300, 600, 400, 0x222222, 0.9).setInteractive();
@@ -176,9 +190,8 @@ export class BossExitScene extends Scene {
       await saveMetaState(updatedState);
 
       clearRun();
-      this.scene.stop();
       this.scene.stop('GameScene');
-      this.scene.start('CityHub');
+      this.fadeToScene('CityHub');
     } else {
       this.loopRunner.onBossChoice('continue');
       // Resume GameScene -- LoopRunner is now in 'planning' state

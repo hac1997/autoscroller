@@ -4,20 +4,35 @@
 import { Scene } from 'phaser';
 import type { CombatStats } from '../systems/combat/CombatStats';
 import { shouldOfferReward, type RNG } from '../systems/deck/LootSystem';
+import { COLORS, FONTS, LAYOUT, createButton } from '../ui/StyleConstants';
 
 /** Simple Math.random-based RNG for runtime use */
 const mathRng: RNG = { next: () => Math.random() };
 
 export class PostCombatScene extends Scene {
+  private transitioning = false;
+
   constructor() {
     super('PostCombatScene');
   }
 
+  private fadeToScene(sceneKey: string, data?: any): void {
+    if (this.transitioning) return;
+    this.transitioning = true;
+    this.cameras.main.fadeOut(LAYOUT.fadeDuration, 0, 0, 0);
+    this.cameras.main.once('camerafadeoutcomplete', () => {
+      this.scene.start(sceneKey, data);
+    });
+  }
+
   create(data: { stats: CombatStats; enemyType: string; xpEarned: number }): void {
+    this.transitioning = false;
+    this.cameras.main.fadeIn(LAYOUT.fadeDuration, 0, 0, 0);
+
     const stats = data.stats;
     const xpEarned = data.xpEarned ?? 0;
 
-    this.cameras.main.setBackgroundColor(0x1a1a2e);
+    this.cameras.main.setBackgroundColor(COLORS.background);
 
     // Overlay panel
     this.add.rectangle(400, 300, 500, 380, 0x222222, 0.9);
@@ -59,23 +74,15 @@ export class PostCombatScene extends Scene {
     }
 
     // Continue button
-    const continueBtn = this.add.text(400, 420, 'Continue', {
-      fontSize: '24px',
-      fontStyle: 'bold',
-      color: '#ffd700',
-    }).setOrigin(0.5).setInteractive({ useHandCursor: true });
-
-    continueBtn.on('pointerover', () => continueBtn.setColor('#ffffff'));
-    continueBtn.on('pointerout', () => continueBtn.setColor('#ffd700'));
-    continueBtn.on('pointerdown', () => {
+    createButton(this, 400, 420, 'Continue', () => {
       const enemyType = (data.enemyType ?? 'normal') as 'normal' | 'elite' | 'boss';
       if (shouldOfferReward(enemyType, mathRng)) {
-        this.scene.start('RewardScene');
+        this.fadeToScene('RewardScene');
       } else {
         this.scene.stop();
         this.scene.resume('GameScene');
       }
-    });
+    }, 'primary');
 
     this.events.on('shutdown', this.cleanup, this);
   }
