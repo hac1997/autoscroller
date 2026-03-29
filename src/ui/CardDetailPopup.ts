@@ -1,0 +1,243 @@
+// CardDetailPopup -- full-screen overlay showing enlarged card with all details.
+// Triggered by clicking any card visual in the game.
+
+import Phaser from 'phaser';
+import { getCardById } from '../data/DataLoader';
+import { getRun } from '../state/RunState';
+import { COLORS, FONTS } from './StyleConstants';
+import type { CardDefinition, CardCategory } from '../data/types';
+
+const RARITY_COLORS: Record<string, number> = {
+  common: 0xcccccc,
+  uncommon: 0x33cc33,
+  rare: 0xff6600,
+  epic: 0xaa00ff,
+};
+
+const RARITY_LABELS: Record<string, string> = {
+  common: 'Common',
+  uncommon: 'Uncommon',
+  rare: 'Rare',
+  epic: 'Epic',
+};
+
+const CATEGORY_COLORS: Record<CardCategory, number> = {
+  attack: 0xcc3333,
+  defense: 0x3366cc,
+  magic: 0x9933cc,
+};
+
+const CATEGORY_LABELS: Record<CardCategory, string> = {
+  attack: 'Attack',
+  defense: 'Defense',
+  magic: 'Magic',
+};
+
+const TARGETING_LABELS: Record<string, string> = {
+  single: 'Single Target',
+  aoe: 'All Enemies',
+  'lowest-hp': 'Lowest HP',
+  random: 'Random',
+  self: 'Self',
+};
+
+/**
+ * Show a card detail popup overlay on the given scene.
+ * Click anywhere on the backdrop to dismiss.
+ * Returns the container so the caller can destroy it if needed.
+ */
+export function showCardDetail(
+  scene: Phaser.Scene,
+  cardId: string,
+): Phaser.GameObjects.Container {
+  const card = getCardById(cardId);
+  if (!card) return scene.add.container(0, 0);
+
+  // Check if card is upgraded
+  let isUpgraded = false;
+  try {
+    const run = getRun();
+    isUpgraded = run.deck.upgradedCards?.includes(cardId) ?? false;
+  } catch {
+    // No active run
+  }
+
+  // Resolve effective card values (apply upgrade overlay)
+  const effectiveDesc = (isUpgraded && card.upgraded?.description) ? card.upgraded.description : card.description;
+  const effectiveCooldown = (isUpgraded && card.upgraded?.cooldown != null) ? card.upgraded.cooldown : card.cooldown;
+  const effectiveCost = (isUpgraded && card.upgraded?.cost) ? card.upgraded.cost : card.cost;
+  const effectiveEffects = (isUpgraded && card.upgraded?.effects) ? card.upgraded.effects : card.effects;
+
+  const popup = scene.add.container(0, 0);
+  popup.setDepth(500);
+
+  // Full-screen dimmed backdrop
+  const backdrop = scene.add.rectangle(400, 300, 800, 600, 0x000000, 0.7);
+  backdrop.setInteractive();
+  backdrop.on('pointerdown', () => {
+    popup.destroy(true);
+  });
+  popup.add(backdrop);
+
+  // Card panel
+  const panelW = 320;
+  const panelH = 420;
+  const px = 400;
+  const py = 280;
+
+  const panel = scene.add.rectangle(px, py, panelW, panelH, 0x1a1a2e, 0.98);
+  const rarityColor = RARITY_COLORS[card.rarity] ?? RARITY_COLORS.common;
+  panel.setStrokeStyle(3, rarityColor);
+  popup.add(panel);
+
+  // Category color strip at top
+  const catColor = CATEGORY_COLORS[card.category] ?? 0x888888;
+  const strip = scene.add.rectangle(px, py - panelH / 2 + 4, panelW - 6, 8, catColor);
+  popup.add(strip);
+
+  const fontFamily = FONTS.family;
+  let yPos = py - panelH / 2 + 30;
+
+  // Card name
+  const displayName = isUpgraded ? `${card.name}+` : card.name;
+  const nameColor = isUpgraded ? COLORS.accent : COLORS.textPrimary;
+  const nameText = scene.add.text(px, yPos, displayName, {
+    fontSize: '28px',
+    fontStyle: 'bold',
+    color: nameColor,
+    fontFamily,
+  }).setOrigin(0.5);
+  popup.add(nameText);
+
+  yPos += 30;
+
+  // Rarity + Category badges
+  const rarityHex = '#' + rarityColor.toString(16).padStart(6, '0');
+  const catHex = '#' + catColor.toString(16).padStart(6, '0');
+  const rarityLabel = RARITY_LABELS[card.rarity] ?? card.rarity;
+  const catLabel = CATEGORY_LABELS[card.category] ?? card.category;
+
+  const badgeText = scene.add.text(px, yPos, `${rarityLabel} ${catLabel}`, {
+    fontSize: '14px',
+    color: rarityHex,
+    fontFamily,
+  }).setOrigin(0.5);
+  popup.add(badgeText);
+
+  yPos += 30;
+
+  // Divider
+  const divider1 = scene.add.rectangle(px, yPos, panelW - 40, 1, 0x444444);
+  popup.add(divider1);
+  yPos += 16;
+
+  // Description
+  const descText = scene.add.text(px, yPos, effectiveDesc, {
+    fontSize: '16px',
+    color: COLORS.textPrimary,
+    fontFamily,
+    wordWrap: { width: panelW - 40 },
+    align: 'center',
+    lineSpacing: 4,
+  }).setOrigin(0.5, 0);
+  popup.add(descText);
+
+  yPos += descText.height + 20;
+
+  // Divider
+  const divider2 = scene.add.rectangle(px, yPos, panelW - 40, 1, 0x444444);
+  popup.add(divider2);
+  yPos += 16;
+
+  // Stats section
+  const statsLeft = px - panelW / 2 + 30;
+  const statsRight = px + panelW / 2 - 30;
+
+  // Cooldown
+  const cdLabel = scene.add.text(statsLeft, yPos, 'Cooldown', {
+    fontSize: '14px', color: COLORS.textSecondary, fontFamily,
+  });
+  popup.add(cdLabel);
+  const cdVal = scene.add.text(statsRight, yPos, `${effectiveCooldown}s`, {
+    fontSize: '14px', color: COLORS.textPrimary, fontFamily,
+  }).setOrigin(1, 0);
+  popup.add(cdVal);
+  yPos += 22;
+
+  // Targeting
+  const targLabel = scene.add.text(statsLeft, yPos, 'Targeting', {
+    fontSize: '14px', color: COLORS.textSecondary, fontFamily,
+  });
+  popup.add(targLabel);
+  const targVal = scene.add.text(statsRight, yPos, TARGETING_LABELS[card.targeting] ?? card.targeting, {
+    fontSize: '14px', color: COLORS.textPrimary, fontFamily,
+  }).setOrigin(1, 0);
+  popup.add(targVal);
+  yPos += 22;
+
+  // Cost
+  if (effectiveCost) {
+    const costLabel = scene.add.text(statsLeft, yPos, 'Cost', {
+      fontSize: '14px', color: COLORS.textSecondary, fontFamily,
+    });
+    popup.add(costLabel);
+
+    let costStr = '';
+    let costColor = COLORS.textPrimary;
+    if (effectiveCost.stamina) { costStr = `${effectiveCost.stamina} Stamina`; costColor = '#ff8c00'; }
+    else if (effectiveCost.mana) { costStr = `${effectiveCost.mana} Mana`; costColor = '#6a5acd'; }
+    else if (effectiveCost.defense) { costStr = `${effectiveCost.defense} Defense`; costColor = '#3366cc'; }
+
+    const costVal = scene.add.text(statsRight, yPos, costStr, {
+      fontSize: '14px', color: costColor, fontFamily,
+    }).setOrigin(1, 0);
+    popup.add(costVal);
+    yPos += 22;
+  }
+
+  // Effects breakdown
+  if (effectiveEffects && effectiveEffects.length > 0) {
+    yPos += 4;
+    const effectsLabel = scene.add.text(px, yPos, 'Effects', {
+      fontSize: '13px', color: COLORS.textSecondary, fontFamily, fontStyle: 'bold',
+    }).setOrigin(0.5, 0);
+    popup.add(effectsLabel);
+    yPos += 18;
+
+    for (const eff of effectiveEffects) {
+      const effTypeLabel = eff.type.charAt(0).toUpperCase() + eff.type.slice(1);
+      const targetLabel = eff.target === 'self' ? '(Self)' : '(Enemy)';
+      const effStr = `${effTypeLabel}: ${eff.value} ${targetLabel}`;
+      const effText = scene.add.text(px, yPos, effStr, {
+        fontSize: '13px', color: catHex, fontFamily,
+      }).setOrigin(0.5, 0);
+      popup.add(effText);
+      yPos += 17;
+    }
+  }
+
+  // Upgraded indicator
+  if (isUpgraded) {
+    const upgText = scene.add.text(px, py + panelH / 2 - 20, 'UPGRADED', {
+      fontSize: '12px', color: COLORS.accent, fontFamily, fontStyle: 'bold',
+    }).setOrigin(0.5);
+    popup.add(upgText);
+  }
+
+  // Dismiss hint
+  const hint = scene.add.text(px, py + panelH / 2 + 20, 'Click anywhere to close', {
+    fontSize: '12px', color: COLORS.textSecondary, fontFamily, fontStyle: 'italic',
+  }).setOrigin(0.5);
+  popup.add(hint);
+
+  // Entrance animation
+  popup.setAlpha(0);
+  scene.tweens.add({
+    targets: popup,
+    alpha: 1,
+    duration: 150,
+    ease: 'Sine.easeOut',
+  });
+
+  return popup;
+}

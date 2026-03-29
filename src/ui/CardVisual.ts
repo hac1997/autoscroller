@@ -3,6 +3,7 @@
 
 import { getCardById } from '../data/DataLoader';
 import { getRun } from '../state/RunState';
+import { showCardDetail } from './CardDetailPopup';
 import type { CardCategory } from '../data/types';
 
 // ── Color Constants ─────────────────────────────────────────
@@ -123,6 +124,11 @@ export function createCardVisual(
       ease: 'Sine.easeOut',
     });
     bg.setStrokeStyle(2, rarityColor);
+  });
+
+  // Click to show detail popup
+  container.on('pointerdown', () => {
+    showCardDetail(scene, cardId);
   });
 
   // Store card data for external access
