@@ -1,0 +1,39 @@
+{
+  "character": {
+    "id": "4a796c88-d9e6-4126-bddc-444cfcca62f4",
+    "name": "Elite Knight",
+    "prompt": "elite knight in silver plate armor, large sword, ornate helmet, fantasy RPG elite enemy",
+    "size": {
+      "width": 64,
+      "height": 64
+    },
+    "directions": 8,
+    "view": "side",
+    "created_at": "2026-03-29T13:22:41.992Z"
+  },
+  "frames": {
+    "rotations": {
+      "south-east": "rotations/south-east.png"
+    },
+    "animations": {
+      "breathing-idle": {
+        "south-east": [
+          "animations/breathing-idle/south-east/frame_000.png",
+          "animations/breathing-idle/south-east/frame_001.png",
+          "animations/breathing-idle/south-east/frame_002.png",
+          "animations/breathing-idle/south-east/frame_003.png"
+        ]
+      },
+      "attack": {
+        "south-east": [
+          "animations/attack/south-east/frame_000.png",
+          "animations/attack/south-east/frame_001.png",
+          "animations/attack/south-east/frame_002.png",
+          "animations/attack/south-east/frame_003.png",
+          "animations/attack/south-east/frame_004.png",
+          "animations/attack/south-east/frame_005.png"
+        ]
+      }
+    }
+  }
+}

@@ -1,0 +1,50 @@
+{
+  "character": {
+    "id": "b2f5726d-9f04-4fe1-b750-bda688a4c67a",
+    "name": "Demon Lord",
+    "prompt": "demon lord boss, dark red skin, horns, massive muscular body, fantasy RPG boss",
+    "size": {
+      "width": 64,
+      "height": 64
+    },
+    "directions": 8,
+    "view": "side",
+    "created_at": "2026-03-29T13:22:49.221Z"
+  },
+  "frames": {
+    "rotations": {
+      "south-east": "rotations/south-east.png"
+    },
+    "animations": {
+      "breathing-idle": {
+        "south-east": [
+          "animations/breathing-idle/south-east/frame_000.png",
+          "animations/breathing-idle/south-east/frame_001.png",
+          "animations/breathing-idle/south-east/frame_002.png",
+          "animations/breathing-idle/south-east/frame_003.png"
+        ]
+      },
+      "attack": {
+        "south-east": [
+          "animations/attack/south-east/frame_000.png",
+          "animations/attack/south-east/frame_001.png",
+          "animations/attack/south-east/frame_002.png",
+          "animations/attack/south-east/frame_003.png",
+          "animations/attack/south-east/frame_004.png",
+          "animations/attack/south-east/frame_005.png",
+          "animations/attack/south-east/frame_006.png"
+        ]
+      },
+      "walking": {
+        "south-east": [
+          "animations/walking/south-east/frame_000.png",
+          "animations/walking/south-east/frame_001.png",
+          "animations/walking/south-east/frame_002.png",
+          "animations/walking/south-east/frame_003.png",
+          "animations/walking/south-east/frame_004.png",
+          "animations/walking/south-east/frame_005.png"
+        ]
+      }
+    }
+  }
+}
