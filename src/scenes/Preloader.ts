@@ -26,6 +26,12 @@ export class Preloader extends Scene {
     this.load.spritesheet('hero_attack', 'assets/hero/spritesheets/hero_attack.png', { frameWidth: 64, frameHeight: 64 });
     this.load.spritesheet('hero_death', 'assets/hero/spritesheets/hero_death.png', { frameWidth: 64, frameHeight: 64 });
 
+    // Mage hero spritesheets (64x64 per frame, horizontal strips)
+    this.load.spritesheet('mage_walk', 'assets/mage/spritesheets/mage_walk.png', { frameWidth: 64, frameHeight: 64 });
+    this.load.spritesheet('mage_idle', 'assets/mage/spritesheets/mage_idle.png', { frameWidth: 64, frameHeight: 64 });
+    this.load.spritesheet('mage_attack', 'assets/mage/spritesheets/mage_attack.png', { frameWidth: 64, frameHeight: 64 });
+    this.load.spritesheet('mage_death', 'assets/mage/spritesheets/mage_death.png', { frameWidth: 64, frameHeight: 64 });
+
     // Monster spritesheets (64x64 per frame, horizontal strips)
     const monsterIds = ['slime', 'goblin', 'orc', 'mage', 'elite_knight', 'boss_demon'];
     for (const id of monsterIds) {

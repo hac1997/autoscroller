@@ -15,6 +15,7 @@ import { earnXP, getXPForEnemy, loseAllRunXP } from '../systems/hero/XPSystem';
 import { scaleEnemy } from '../data/EnemyDefinitions';
 import { loadMetaState } from '../systems/MetaPersistence';
 import { COLORS, LAYOUT } from '../ui/StyleConstants';
+import { getSpritePrefix } from '../systems/hero/ClassRegistry';
 
 export class CombatScene extends Scene {
   private engine!: CombatEngine;
@@ -101,12 +102,21 @@ export class CombatScene extends Scene {
 
     // ── Hero & Enemy visual representations ──────────────
     // Hero (left side) - animated sprite at 4x scale (64x64 -> 256x256)
-    this.heroSprite = this.add.sprite(200, 350, 'hero_idle').setDepth(10).setScale(4);
-    this.heroSprite.play('hero_idle');
-    // Create hero_death animation lazily
-    if (!this.anims.exists('hero_death') && this.textures.exists('hero_death')) {
-      this.anims.create({ key: 'hero_death', frames: this.anims.generateFrameNumbers('hero_death', {}), frameRate: 8, repeat: 0 });
+    const sp = getSpritePrefix(run.hero.className ?? 'warrior');
+    const heroIdleKey = `${sp}_idle`;
+    const heroAttackKey = `${sp}_attack`;
+    const heroDeathKey = `${sp}_death`;
+    if (!this.anims.exists(heroIdleKey) && this.textures.exists(heroIdleKey)) {
+      this.anims.create({ key: heroIdleKey, frames: this.anims.generateFrameNumbers(heroIdleKey, {}), frameRate: 4, repeat: -1 });
     }
+    if (!this.anims.exists(heroAttackKey) && this.textures.exists(heroAttackKey)) {
+      this.anims.create({ key: heroAttackKey, frames: this.anims.generateFrameNumbers(heroAttackKey, {}), frameRate: 10, repeat: 0 });
+    }
+    if (!this.anims.exists(heroDeathKey) && this.textures.exists(heroDeathKey)) {
+      this.anims.create({ key: heroDeathKey, frames: this.anims.generateFrameNumbers(heroDeathKey, {}), frameRate: 8, repeat: 0 });
+    }
+    this.heroSprite = this.add.sprite(200, 350, heroIdleKey).setDepth(10).setScale(4);
+    this.heroSprite.play(heroIdleKey);
     this.heroLabel = this.add.text(200, 200, 'Hero', {
       fontSize: '16px', fontStyle: 'bold', color: COLORS.textPrimary,
     }).setOrigin(0.5).setDepth(10);
@@ -158,9 +168,9 @@ export class CombatScene extends Scene {
       this.cardQueue.onCardPlayed(0);
       // Play hero attack animation and flash enemy on hit
       if (eventData.damage > 0) {
-        this.heroSprite.play('hero_attack');
+        this.heroSprite.play(heroAttackKey);
         this.heroSprite.once('animationcomplete', () => {
-          if (this.heroSprite) this.heroSprite.play('hero_idle');
+          if (this.heroSprite) this.heroSprite.play(heroIdleKey);
         });
         this.combatEffects.floatingNumber(550, 320, eventData.damage, '#ffffff', '-');
         if (this.enemySprite instanceof Phaser.GameObjects.Sprite) {
@@ -240,8 +250,8 @@ export class CombatScene extends Scene {
         }
       } else {
         // Hero dies - play hero death animation
-        if (this.anims.exists('hero_death')) {
-          this.heroSprite.play('hero_death');
+        if (this.anims.exists(heroDeathKey)) {
+          this.heroSprite.play(heroDeathKey);
         }
       }
 

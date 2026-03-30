@@ -7,6 +7,7 @@ import { LoopCelebration } from '../ui/LoopCelebration';
 import { TileVisual } from '../ui/TileVisual';
 import { loadMetaState } from '../systems/MetaPersistence';
 import { COLORS, LAYOUT } from '../ui/StyleConstants';
+import { getSpritePrefix } from '../systems/hero/ClassRegistry';
 
 /**
  * GameScene -- thin Phaser wrapper over LoopRunner.
@@ -92,18 +93,23 @@ export class GameScene extends Scene {
     this.worldOffset = 0;
     this.celebrationPlaying = false;
 
-    // Hero animations
-    if (!this.anims.exists('hero_walk')) {
-      this.anims.create({ key: 'hero_walk', frames: this.anims.generateFrameNumbers('hero_walk', {}), frameRate: 8, repeat: -1 });
-      this.anims.create({ key: 'hero_idle', frames: this.anims.generateFrameNumbers('hero_idle', {}), frameRate: 4, repeat: -1 });
-      this.anims.create({ key: 'hero_attack', frames: this.anims.generateFrameNumbers('hero_attack', {}), frameRate: 10, repeat: 0 });
-      this.anims.create({ key: 'hero_death', frames: this.anims.generateFrameNumbers('hero_death', {}), frameRate: 8, repeat: 0 });
+    // Hero animations (class-aware sprite keys)
+    const sp = getSpritePrefix(run.hero.className ?? 'warrior');
+    const walkKey = `${sp}_walk`;
+    const idleKey = `${sp}_idle`;
+    const attackKey = `${sp}_attack`;
+    const deathKey = `${sp}_death`;
+    if (!this.anims.exists(walkKey)) {
+      this.anims.create({ key: walkKey, frames: this.anims.generateFrameNumbers(walkKey, {}), frameRate: 8, repeat: -1 });
+      this.anims.create({ key: idleKey, frames: this.anims.generateFrameNumbers(idleKey, {}), frameRate: 4, repeat: -1 });
+      this.anims.create({ key: attackKey, frames: this.anims.generateFrameNumbers(attackKey, {}), frameRate: 10, repeat: 0 });
+      this.anims.create({ key: deathKey, frames: this.anims.generateFrameNumbers(deathKey, {}), frameRate: 8, repeat: 0 });
     }
 
     // Hero sprite
-    this.heroSprite = this.add.sprite(100, 410, 'hero_idle');
+    this.heroSprite = this.add.sprite(100, 410, idleKey);
     this.heroSprite.setDepth(50);
-    this.heroSprite.play('hero_walk');
+    this.heroSprite.play(walkKey);
 
     // Camera follow
     this.cameras.main.startFollow(this.heroSprite, true, 0.1, 0.1);
