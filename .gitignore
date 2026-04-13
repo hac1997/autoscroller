@@ -1,0 +1,7 @@
+node_modules/
+dist/
+.vs/
+.claude/
+.planning/
+.mcp.json
+*.log
