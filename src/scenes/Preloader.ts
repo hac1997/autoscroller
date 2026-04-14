@@ -71,6 +71,26 @@ export class Preloader extends Scene {
     this.load.image('tile_event', 'assets/tiles/tile_event.png');
     this.load.image('tile_treasure', 'assets/tiles/tile_treasure.png');
     this.load.image('tile_boss', 'assets/tiles/tile_boss.png');
+
+    // Card Illustrations
+    const cardIds = [
+      'strike', 'heavy-hit', 'fury', 'berserker', 'counter-strike', 'defend', 'shield-wall', 
+      'fortify', 'iron-skin', 'fireball', 'heal', 'arcane-shield', 'rejuvenate', 'mana-drain', 
+      'weaken', 'cleave', 'reckless-charge', 'execute', 'doom-blade', 'parry', 'bulwark', 
+      'last-stand', 'meditate', 'vampiric-touch', 'haste', 'energy-surge', 'poison-cloud', 
+      'soul-rend', 'sacrifice', 'chain-lightning'
+    ];
+
+    const jpgCards = new Set([
+      'chain-lightning', 'energy-surge', 'haste', 'poison-cloud', 'sacrifice', 'soul-rend',
+      'berserker', 'bulwark', 'doom-blade', 'heavy-hit', 'last-stand', 'mana-drain',
+      'meditate', 'parry', 'strike', 'vampiric-touch', 'weaken'
+    ]);
+
+    for (const id of cardIds) {
+      const ext = jpgCards.has(id) ? '.jpg' : '.png';
+      this.load.image(`card_${id}`, `assets/cards/${id}${ext}`);
+    }
   }
 
   async create(): Promise<void> {
