@@ -66,10 +66,11 @@ function consoleLogPlugin(): Plugin {
 }
 
 export default defineConfig({
-    base: './',
+    base: './autoscroller/',
     plugins: [debugSavePlugin(), consoleLogPlugin()],
     server: {
-        host: true
+        host: true,
+        allowedHosts: ["feira-de-jogos.dev.br"]
     },
     build: {
         // Phaser alone is ~1.5MB and lives in its own chunk; the game code is
