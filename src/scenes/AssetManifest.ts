@@ -83,41 +83,41 @@ export function loadMenuCritical(load: LoadTarget): void {
 // ── Tier 1: light chrome + run-entry visuals ──────────────────────────────────
 export function loadLightChrome(load: LoadTarget): void {
   // Combat-terrain tiles (single all-in-one diorama per tile).
-  image(load, 'tile_basic', 'assets/map/tiles/tile_basic.png');
-  image(load, 'tile_forest', 'assets/map/tiles/tile_forest.png');
-  image(load, 'tile_graveyard', 'assets/map/tiles/tile_graveyard.png');
-  image(load, 'tile_swamp', 'assets/map/tiles/tile_swamp.png');
-  image(load, 'tile_desert', 'assets/map/tiles/tile_desert.png');
-  image(load, 'tile_lava', 'assets/map/tiles/tile_lava.png');
+  image(load, 'tile_basic', 'assets/map/tiles/tile_basic.webp');
+  image(load, 'tile_forest', 'assets/map/tiles/tile_forest.webp');
+  image(load, 'tile_graveyard', 'assets/map/tiles/tile_graveyard.webp');
+  image(load, 'tile_swamp', 'assets/map/tiles/tile_swamp.webp');
+  image(load, 'tile_desert', 'assets/map/tiles/tile_desert.webp');
+  image(load, 'tile_lava', 'assets/map/tiles/tile_lava.webp');
   for (const id of ['forest', 'graveyard', 'swamp', 'desert', 'lava']) {
-    image(load, `tile_reserved_${id}`, `assets/map/tiles/tile_reserved_${id}.png`);
+    image(load, `tile_reserved_${id}`, `assets/map/tiles/tile_reserved_${id}.webp`);
   }
-  image(load, 'tile_event', 'assets/map/tiles/tile_event.png');
-  image(load, 'tile_treasure', 'assets/map/tiles/tile_treasure.png');
-  image(load, 'tile_boss', 'assets/map/tiles/tile_boss.png');
+  image(load, 'tile_event', 'assets/map/tiles/tile_event.webp');
+  image(load, 'tile_treasure', 'assets/map/tiles/tile_treasure.webp');
+  image(load, 'tile_boss', 'assets/map/tiles/tile_boss.webp');
 
   // Tile landmarks.
-  image(load, 'landmark_event', 'assets/map/landmarks/landmark_event.png');
-  image(load, 'landmark_treasure', 'assets/map/landmarks/landmark_treasure.png');
-  image(load, 'landmark_boss', 'assets/map/landmarks/landmark_boss.png');
-  image(load, 'landmark_desert', 'assets/map/landmarks/landmark_desert.png');
-  image(load, 'landmark_forest', 'assets/map/landmarks/landmark_forest.png');
-  image(load, 'landmark_graveyard', 'assets/map/landmarks/landmark_graveyard.png');
-  image(load, 'landmark_swamp', 'assets/map/landmarks/landmark_swamp.png');
-  image(load, 'landmark_lava', 'assets/map/landmarks/landmark_lava.png');
-  image(load, 'landmark_subtile_camp', 'assets/map/landmarks/landmark_subtile_camp.png');
-  image(load, 'landmark_subtile_manawell', 'assets/map/landmarks/landmark_subtile_manawell.png');
-  image(load, 'landmark_subtile_ambush', 'assets/map/landmarks/landmark_subtile_ambush.png');
-  image(load, 'landmark_subtile_bleedtotem', 'assets/map/landmarks/landmark_subtile_bleedtotem.png');
-  image(load, 'landmark_subtile_burnaltar', 'assets/map/landmarks/landmark_subtile_burnaltar.png');
-  image(load, 'landmark_subtile_magma', 'assets/map/landmarks/landmark_subtile_magma.png');
-  image(load, 'landmark_subtile_resonance', 'assets/map/landmarks/landmark_subtile_resonance.png');
-  image(load, 'landmark_subtile_warhorn', 'assets/map/landmarks/landmark_subtile_warhorn.png');
+  image(load, 'landmark_event', 'assets/map/landmarks/landmark_event.webp');
+  image(load, 'landmark_treasure', 'assets/map/landmarks/landmark_treasure.webp');
+  image(load, 'landmark_boss', 'assets/map/landmarks/landmark_boss.webp');
+  image(load, 'landmark_desert', 'assets/map/landmarks/landmark_desert.webp');
+  image(load, 'landmark_forest', 'assets/map/landmarks/landmark_forest.webp');
+  image(load, 'landmark_graveyard', 'assets/map/landmarks/landmark_graveyard.webp');
+  image(load, 'landmark_swamp', 'assets/map/landmarks/landmark_swamp.webp');
+  image(load, 'landmark_lava', 'assets/map/landmarks/landmark_lava.webp');
+  image(load, 'landmark_subtile_camp', 'assets/map/landmarks/landmark_subtile_camp.webp');
+  image(load, 'landmark_subtile_manawell', 'assets/map/landmarks/landmark_subtile_manawell.webp');
+  image(load, 'landmark_subtile_ambush', 'assets/map/landmarks/landmark_subtile_ambush.webp');
+  image(load, 'landmark_subtile_bleedtotem', 'assets/map/landmarks/landmark_subtile_bleedtotem.webp');
+  image(load, 'landmark_subtile_burnaltar', 'assets/map/landmarks/landmark_subtile_burnaltar.webp');
+  image(load, 'landmark_subtile_magma', 'assets/map/landmarks/landmark_subtile_magma.webp');
+  image(load, 'landmark_subtile_resonance', 'assets/map/landmarks/landmark_subtile_resonance.webp');
+  image(load, 'landmark_subtile_warhorn', 'assets/map/landmarks/landmark_subtile_warhorn.webp');
 
   // Hero (warrior) sprites.
-  image(load, 'hero_idle', 'assets/characters/hero/idle/idle_1.png');
-  image(load, 'hero_idle2', 'assets/characters/hero/idle/idle_2.png');
-  image(load, 'hero_shadow', 'assets/characters/hero/shadow.png');
+  image(load, 'hero_idle', 'assets/characters/hero/idle/idle_1.webp');
+  image(load, 'hero_idle2', 'assets/characters/hero/idle/idle_2.webp');
+  image(load, 'hero_shadow', 'assets/characters/hero/shadow.webp');
   sheet(load, 'hero_walk', 'assets/characters/hero/scrolling/spritesheet.webp', { frameWidth: 512, frameHeight: 512 });
   sheet(load, 'hero_attack', 'assets/characters/hero/attack/attack.webp', { frameWidth: 532, frameHeight: 568 });
   sheet(load, 'hero_channel', 'assets/characters/hero/cast_debuff/cast_debuff_spritesheet.webp', { frameWidth: 512, frameHeight: 512 });
@@ -128,7 +128,7 @@ export function loadLightChrome(load: LoadTarget): void {
 
   // Mage sprites.
   sheet(load, 'mage_select', 'assets/characters/mage/selection/spritesheet.webp', { frameWidth: 386, frameHeight: 514 });
-  sheet(load, 'mage_idle', 'assets/characters/mage/idle/spritesheet.png', { frameWidth: 640, frameHeight: 562 });
+  sheet(load, 'mage_idle', 'assets/characters/mage/idle/spritesheet.webp', { frameWidth: 640, frameHeight: 562 });
   sheet(load, 'mage_attack', 'assets/characters/mage/attack/spritesheet.webp', { frameWidth: 640, frameHeight: 562 });
   sheet(load, 'mage_walk', 'assets/characters/mage/scrolling/spritesheet.webp', { frameWidth: 512, frameHeight: 512 });
   sheet(load, 'hero_chibi_mage', 'assets/characters/mage/pocket/spritesheet.webp', { frameWidth: 256, frameHeight: 256, endFrame: 5 });
@@ -136,15 +136,15 @@ export function loadLightChrome(load: LoadTarget): void {
   // Parallax loop backgrounds.
 
   // Glossary + combat HUD chrome (small, all guarded at use sites).
-  image(load, 'glossary_book_icon', 'assets/ui/glossary/book_icon.png');
-  image(load, 'glossary_panel_bg', 'assets/ui/glossary/panel_bg.png');
+  image(load, 'glossary_book_icon', 'assets/ui/glossary/book_icon.webp');
+  image(load, 'glossary_panel_bg', 'assets/ui/glossary/panel_bg.webp');
 
   // Character-select chrome.
 
   // Forge sigils (element glyphs resolved by ElementSystem/IconTokens) + small
   // forge items. The large forge backdrop lives in tier 5 (scene art).
   for (const id of ['attack', 'defense', 'agility', 'counter', 'fire', 'water', 'air', 'earth']) {
-    image(load, `forge_sigil_${id}`, `assets/icons/tokens/forge-sigils/${id}.png`);
+    image(load, `forge_sigil_${id}`, `assets/icons/tokens/forge-sigils/${id}.webp`);
   }
 
   // Tutorial + keyword teaching panels (guarded; appear during first run).
@@ -155,30 +155,30 @@ export function loadLightChrome(load: LoadTarget): void {
     'forge_intro', 'forge_craft', 'boss_preview', 'complete',
   ];
   for (const s of tutorialSteps) {
-    image(load, `tutorial_text_${s}`, `assets/ui/text/tutorial/tutorial_${s}.png`);
+    image(load, `tutorial_text_${s}`, `assets/ui/text/tutorial/tutorial_${s}.webp`);
   }
   for (const kw of ['brace', 'exhaust', 'haste', 'vengeance']) {
-    image(load, `keyword_${kw}`, `assets/ui/text/keyword/keyword_${kw}.png`);
+    image(load, `keyword_${kw}`, `assets/ui/text/keyword/keyword_${kw}.webp`);
   }
 
   // Planning / tile-selection chrome.
-  image(load, 'card_mold_v2', 'assets/ui/frames/card_mold_v2.png');
-  image(load, 'deck_frame', 'assets/ui/frames/deck-frame.png');
+  image(load, 'card_mold_v2', 'assets/ui/frames/card_mold_v2.webp');
+  image(load, 'deck_frame', 'assets/ui/frames/deck-frame.webp');
   const tileTooltips = ['forest', 'graveyard', 'swamp', 'desert', 'lava', 'event', 'treasure',
     'ambush', 'magma', 'manawell', 'camp', 'burnaltar', 'bleedtotem', 'resonance', 'warhorn'];
   for (const t of tileTooltips) {
-    image(load, `tile_tooltip_${t}`, `assets/ui/text/tiles/tile_tooltip_${t}.png`);
+    image(load, `tile_tooltip_${t}`, `assets/ui/text/tiles/tile_tooltip_${t}.webp`);
   }
 
   // Shop chrome (small panels/buttons; large shop backdrops are tier 5).
-  image(load, 'confirm_panel', 'assets/ui/panels/confirm_panel.png');
+  image(load, 'confirm_panel', 'assets/ui/panels/confirm_panel.webp');
 
   // Forge dwarf NPC + wood button skin + settings/keyword frames.
-  image(load, 'dwarf_talking', 'assets/characters/npc/forge-dwarf/dwarf_talking.png');
-  image(load, 'dwarf_hands_on_hips', 'assets/characters/npc/forge-dwarf/dwarf_hands_on_hips.png');
+  image(load, 'dwarf_talking', 'assets/characters/npc/forge-dwarf/dwarf_talking.webp');
+  image(load, 'dwarf_hands_on_hips', 'assets/characters/npc/forge-dwarf/dwarf_hands_on_hips.webp');
 
   // Generic HUD panels.
-  image(load, 'speed_panel', 'assets/ui/panels/speed_panel.png');
+  image(load, 'speed_panel', 'assets/ui/panels/speed_panel.webp');
 
   // Buttons (all small).
   const buttons = [
@@ -189,9 +189,9 @@ export function loadLightChrome(load: LoadTarget): void {
     'btn_keep_my_run', 'btn_yes_delete',
   ];
   for (const b of buttons) {
-    image(load, b, `assets/ui/buttons/${b}.png`);
+    image(load, b, `assets/ui/buttons/${b}.webp`);
   }
-  image(load, 'btn_start_loop', 'assets/ui/buttons/start-loop.png');
+  image(load, 'btn_start_loop', 'assets/ui/buttons/start-loop.webp');
 
   // Building upgrade text panels (one per level per building).
   const buildingPanels: Array<[string, number]> = [
@@ -199,23 +199,23 @@ export function loadLightChrome(load: LoadTarget): void {
   ];
   for (const [name, max] of buildingPanels) {
     for (let l = 1; l <= max; l++) {
-      image(load, `building_${name}_l${l}`, `assets/ui/text/buildings/building_${name}_l${l}.png`);
+      image(load, `building_${name}_l${l}`, `assets/ui/text/buildings/building_${name}_l${l}.webp`);
     }
   }
 
   // Material + utility icons (small).
-  image(load, 'mat_iron', 'assets/icons/iron.png');
-  image(load, 'mat_crystal', 'assets/icons/crystal.png');
-  image(load, 'mat_scroll', 'assets/icons/scroll.png');
-  image(load, 'mat_wood', 'assets/icons/wood.png');
-  image(load, 'mat_stone', 'assets/icons/stone.png');
-  image(load, 'mat_bone', 'assets/icons/bone.png');
-  image(load, 'mat_essence', 'assets/icons/essence.png');
-  image(load, 'mat_herbs', 'assets/icons/herbs.png');
-  image(load, 'deck_icon', 'assets/icons/deck-icon.png');
-  image(load, 'relic_icon', 'assets/icons/relic-icon.png');
-  image(load, 'icon_coin', 'assets/icons/coin.png');
-  image(load, 'icon_brick', 'assets/icons/brick.png');
+  image(load, 'mat_iron', 'assets/icons/iron.webp');
+  image(load, 'mat_crystal', 'assets/icons/crystal.webp');
+  image(load, 'mat_scroll', 'assets/icons/scroll.webp');
+  image(load, 'mat_wood', 'assets/icons/wood.webp');
+  image(load, 'mat_stone', 'assets/icons/stone.webp');
+  image(load, 'mat_bone', 'assets/icons/bone.webp');
+  image(load, 'mat_essence', 'assets/icons/essence.webp');
+  image(load, 'mat_herbs', 'assets/icons/herbs.webp');
+  image(load, 'deck_icon', 'assets/icons/deck-icon.webp');
+  image(load, 'relic_icon', 'assets/icons/relic-icon.webp');
+  image(load, 'icon_coin', 'assets/icons/coin.webp');
+  image(load, 'icon_brick', 'assets/icons/brick.webp');
   image(load, 'icon_card', 'assets/icons/card.jpg');
 
   // Card token glyphs ([burn], [str], elements, …) + painterly v2 element icons.
@@ -227,10 +227,10 @@ export function loadLightChrome(load: LoadTarget): void {
     'fire', 'water', 'air', 'earth',
   ];
   for (const token of cardTokenIds) {
-    image(load, `icon_${token}`, `assets/icons/tokens/${token}.png`);
+    image(load, `icon_${token}`, `assets/icons/tokens/${token}.webp`);
   }
   for (const token of ['attack', 'defense', 'agility', 'counter', 'fire', 'water', 'air', 'earth']) {
-    image(load, `icon_v2_${token}`, `assets/icons/tokens/elements-v2/${token}.png`);
+    image(load, `icon_v2_${token}`, `assets/icons/tokens/elements-v2/${token}.webp`);
   }
 
   // Run/town audio (missing audio is silent — never a visual break).
@@ -277,42 +277,42 @@ const RELIC_IDS = [
 
 export function loadRelicArt(load: LoadTarget): void {
   for (const id of RELIC_IDS) {
-    image(load, `relic_${id}`, `assets/relics/${id}.png`);
+    image(load, `relic_${id}`, `assets/relics/${id}.webp`);
   }
 }
 
 // ── Tier 3: combat art (monsters, hit effects, battle backgrounds) ────────────
 const STATIC_MONSTERS: Array<{ id: string; folder: string; file: string; hasFrame2?: boolean; frameCount?: number }> = [
-  { id: 'corpse_eater', folder: 'cemetery', file: 'corpse eater_1.png', hasFrame2: true },
-  { id: 'pocket_cat', folder: 'cemetery', file: 'pocket cat.png' },
-  { id: 'skeleton', folder: 'cemetery', file: 'skeleton_1.png', hasFrame2: true },
-  { id: 'vampire', folder: 'cemetery', file: 'vampire_1.png', hasFrame2: true },
-  { id: 'werewolf', folder: 'cemetery', file: 'werewolf_1.png', hasFrame2: true },
-  { id: 'zombie', folder: 'cemetery', file: 'zombie.png' },
-  { id: 'doom_knight', folder: 'default', file: 'doom_knight_1.png', hasFrame2: true },
-  { id: 'baby_dragon', folder: 'desert', file: 'baby dragon_1.png', hasFrame2: true },
-  { id: 'mutated_salamander', folder: 'desert', file: 'mutated_salamander_1.png', hasFrame2: true },
-  { id: 'scorpion', folder: 'desert', file: 'scorpion_1.png', hasFrame2: true },
-  { id: 'ancient_tree', folder: 'forest', file: 'ancient tree_1.png', hasFrame2: true },
-  { id: 'mush', folder: 'forest', file: 'mush_1.png', hasFrame2: true },
-  { id: 'forge_slime', folder: 'lava', file: 'forge_slime_1.png', hasFrame2: true },
-  { id: 'lava_golem', folder: 'lava', file: 'lava_golem_1.png', hasFrame2: true },
-  { id: 'fire_elemental', folder: 'lava', file: 'fire_elemental_1.png', hasFrame2: true },
-  { id: 'depths_horror', folder: 'swamp', file: 'depths_horror_1.png', hasFrame2: true },
-  { id: 'toxic_gooze', folder: 'swamp', file: 'toxic gooze_1.png', hasFrame2: true },
-  { id: 'venomous_kobra', folder: 'swamp', file: 'venomous_kobra_1.png', hasFrame2: true },
-  { id: 'slime', folder: 'green_field', file: 'slime_1.png', hasFrame2: true },
-  { id: 'red_slime', folder: 'green_field', file: 'red_slime_1.png', hasFrame2: true },
-  { id: 'earth_dragon', folder: 'green_field', file: 'earth_dragon_1.png', hasFrame2: true },
-  { id: 'lost_lizard', folder: '', file: 'lost_lizard_1.png', hasFrame2: true },
-  { id: 'bog_witch', folder: 'boss', file: 'bog_witch_1.png', hasFrame2: true },
-  { id: 'desert_golem', folder: 'boss', file: 'desert_golem_1.png', hasFrame2: true },
-  { id: 'infernal_dragon', folder: 'boss', file: 'infernal_dragon_1.png', hasFrame2: true },
+  { id: 'corpse_eater', folder: 'cemetery', file: 'corpse eater_1.webp', hasFrame2: true },
+  { id: 'pocket_cat', folder: 'cemetery', file: 'pocket cat.webp' },
+  { id: 'skeleton', folder: 'cemetery', file: 'skeleton_1.webp', hasFrame2: true },
+  { id: 'vampire', folder: 'cemetery', file: 'vampire_1.webp', hasFrame2: true },
+  { id: 'werewolf', folder: 'cemetery', file: 'werewolf_1.webp', hasFrame2: true },
+  { id: 'zombie', folder: 'cemetery', file: 'zombie.webp' },
+  { id: 'doom_knight', folder: 'default', file: 'doom_knight_1.webp', hasFrame2: true },
+  { id: 'baby_dragon', folder: 'desert', file: 'baby dragon_1.webp', hasFrame2: true },
+  { id: 'mutated_salamander', folder: 'desert', file: 'mutated_salamander_1.webp', hasFrame2: true },
+  { id: 'scorpion', folder: 'desert', file: 'scorpion_1.webp', hasFrame2: true },
+  { id: 'ancient_tree', folder: 'forest', file: 'ancient tree_1.webp', hasFrame2: true },
+  { id: 'mush', folder: 'forest', file: 'mush_1.webp', hasFrame2: true },
+  { id: 'forge_slime', folder: 'lava', file: 'forge_slime_1.webp', hasFrame2: true },
+  { id: 'lava_golem', folder: 'lava', file: 'lava_golem_1.webp', hasFrame2: true },
+  { id: 'fire_elemental', folder: 'lava', file: 'fire_elemental_1.webp', hasFrame2: true },
+  { id: 'depths_horror', folder: 'swamp', file: 'depths_horror_1.webp', hasFrame2: true },
+  { id: 'toxic_gooze', folder: 'swamp', file: 'toxic gooze_1.webp', hasFrame2: true },
+  { id: 'venomous_kobra', folder: 'swamp', file: 'venomous_kobra_1.webp', hasFrame2: true },
+  { id: 'slime', folder: 'green_field', file: 'slime_1.webp', hasFrame2: true },
+  { id: 'red_slime', folder: 'green_field', file: 'red_slime_1.webp', hasFrame2: true },
+  { id: 'earth_dragon', folder: 'green_field', file: 'earth_dragon_1.webp', hasFrame2: true },
+  { id: 'lost_lizard', folder: '', file: 'lost_lizard_1.webp', hasFrame2: true },
+  { id: 'bog_witch', folder: 'boss', file: 'bog_witch_1.webp', hasFrame2: true },
+  { id: 'desert_golem', folder: 'boss', file: 'desert_golem_1.webp', hasFrame2: true },
+  { id: 'infernal_dragon', folder: 'boss', file: 'infernal_dragon_1.webp', hasFrame2: true },
   // `iron_golem` (Dryas, the iron commander) now has its own distinct art —
   // a left-facing battle-stance sprite, separate from the ancient colossus.
-  { id: 'iron_golem',      folder: 'boss', file: 'iron_commander_1.png', hasFrame2: true, frameCount: 3 },
+  { id: 'iron_golem',      folder: 'boss', file: 'iron_commander_1.webp', hasFrame2: true, frameCount: 3 },
   // `boss_iron_golem` (Ancient Iron Golem) keeps the original colossus sprite.
-  { id: 'boss_iron_golem', folder: 'boss', file: 'iron_golem_1.png', hasFrame2: true },
+  { id: 'boss_iron_golem', folder: 'boss', file: 'iron_golem_1.webp', hasFrame2: true },
 ];
 
 const ENEMY_ATTACK_IDS = [
@@ -329,30 +329,30 @@ export function loadCombatArt(load: LoadTarget): void {
     image(load, `monster_${m.id}`, path);
     const totalFrames = m.frameCount ?? (m.hasFrame2 ? 2 : 1);
     for (let n = 2; n <= totalFrames; n++) {
-      image(load, `monster_${m.id}_${n}`, path.replace(/(_1)?\.png$/i, `_${n}.png`));
+      image(load, `monster_${m.id}_${n}`, path.replace(/(_1)?\.webp$/i, `_${n}.webp`));
     }
-    image(load, `portrait_${m.id}`, `assets/characters/monsters/portraits/${m.id}.png`);
+    image(load, `portrait_${m.id}`, `assets/characters/monsters/portraits/${m.id}.webp`);
   }
 
   // Enemy attack cards (rendered via CardFace, which guards art).
   for (const id of ENEMY_ATTACK_IDS) {
-    image(load, `enemy/enemy_${id}`, `assets/cards/enemy/enemy_${id}.png`);
+    image(load, `enemy/enemy_${id}`, `assets/cards/enemy/enemy_${id}.webp`);
   }
 
   // Battle backgrounds.
 
   // Hit-effect spritesheets (CombatEffects early-returns when absent).
   const FX_W = 443; const FX_H = 887;
-  sheet(load, 'fx_slash', 'assets/effects/combat/fx_slash.png', { frameWidth: FX_W, frameHeight: FX_H });
-  sheet(load, 'fx_shield_fade', 'assets/effects/combat/fx_shield_fade.png', { frameWidth: 1024, frameHeight: 1024 });
-  sheet(load, 'fx_aura_heal', 'assets/effects/combat/fx_aura_heal.png', { frameWidth: 1024, frameHeight: 1024, endFrame: 5 });
-  sheet(load, 'fx_aura_buff', 'assets/effects/combat/fx_aura_buff.png', { frameWidth: 1024, frameHeight: 1024, endFrame: 5 });
-  sheet(load, 'fx_leaf_fall', 'assets/effects/combat/fx_leaf_fall.png', { frameWidth: 512, frameHeight: 512, endFrame: 5 });
-  sheet(load, 'fx_stomp', 'assets/effects/combat/fx_stomp.png', { frameWidth: 1024, frameHeight: 1024 });
-  sheet(load, 'fx_bite', 'assets/effects/combat/fx_bite.png', { frameWidth: 1024, frameHeight: 1024 });
-  sheet(load, 'fx_fire', 'assets/effects/combat/fx_fire.png', { frameWidth: 1024, frameHeight: 1024 });
-  sheet(load, 'fx_bleed', 'assets/effects/combat/fx_bleed.png', { frameWidth: 1024, frameHeight: 1024 });
-  sheet(load, 'fx_stun', 'assets/effects/combat/fx_stun.png', { frameWidth: 1024, frameHeight: 1024 });
+  sheet(load, 'fx_slash', 'assets/effects/combat/fx_slash.webp', { frameWidth: FX_W, frameHeight: FX_H });
+  sheet(load, 'fx_shield_fade', 'assets/effects/combat/fx_shield_fade.webp', { frameWidth: 1024, frameHeight: 1024 });
+  sheet(load, 'fx_aura_heal', 'assets/effects/combat/fx_aura_heal.webp', { frameWidth: 1024, frameHeight: 1024, endFrame: 5 });
+  sheet(load, 'fx_aura_buff', 'assets/effects/combat/fx_aura_buff.webp', { frameWidth: 1024, frameHeight: 1024, endFrame: 5 });
+  sheet(load, 'fx_leaf_fall', 'assets/effects/combat/fx_leaf_fall.webp', { frameWidth: 512, frameHeight: 512, endFrame: 5 });
+  sheet(load, 'fx_stomp', 'assets/effects/combat/fx_stomp.webp', { frameWidth: 1024, frameHeight: 1024 });
+  sheet(load, 'fx_bite', 'assets/effects/combat/fx_bite.webp', { frameWidth: 1024, frameHeight: 1024 });
+  sheet(load, 'fx_fire', 'assets/effects/combat/fx_fire.webp', { frameWidth: 1024, frameHeight: 1024 });
+  sheet(load, 'fx_bleed', 'assets/effects/combat/fx_bleed.webp', { frameWidth: 1024, frameHeight: 1024 });
+  sheet(load, 'fx_stun', 'assets/effects/combat/fx_stun.webp', { frameWidth: 1024, frameHeight: 1024 });
 }
 
 // ── Tier 4: card art (~300MB; CardFace renders emoji placeholder when absent) ──
@@ -417,14 +417,14 @@ const CARD_IDS = [
 
 export function loadCardArt(load: LoadTarget): void {
   for (const id of CARD_IDS) {
-    image(load, `card_${id}`, `assets/cards/${id}.png`);
+    image(load, `card_${id}`, `assets/cards/${id}.webp`);
   }
 }
 
 // ── Tier 5: large one-off scene backgrounds (all guarded at use sites) ────────
 export function loadSceneArt(load: LoadTarget): void {
-  image(load, 'bg_settings_scribe', 'assets/ui/backgrounds/bg_settings_scribe.png');
-  image(load, 'achievements_bg', 'assets/ui/panels/achievments.png');
+  image(load, 'bg_settings_scribe', 'assets/ui/backgrounds/bg_settings_scribe.webp');
+  image(load, 'achievements_bg', 'assets/ui/panels/achievments.webp');
 }
 
 // ── Background warmer ─────────────────────────────────────────────────────────
