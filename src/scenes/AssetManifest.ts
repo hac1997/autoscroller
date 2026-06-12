@@ -118,20 +118,20 @@ export function loadLightChrome(load: LoadTarget): void {
   image(load, 'hero_idle', 'assets/characters/hero/idle/idle_1.png');
   image(load, 'hero_idle2', 'assets/characters/hero/idle/idle_2.png');
   image(load, 'hero_shadow', 'assets/characters/hero/shadow.png');
-  sheet(load, 'hero_walk', 'assets/characters/hero/scrolling/spritesheet.png', { frameWidth: 512, frameHeight: 512 });
-  sheet(load, 'hero_attack', 'assets/characters/hero/attack/attack.png', { frameWidth: 532, frameHeight: 568 });
-  sheet(load, 'hero_channel', 'assets/characters/hero/cast_debuff/cast_debuff_spritesheet.png', { frameWidth: 512, frameHeight: 512 });
-  sheet(load, 'hero_battle_stance', 'assets/characters/hero/battle_stance/battle_stance_spritesheet.png', { frameWidth: 512, frameHeight: 512 });
-  sheet(load, 'hero_defend', 'assets/characters/hero/defend/defend_spritesheet.png', { frameWidth: 512, frameHeight: 512 });
-  sheet(load, 'hero_chibi_warrior', 'assets/characters/hero/pocket/spritesheet.png', { frameWidth: 512, frameHeight: 512 });
-  sheet(load, 'warrior_select', 'assets/characters/hero/selection/spritesheet.png', { frameWidth: 500, frameHeight: 437 });
+  sheet(load, 'hero_walk', 'assets/characters/hero/scrolling/spritesheet.webp', { frameWidth: 512, frameHeight: 512 });
+  sheet(load, 'hero_attack', 'assets/characters/hero/attack/attack.webp', { frameWidth: 532, frameHeight: 568 });
+  sheet(load, 'hero_channel', 'assets/characters/hero/cast_debuff/cast_debuff_spritesheet.webp', { frameWidth: 512, frameHeight: 512 });
+  sheet(load, 'hero_battle_stance', 'assets/characters/hero/battle_stance/battle_stance_spritesheet.webp', { frameWidth: 512, frameHeight: 512 });
+  sheet(load, 'hero_defend', 'assets/characters/hero/defend/defend_spritesheet.webp', { frameWidth: 512, frameHeight: 512 });
+  sheet(load, 'hero_chibi_warrior', 'assets/characters/hero/pocket/spritesheet.webp', { frameWidth: 512, frameHeight: 512 });
+  sheet(load, 'warrior_select', 'assets/characters/hero/selection/spritesheet.webp', { frameWidth: 500, frameHeight: 437 });
 
   // Mage sprites.
-  sheet(load, 'mage_select', 'assets/characters/mage/selection/spritesheet.png', { frameWidth: 386, frameHeight: 514 });
+  sheet(load, 'mage_select', 'assets/characters/mage/selection/spritesheet.webp', { frameWidth: 386, frameHeight: 514 });
   sheet(load, 'mage_idle', 'assets/characters/mage/idle/spritesheet.png', { frameWidth: 640, frameHeight: 562 });
-  sheet(load, 'mage_attack', 'assets/characters/mage/attack/spritesheet.png', { frameWidth: 640, frameHeight: 562 });
-  sheet(load, 'mage_walk', 'assets/characters/mage/scrolling/spritesheet.png', { frameWidth: 512, frameHeight: 512 });
-  sheet(load, 'hero_chibi_mage', 'assets/characters/mage/pocket/spritesheet.png', { frameWidth: 256, frameHeight: 256, endFrame: 5 });
+  sheet(load, 'mage_attack', 'assets/characters/mage/attack/spritesheet.webp', { frameWidth: 640, frameHeight: 562 });
+  sheet(load, 'mage_walk', 'assets/characters/mage/scrolling/spritesheet.webp', { frameWidth: 512, frameHeight: 512 });
+  sheet(load, 'hero_chibi_mage', 'assets/characters/mage/pocket/spritesheet.webp', { frameWidth: 256, frameHeight: 256, endFrame: 5 });
 
   // Parallax loop backgrounds.
 

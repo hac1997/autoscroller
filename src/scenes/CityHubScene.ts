@@ -73,15 +73,17 @@ export class CityHubScene extends Scene {
 
     // ── Background ────────────────────────────────────────────
     this.cameras.main.setBackgroundColor(COLORS.background);
-    if (this.textures.exists('bg_city')) {
+    if (this.textures.exists('bg_city_0')) {
       if (!this.anims.exists('bg_city_anim')) {
+        // bg_city virou 6 texturas separadas (bg_city_0..5) em vez de um
+        // spritesheet; montamos o quadro de animação a partir das keys.
         this.anims.create({
           key: 'bg_city_anim',
-          frames: this.anims.generateFrameNumbers('bg_city', { start: 0, end: 5 }),
+          frames: [0, 1, 2, 3, 4, 5].map((i) => ({ key: `bg_city_${i}` })),
           frameRate: 4, repeat: -1,
         });
       }
-      const bg = this.add.sprite(400, 300, 'bg_city');
+      const bg = this.add.sprite(400, 300, 'bg_city_0');
       bg.setScale(0.7, 0.85).setDepth(-10);
       bg.play('bg_city_anim');
     }

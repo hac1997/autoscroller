@@ -36,28 +36,28 @@ export class Preloader extends Scene {
     this.load.image('glossary_panel_bg', 'assets/ui/glossary/panel_bg.png');
     this.load.image('timer_panel', 'assets/scenes/combat/timer-panel.png');
     this.load.image('hero_idle2', 'assets/characters/hero/idle/idle_2.png');
-    this.load.spritesheet('hero_walk',   'assets/characters/hero/scrolling/spritesheet.png', { frameWidth: 512, frameHeight: 512 });
-    this.load.spritesheet('hero_attack', 'assets/characters/hero/attack/attack.png', { frameWidth: 532, frameHeight: 568 });
-    this.load.spritesheet('hero_channel', 'assets/characters/hero/cast_debuff/cast_debuff_spritesheet.png', { frameWidth: 512, frameHeight: 512 });
-    this.load.spritesheet('hero_battle_stance', 'assets/characters/hero/battle_stance/battle_stance_spritesheet.png', { frameWidth: 512, frameHeight: 556 });
-    this.load.spritesheet('hero_defend', 'assets/characters/hero/defend/defend_spritesheet.png', { frameWidth: 512, frameHeight: 512 });
-    this.load.spritesheet('hero_chibi_warrior', 'assets/characters/hero/pocket/spritesheet.png', { frameWidth: 512, frameHeight: 512 });
+    this.load.spritesheet('hero_walk',   'assets/characters/hero/scrolling/spritesheet.webp', { frameWidth: 512, frameHeight: 512 });
+    this.load.spritesheet('hero_attack', 'assets/characters/hero/attack/attack.webp', { frameWidth: 532, frameHeight: 568 });
+    this.load.spritesheet('hero_channel', 'assets/characters/hero/cast_debuff/cast_debuff_spritesheet.webp', { frameWidth: 512, frameHeight: 512 });
+    this.load.spritesheet('hero_battle_stance', 'assets/characters/hero/battle_stance/battle_stance_spritesheet.webp', { frameWidth: 512, frameHeight: 556 });
+    this.load.spritesheet('hero_defend', 'assets/characters/hero/defend/defend_spritesheet.webp', { frameWidth: 512, frameHeight: 512 });
+    this.load.spritesheet('hero_chibi_warrior', 'assets/characters/hero/pocket/spritesheet.webp', { frameWidth: 512, frameHeight: 512 });
     // Warrior selection preview (2-frame idle, 500x437 per frame)
-    this.load.spritesheet('warrior_select', 'assets/characters/hero/selection/spritesheet.png', { frameWidth: 500, frameHeight: 437 });
+    this.load.spritesheet('warrior_select', 'assets/characters/hero/selection/spritesheet.webp', { frameWidth: 500, frameHeight: 437 });
 
     // Mage selection preview (7-frame idle, 386x514 per frame; sheet is 2702x514)
-    this.load.spritesheet('mage_select', 'assets/characters/mage/selection/spritesheet.png', { frameWidth: 386, frameHeight: 514 });
+    this.load.spritesheet('mage_select', 'assets/characters/mage/selection/spritesheet.webp', { frameWidth: 386, frameHeight: 514 });
     // Mage combat spritesheets (4-frame idle, 6-frame attack; 768×768 per frame)
-    this.load.spritesheet('mage_idle',         'assets/characters/mage/battle_stance/spritesheet.png',       { frameWidth: 768, frameHeight: 768, endFrame: 3 });
-    this.load.spritesheet('mage_attack',       'assets/characters/mage/attack/spritesheet.png',              { frameWidth: 768, frameHeight: 768, endFrame: 5 });
-    this.load.spritesheet('mage_battle_stance','assets/characters/mage/battle_stance/spritesheet.png',       { frameWidth: 768, frameHeight: 768, endFrame: 3 });
-    this.load.spritesheet('mage_defend',       'assets/characters/mage/defense/spritesheet.png',             { frameWidth: 768, frameHeight: 768, endFrame: 3 });
-    this.load.spritesheet('mage_cast_debuff',  'assets/characters/mage/cast_debuff/spritesheet.png',          { frameWidth: 768, frameHeight: 768, endFrame: 3 });
+    this.load.spritesheet('mage_idle',         'assets/characters/mage/battle_stance/spritesheet.webp',       { frameWidth: 768, frameHeight: 768, endFrame: 3 });
+    this.load.spritesheet('mage_attack',       'assets/characters/mage/attack/spritesheet.webp',              { frameWidth: 768, frameHeight: 768, endFrame: 5 });
+    this.load.spritesheet('mage_battle_stance','assets/characters/mage/battle_stance/spritesheet.webp',       { frameWidth: 768, frameHeight: 768, endFrame: 3 });
+    this.load.spritesheet('mage_defend',       'assets/characters/mage/defense/spritesheet.webp',             { frameWidth: 768, frameHeight: 768, endFrame: 3 });
+    this.load.spritesheet('mage_cast_debuff',  'assets/characters/mage/cast_debuff/spritesheet.webp',          { frameWidth: 768, frameHeight: 768, endFrame: 3 });
     // Mage scrolling animation (10-frame run, 512×512 per frame)
-    this.load.spritesheet('mage_walk',   'assets/characters/mage/scrolling/spritesheet.png', { frameWidth: 512, frameHeight: 512 });
+    this.load.spritesheet('mage_walk',   'assets/characters/mage/scrolling/spritesheet.webp', { frameWidth: 512, frameHeight: 512 });
 
     this.load.image('mage_defeat_bg',    'assets/scenes/death/mage_defeat.jpg');
-    this.load.spritesheet('hero_chibi_mage', 'assets/characters/mage/pocket/spritesheet.png', { frameWidth: 256, frameHeight: 256, endFrame: 5 });
+    this.load.spritesheet('hero_chibi_mage', 'assets/characters/mage/pocket/spritesheet.webp', { frameWidth: 256, frameHeight: 256, endFrame: 5 });
     this.load.image('warrior_defeat_bg', 'assets/scenes/death/warrior_defeat.jpg');
 
     // Monster static images — `hasFrame2` flags entries that ship a second
@@ -126,9 +126,11 @@ export class Preloader extends Scene {
     }
 
     // Scene backgrounds (400x400, scaled to fill 800x600)
-    this.load.spritesheet('bg_city', 'assets/scenes/city_hub/bg_city.png', {
-      frameWidth: 1280, frameHeight: 720,
-    });
+    // bg_city: 6 frames separados (WebP) animados por array de texturas em
+    // CityHubScene (ex-spritesheet 7680x720 de 10.6MB; agora 6x ~180KB).
+    for (let i = 0; i < 6; i++) {
+      this.load.image(`bg_city_${i}`, `assets/scenes/city_hub/bg_city_${i}.webp`);
+    }
     // bg_run.png not yet authored — GameScene falls back to bg_desert when
     // bg_run is missing (see GameScene.ts createDesertBackgrounds).
     this.load.image('bg_battle_basic',     'assets/scenes/combat/bg_battle_basic.webp');
