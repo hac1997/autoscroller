@@ -72,6 +72,11 @@ export default defineConfig({
         host: true
     },
     build: {
+        // Phaser alone is ~1.5MB and lives in its own chunk; the game code is
+        // loaded almost entirely at boot, so further splitting buys little.
+        // Raise the warning threshold above the Phaser chunk so the build is
+        // clean instead of noisy with an unactionable size warning.
+        chunkSizeWarningLimit: 1600,
         rollupOptions: {
             output: {
                 manualChunks: {

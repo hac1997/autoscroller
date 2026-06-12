@@ -32,6 +32,12 @@ import { DebugOverlayScene } from './scenes/DebugOverlayScene'
 import { CombatTestScene } from './scenes/CombatTestScene'
 import { SCENE_KEYS } from './state/SceneKeys'
 import { initConsoleLogger } from './debug/ConsoleLogger'
+// Imported statically: these are already in the main chunk via dozens of scenes,
+// so a dynamic import() here cannot split them out (Rollup warns). Static import
+// is the honest shape and keeps the bundle graph clean.
+import { loadMetaState } from './systems/MetaPersistence'
+import { getLocale, setLocale, wasLocaleExplicitlyStored } from './i18n/i18n'
+import { applyDataLocale } from './i18n/dataLocalize'
 
 // Capture all console output to logs/console.log (dev-only; tree-shaken from
 // production). Installed first so it sees the earliest boot logs.
@@ -202,9 +208,6 @@ if (import.meta.env.PROD) {
 // scene that mounts afterward reads the corrected language.
 void (async () => {
     try {
-        const { loadMetaState } = await import('./systems/MetaPersistence')
-        const { getLocale, setLocale, wasLocaleExplicitlyStored } = await import('./i18n/i18n')
-        const { applyDataLocale } = await import('./i18n/dataLocalize')
         const meta = await loadMetaState()
         // Only adopt the durable save copy when the player hasn't made an
         // explicit choice this device (no localStorage mirror). An explicit
