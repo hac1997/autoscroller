@@ -131,18 +131,18 @@ export class Preloader extends Scene {
     });
     // bg_run.png not yet authored — GameScene falls back to bg_desert when
     // bg_run is missing (see GameScene.ts createDesertBackgrounds).
-    this.load.image('bg_battle_basic',     'assets/scenes/combat/bg_battle_basic.png');
-    this.load.image('bg_battle_forest',    'assets/scenes/combat/bg_battle_forest.png');
-    this.load.image('bg_battle_graveyard', 'assets/scenes/combat/bg_battle_graveyard.png');
+    this.load.image('bg_battle_basic',     'assets/scenes/combat/bg_battle_basic.webp');
+    this.load.image('bg_battle_forest',    'assets/scenes/combat/bg_battle_forest.webp');
+    this.load.image('bg_battle_graveyard', 'assets/scenes/combat/bg_battle_graveyard.webp');
     this.load.image('bg_battle_swamp',     'assets/scenes/combat/bg_battle_swamp.png');
-    this.load.image('bg_battle_lava',      'assets/scenes/combat/bg_battle_lava.png');
-    this.load.image('bg_battle_desert',    'assets/scenes/combat/bg_battle_desert.png');
-    this.load.image('bg_battle_ruins',     'assets/scenes/combat/bg_battle_ruins.png');
+    this.load.image('bg_battle_lava',      'assets/scenes/combat/bg_battle_lava.webp');
+    this.load.image('bg_battle_desert',    'assets/scenes/combat/bg_battle_desert.webp');
+    this.load.image('bg_battle_ruins',     'assets/scenes/combat/bg_battle_ruins.webp');
     this.load.image('homepage', 'assets/scenes/main_menu/homepage.jpg');
 
     // Parallax backgrounds
-    this.load.image('bg_green_field', 'assets/scenes/game/green_field_background.png');
-    this.load.image('bg_sky',         'assets/scenes/game/sky-background.png');
+    this.load.image('bg_green_field', 'assets/scenes/game/green_field_background.webp');
+    this.load.image('bg_sky',         'assets/scenes/game/sky-background.webp');
     this.load.image('bg_desert',      'assets/scenes/game/desert.png');
 
     // Special tile sprites (256x256, baked-in decoration).
@@ -224,7 +224,7 @@ export class Preloader extends Scene {
       this.load.image(`tutorial_text_${s}`, `assets/scenes/tutorial/tutorial_${s}.png`);
     }
     this.load.image('tile_selection_board', 'assets/scenes/planning/tile-selection-board.png');
-    this.load.image('tile_inventory_panel', 'assets/scenes/planning/tile_inventory_panel.png');
+    this.load.image('tile_inventory_panel', 'assets/scenes/planning/tile_inventory_panel.webp');
     this.load.image('panel_keyword_frame_v2', 'assets/scenes/combat/panel_keyword_frame_v2.png');
     // Keyword intro panels (baked image per keyword)
     for (const kw of ['brace', 'exhaust', 'haste', 'pierce', 'vengeance']) {
@@ -237,8 +237,8 @@ export class Preloader extends Scene {
     this.load.image('tile_frame', 'assets/scenes/planning/tile-frame.png');
     this.load.image('card_mold_v2', 'assets/ui/frames/card_mold_v2.png');
     this.load.image('deck_frame', 'assets/ui/frames/deck-frame.png');
-    this.load.image('bg_tile_selection', 'assets/scenes/planning/background-tile-selection.png');
-    this.load.image('bg_shop_scene', 'assets/scenes/shop/shop.png');
+    this.load.image('bg_tile_selection', 'assets/scenes/planning/background-tile-selection.webp');
+    this.load.image('bg_shop_scene', 'assets/scenes/shop/shop.webp');
     this.load.image('shop_panel_list',    'assets/scenes/shop/big_panel.png');
     this.load.image('shop_panel_detail',  'assets/scenes/shop/asset description.png');
     this.load.image('shop_tab',           'assets/scenes/shop/shop-section.png');
@@ -246,14 +246,14 @@ export class Preloader extends Scene {
     this.load.image('shop_btn_buy',       'assets/scenes/shop/buy-button.png');
     this.load.image('shop_btn_sell',      'assets/scenes/shop/sell-button.png');
     this.load.image('shop_gold_panel',    'assets/scenes/shop/gold_panel.png');
-    this.load.image('confirm_panel',        'assets/scenes/shop_remove_card/confirm_panel.png');
+    this.load.image('confirm_panel',        'assets/scenes/shop_remove_card/confirm_panel.webp');
     // Grok-generated painted backdrops for previously-bare scenes. See
     // docs/UI_AUDIT.md for the prompts and re-generation recipe.
-    this.load.image('bg_deck_builder', 'assets/scenes/deck_customization/bg_deck_builder.png');
-    this.load.image('bg_deck_editor_v2', 'assets/scenes/deck_customization/deck-editor-v2.png');
-    this.load.image('bg_relic_vault',  'assets/scenes/relic_viewer/bg_relic_vault.png');
-    this.load.image('bg_card_library', 'assets/scenes/card_library/bg_card_library.png');
-    this.load.image('book_open',       'assets/scenes/card_library/book_open.png');
+    this.load.image('bg_deck_builder', 'assets/scenes/deck_customization/bg_deck_builder.webp');
+    this.load.image('bg_deck_editor_v2', 'assets/scenes/deck_customization/deck-editor-v2.webp');
+    this.load.image('bg_relic_vault',  'assets/scenes/relic_viewer/bg_relic_vault.webp');
+    this.load.image('bg_card_library', 'assets/scenes/card_library/bg_card_library.webp');
+    this.load.image('book_open',       'assets/scenes/card_library/book_open.webp');
     this.load.image('bookmark_tab',    'assets/scenes/card_library/bookmark_tab.png');
     // Page stacks for visual depth in the compendium. Four thickness variants —
     // the active tab picks which side gets which (the book's "open progress").
@@ -266,9 +266,9 @@ export class Preloader extends Scene {
     this.load.image('page-gutter',     'assets/scenes/card_library/page-gutter.png');
     // Section bookmark banners (text + emblem baked in, one per compendium tab)
     this.load.image('ribbon_card',     'assets/scenes/card_library/ribbon_card.png');
-    this.load.image('ribbon_relics',   'assets/scenes/card_library/ribbon_relics.png');
-    this.load.image('ribbon_tiles',    'assets/scenes/card_library/ribbon_tiles.png');
-    this.load.image('ribbon_bosses',   'assets/scenes/card_library/ribbon_bosses.png');
+    this.load.image('ribbon_relics',   'assets/scenes/card_library/ribbon_relics.webp');
+    this.load.image('ribbon_tiles',    'assets/scenes/card_library/ribbon_tiles.webp');
+    this.load.image('ribbon_bosses',   'assets/scenes/card_library/ribbon_bosses.webp');
     // *_status_panel = painel "rico": a arte é só o fundo e o texto (nome/
     // descrição/deck) é renderizado por cima pelo Phaser em CharacterSelectScene.
     // Tem prioridade sobre *_status (fallback só-imagem) via textures.exists().
@@ -292,11 +292,11 @@ export class Preloader extends Scene {
     this.load.bitmapFont('vt323_blue',  'assets/fonts/vt323_blue/vt323_blue.png',   'assets/fonts/vt323_blue/vt323_blue.fnt');
 
     this.load.image('speed_panel',        'assets/ui/panels/speed_panel.png');
-    this.load.image('hud_panel_left',     'assets/scenes/game/hud_panel_left.png');
+    this.load.image('hud_panel_left',     'assets/scenes/game/hud_panel_left.webp');
     this.load.image('hud_hero_panel',     'assets/scenes/game/hero_panel.png');
     this.load.image('hud_loop_panel',     'assets/scenes/game/loop-Panel.png');
     this.load.image('loop_chip_panel',    'assets/scenes/game/loop_chip_panel.png');
-    this.load.image('hud_panel_progress', 'assets/scenes/game/hud_panel_progress.png');
+    this.load.image('hud_panel_progress', 'assets/scenes/game/hud_panel_progress.webp');
     this.load.image('loop_summary_panel', 'assets/scenes/loop_summary/loopcomplete.png');
     this.load.image('txt_loop_complete',  'assets/scenes/loop_summary/txt_loop_complete.png');
     this.load.image('txt_victory',        'assets/scenes/combat/txt_victory.png');
@@ -353,7 +353,7 @@ this.load.image('btn_start_run',       'assets/ui/buttons/btn_start_run.png');
     this.load.image('btn_keep',            'assets/ui/buttons/btn_keep.png');
     this.load.image('btn_delete_run',      'assets/ui/buttons/btn_delete_run.png');
     this.load.image('btn_forge_action',    'assets/scenes/forge/btn_forge_action.png');
-    this.load.image('btn_dismiss',         'assets/scenes/forge/btn_dismiss.png');
+    this.load.image('btn_dismiss',         'assets/scenes/forge/btn_dismiss.webp');
     this.load.image('btn_got_it',          'assets/ui/buttons/btn_got_it.png');
     this.load.image('btn_continue_loop',   'assets/scenes/loop_summary/btn_continue_loop.png');
     // New wood-style buttons (generated 2026-06-06)
@@ -376,7 +376,7 @@ this.load.image('btn_start_run',       'assets/ui/buttons/btn_start_run.png');
     this.load.image('btn_next',            'assets/ui/buttons/btn_next.png');
     this.load.image('btn_start_loop', 'assets/ui/buttons/start-loop.png');
     this.load.image('btn_start_loop_scene', 'assets/scenes/planning/start-loop-loop-scene.png');
-    this.load.image('skip_loop_panel', 'assets/scenes/planning/skip-loop.png');
+    this.load.image('skip_loop_panel', 'assets/scenes/planning/skip-loop.webp');
     this.load.image('remove_tiles_panel', 'assets/scenes/planning/remove_tiles.png');
     this.load.image('btn_skip_1',  'assets/scenes/planning/1.png');
     this.load.image('btn_skip_5',  'assets/scenes/planning/5.png');
@@ -546,7 +546,7 @@ this.load.image('btn_start_run',       'assets/ui/buttons/btn_start_run.png');
     this.load.audio('sfx_fireball', 'assets/audio/fire.m4a');
     this.load.audio('sfx_hurt', 'assets/audio/hurt.m4a');
     this.load.audio('sfx_cashing', 'assets/audio/cashing.m4a');
-    this.load.audio('ambience_wind', 'assets/audio/wind.wav');
+    this.load.audio('ambience_wind', 'assets/audio/wind.ogg');
   }
 
   async create(): Promise<void> {

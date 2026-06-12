@@ -240,7 +240,7 @@ export function loadLightChrome(load: LoadTarget): void {
   audio(load, 'sfx_fireball', 'assets/audio/fire.m4a');
   audio(load, 'sfx_hurt', 'assets/audio/hurt.m4a');
   audio(load, 'sfx_cashing', 'assets/audio/cashing.m4a');
-  audio(load, 'ambience_wind', 'assets/audio/wind.wav');
+  audio(load, 'ambience_wind', 'assets/audio/wind.ogg');
 }
 
 // ── Tier 2: relic art ─────────────────────────────────────────────────────────
