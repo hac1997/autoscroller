@@ -1,7 +1,7 @@
 // FeiraAuthScene — tela de login da Feira de Jogos.
 //
 // Fluxo: o jogador derrota um boss -> GameScene pausa e lança ESTA cena ->
-// o jogador entra com o Google e recebe 300 tijolinhos -> seguimos para a
+// o jogador entra com o Google e recebe 100 tijolinhos -> seguimos para a
 // BossExitScene (continue/exit). O botão oficial "Entrar com Google" é um
 // elemento HTML sobreposto ao canvas (Phaser DOM está habilitado no jogo).
 
@@ -18,7 +18,9 @@ import type { LoopRunner, LoopRunState } from '../systems/LoopRunner';
 
 const CX = LAYOUT.centerX;
 const TIJOLINHOS = 100;
-const BTN_WIDTH = 240;
+// Botão oficial do Google. O GSI limita `width` a 400px; 360 dá presença na
+// tela sem estourar o limite e some bem com o título e o texto acima.
+const BTN_WIDTH = 360;
 
 interface FeiraAuthData {
   loopRunner: LoopRunner;
@@ -43,8 +45,8 @@ export class FeiraAuthScene extends Scene {
 
     const font = FONTS.family;
 
-    // Fundo escuro cobrindo a tela.
-    this.add.rectangle(CX, LAYOUT.centerY, LAYOUT.canvasWidth, LAYOUT.canvasHeight, 0x000000, 0.94)
+    // Fundo escuro sólido cobrindo a tela — mais contraste e foco no centro.
+    this.add.rectangle(CX, LAYOUT.centerY, LAYOUT.canvasWidth, LAYOUT.canvasHeight, 0x05060a, 1)
       .setDepth(0);
 
     this.add.text(CX, 150, 'BOSS DERROTADO!', {
